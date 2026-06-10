@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>WebSocket Test</title>
+
+    <!-- SockJS -->
+    <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+
+    <!-- MODERN STOMP (IMPORTANT) -->
+    <script src="https://cdn.jsdelivr.net/npm/@stomp/stompjs@7.0.0/bundles/stomp.umd.min.js"></script>
+</head>
+
+<body>
+
+<h2>WebSocket Test</h2>
+
+<button onclick="connect()">Connect</button>
+<button onclick="sendMessage()">Send Message</button>
+
+<script>
+
+let client = null;
+
+function connect() {
+
+    const socket = new SockJS('http://localhost:8081/chat');
+
+    client = new StompJs.Client({
+        webSocketFactory: () => socket,
+        reconnectDelay: 5000,
+        debug: (msg) => console.log("STOMP:", msg)
+    });
+
+    client.onConnect = () => {
+
+        console.log("CONNECTED SUCCESSFULLY ✅");
+
+        // subscribe to topic
+        client.subscribe("/topic/general", (message) => {
+            console.log("RECEIVED:", message.body);
+            alert("Message: " + message.body);
+        });
+    };
+
+    client.onStompError = (frame) => {
+        console.log("STOMP ERROR ❌", frame);
+    };
+
+    client.activate();
+}
+
+function sendMessage() {
+
+    if (!client || !client.connected) {
+        console.log("NOT CONNECTED ❌");
+        return;
+    }
+
+    console.log("SENDING MESSAGE...");
+
+     client.publish({
+    destination: "/app/sendMessage/general",
+    body: JSON.stringify({
+        sender: "Ankur",
+        content: "Hello Everyone"
+    })
+});
+
+    console.log("MESSAGE SENT ✅");
+}
+
+</script>
+
+</body>
+</html>

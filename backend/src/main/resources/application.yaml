@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: mingo-chatapp
+
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/mingoapp
+
+server:
+  port: 8081
