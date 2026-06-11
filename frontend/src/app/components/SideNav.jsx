@@ -1,6 +1,9 @@
 
-// version 1
 
+// verion 3 
+
+// import Image from "next/image";
+// import Link from "next/link";
 // import Logo from "./Logo";
 // import {
 //   Home,
@@ -11,17 +14,6 @@
 //   BadgePlus,
 //   LogIn,
 // } from "lucide-react";
-
-// const navItems = [
-//   { icon: <Home size={20} />,             label: "Home" },
-//   { icon: <SquareChartGantt size={20} />, label: "Board" },
-//   { icon: <Send size={20} />,             label: "Messages" },
-//   { icon: <Search size={20} />,           label: "Search" },
-//   { icon: <BellDot size={20} />,          label: "Notifications" },
-//   { icon: <BadgePlus size={20} />,        label: "New" },
-// ];
-
-// const bottomNavItems = navItems.slice(0, 5);
 
 // function NavLink({ icon, label, className = "" }) {
 //   return (
@@ -41,14 +33,13 @@
 //   );
 // }
 
-// // Desktop only — icon + label on sidebar hover
-// function SidebarItem({ icon, label }) {
+// function SidebarLink({ icon, label }) {
 //   return (
 //     <a
 //       title={label}
 //       className="
 //         flex items-center gap-3
-//         h-10 w-10 group-hover:w-full
+//         h-15 w-full
 //         rounded-lg px-2
 //         text-gray-900 dark:text-white
 //         hover:bg-gray-100 dark:hover:bg-gray-800
@@ -72,103 +63,125 @@
 // }
 
 // export default function SideNav() {
+//   const bottomBarIcons = [
+//     { icon: <Home size={20}  />, label: "Home"  },
+//     { icon: <SquareChartGantt size={20} />, label: "Community" },
+//     { icon: <Send size={20} />, label: "Messages" },
+//     { icon: <Search size={20} />, label: "Search" },
+//     { icon: <BellDot size={20} />, label: "Notifications" },
+//   ];
+
+//   const sidebarItems = [
+//     { icon: <Home size={20} />, label: "Home" },
+//     { icon: <SquareChartGantt size={20} />, label: "Community" },
+//     { icon: <Send size={20} />, label: "Messages" },
+//     { icon: <Search size={20} />, label: "Search" },
+//     { icon: <BellDot size={20} />, label: "Notifications" },
+//     { icon: <BadgePlus size={20} />, label: "New" },
+//   ];
+
 //   return (
 //     <>
-//       {/* ── MOBILE TOP BAR ── */}
+//       {/* MOBILE TOP BAR */}
 //       <header className="
-//         md:hidden
-//         fixed top-0 left-0 right-0 z-50
-//         flex items-center justify-between
-//         h-14 px-3
+//         md:hidden fixed top-0 left-0 right-0 z-50
+//         flex items-center h-14 px-3
 //         bg-white border-b border-gray-100
 //         dark:bg-gray-900 dark:border-gray-800
 //       ">
-//         <Logo />
-//         <div className="flex items-center gap-1">
-//           <NavLink icon={<BellDot size={20} />} label="Notifications" />
-//           <a className="
-//             flex items-center justify-center
-//             h-9 w-9 rounded-full
-//             bg-gray-200 dark:bg-gray-700
-//             overflow-hidden
-//           " />
+//         <div className="flex-1 flex items-center justify-start">
+//           <NavLink icon={<BadgePlus size={20} />} label="New" />
+//         </div>
+
+//         <div className="flex items-center justify-center">
+//           <p className="text-red-600">Tensai</p>
+//         </div>
+
+//         <div className="flex-1 flex items-center justify-end">
+//           <Link
+//             href="/profile"
+//             className="flex items-center justify-center h-9 w-9 rounded-full overflow-hidden"
+//           >
+//             <Image
+//               src="/assets/ankur.jpg"
+//               alt="Profile"
+//               width={36}
+//               height={36}
+//               className="object-cover"
+//             />
+//           </Link>
 //         </div>
 //       </header>
 
-//       {/* ── MOBILE BOTTOM BAR ── */}
+//       {/* MOBILE BOTTOM BAR */}
 //       <nav className="
-//         md:hidden
-//         fixed bottom-0 left-0 right-0 z-50
-//         flex items-center justify-around
-//         h-14 px-2
+//         md:hidden fixed bottom-0 left-0 right-0 z-50
+//         flex items-center justify-around h-14 px-2
 //         bg-white border-t border-gray-100
 //         dark:bg-gray-900 dark:border-gray-800
 //       ">
-//         {bottomNavItems.map(({ icon, label }) => (
+//         {bottomBarIcons.map(({ icon, label }) => (
 //           <NavLink key={label} icon={icon} label={label} />
 //         ))}
 //       </nav>
 
-//       {/* ── DESKTOP SIDEBAR ── */}
+//       {/* DESKTOP SIDEBAR */}
 //       <div className="
-//         hidden md:flex
-//         group
-//         h-screen
-//         w-16 hover:w-44
-//         flex-col
-//         border-e border-gray-100
-//         bg-white
+//         hidden md:flex group h-screen w-16 hover:w-44
+//         flex-col border-e border-gray-100 bg-white
 //         transition-all duration-300
 //         dark:border-gray-800 dark:bg-gray-900
-//         shrink-0
 //         overflow-hidden
 //       ">
-//         {/* Top */}
-//         <div>
-//           <Logo />
-//           <ul className="flex flex-col gap-1 pt-4 px-3">
+//         <Logo />
 
-//             {/* Nav items */}
-//             {navItems.map(({ icon, label }) => (
+//         <div className="flex flex-col flex-1">
+//           <ul className="flex flex-col gap-4 pt-5 px-3">
+//             {sidebarItems.map(({ icon, label }) => (
 //               <li key={label}>
-//                 <SidebarItem icon={icon} label={label} />
+//                 <SidebarLink icon={icon} label={label} />
 //               </li>
 //             ))}
+//           </ul>
 
-//             {/* Profile — same styling as SidebarItem */}
-//             <li>
-//               <a className="
+//           {/* PROFILE (FIXED) */}
+//           <div className="mt-auto px-3 pb-3">
+//             <Link
+//               href="/profile"
+//               className="
 //                 flex items-center gap-3
-//                 h-10 w-10 group-hover:w-full
+//                 h-10 w-full
 //                 rounded-lg px-2
 //                 text-gray-900 dark:text-white
 //                 hover:bg-gray-100 dark:hover:bg-gray-800
 //                 transition-all duration-300
 //                 overflow-hidden
-//               ">
-//                 <span className="
-//                   shrink-0 w-5 h-5
-//                   rounded-lg
-//                   bg-gray-200 dark:bg-gray-700
-//                   overflow-hidden
-//                 " />
-//                 <span className="
-//                   whitespace-nowrap text-sm font-medium
-//                   opacity-0 w-0
-//                   group-hover:opacity-100 group-hover:w-auto
-//                   transition-all duration-300
-//                 ">
-//                   Profile
-//                 </span>
-//               </a>
-//             </li>
+//               "
+//             >
+//               <span className="shrink-0 w-7 h-7 rounded-full overflow-hidden flex items-center justify-center">
+//                 <Image
+//                   src="/assets/ankur.jpg"
+//                   alt="Profile"
+//                   width={28}
+//                   height={28}
+//                   className="object-cover rounded-full"
+//                 />
+//               </span>
 
-//           </ul>
+//               <span className="
+//                 whitespace-nowrap text-sm font-medium
+//                 opacity-0 w-0
+//                 group-hover:opacity-100 group-hover:w-auto
+//                 transition-all duration-300
+//               ">
+//                 Profile
+//               </span>
+//             </Link>
+//           </div>
 //         </div>
 
-//         {/* Bottom */}
-//         <div className="mt-auto border-t border-gray-100 p-2 dark:border-gray-800">
-//           <SidebarItem icon={<LogIn size={20} />} label="Login" />
+//         <div className="mt-auto border-t border-gray-100 p-3 dark:border-gray-800">
+//           <SidebarLink icon={<LogIn size={20} />} label="Login" />
 //         </div>
 //       </div>
 //     </>
@@ -176,10 +189,11 @@
 // }
 
 
+// verion 2
 
-// verion 2  "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import Logo from "./Logo";
 import {
   Home,
@@ -196,7 +210,7 @@ function NavLink({ icon, label, className = "" }) {
     <a
       title={label}
       className={`
-        flex items-center justify-center
+        group flex items-center justify-center
         h-10 w-10 rounded-lg
         text-gray-900 dark:text-white
         hover:bg-gray-100 dark:hover:bg-gray-800
@@ -214,7 +228,7 @@ function SidebarLink({ icon, label }) {
     <a
       title={label}
       className="
-        flex items-center gap-3
+       group flex items-center gap-3
         h-15 w-full
         rounded-lg px-2
         text-gray-900 dark:text-white
@@ -231,7 +245,6 @@ function SidebarLink({ icon, label }) {
         opacity-0 w-0
         group-hover:opacity-100 group-hover:w-auto
         transition-all duration-300
-        text-gray-900 dark:text-white
       ">
         {label}
       </span>
@@ -240,66 +253,59 @@ function SidebarLink({ icon, label }) {
 }
 
 export default function SideNav() {
-
-  const bottomBarIcons = [
-    { icon: <Home size={20} />,             label: "Home" },
-    { icon: <SquareChartGantt size={20} />, label: "Board" },
-    { icon: <Send size={20} />,             label: "Messages" },
-    { icon: <Search size={20} />,           label: "Search" },
-    { icon: <BellDot size={20} />,          label: "Notifications" },
-  ];
-
-  const sidebarItems = [
-    { icon: <Home size={20} />,             label: "Home" },
-    { icon: <SquareChartGantt size={20} />, label: "Board" },
-    { icon: <Send size={20} />,             label: "Messages" },
-    { icon: <Search size={20} />,           label: "Search" },
-    { icon: <BellDot size={20} />,          label: "Notifications" },
-    { icon: <BadgePlus size={20} />,        label: "New" },
-  ];
+const bottomBarIcons = [
+  { icon: <Home size={20} className="group-hover:text-blue-500" />, label: "Home" },
+  { icon: <SquareChartGantt size={20} className="group-hover:text-green-500" />, label: "Community" },
+  { icon: <Send size={20} className="group-hover:text-purple-500" />, label: "Messages" },
+  { icon: <Search size={20} className="group-hover:text-yellow-500" />, label: "Search" },
+  { icon: <BellDot size={20} className="group-hover:text-red-500" />, label: "Notifications" },
+];
+const sidebarItems = [
+  { icon: <Home size={20} className="group-hover:text-blue-500" />, label: "Home" },
+  { icon: <SquareChartGantt size={20} className="group-hover:text-green-500" />, label: "Community" },
+  { icon: <Send size={20} className="group-hover:text-purple-500" />, label: "Messages" },
+  { icon: <Search size={20} className="group-hover:text-yellow-500" />, label: "Search" },
+  { icon: <BellDot size={20} className="group-hover:text-red-500" />, label: "Notifications" },
+  { icon: <BadgePlus size={20} className="group-hover:text-pink-500" />, label: "New" },
+];
 
   return (
     <>
-      {/* ── MOBILE TOP BAR ── */}
+      {/* MOBILE TOP BAR */}
       <header className="
-        md:hidden
-        fixed top-0 left-0 right-0 z-50
-        flex items-center
-        h-14 px-3
+        md:hidden fixed top-0 left-0 right-0 z-50
+        flex items-center h-14 px-3
         bg-white border-b border-gray-100
         dark:bg-gray-900 dark:border-gray-800
       ">
         <div className="flex-1 flex items-center justify-start">
-          <NavLink icon={<BadgePlus size={20} />} label="New" />
+          <NavLink icon={<BadgePlus size={20} className="group-hover:text-blue-500"/>} label="New" />
         </div>
+
         <div className="flex items-center justify-center">
           <p className="text-red-600">Tensai</p>
         </div>
+
         <div className="flex-1 flex items-center justify-end">
-          <a
-  className="
-    flex items-center justify-center
-    h-9 w-9 rounded-full
-    overflow-hidden
-  "
->
-  <Image
-    src="/assets/ankur.jpg"
-    alt="Profile"
-    width={36}
-    height={36}
-    className="object-cover"
-  />
-</a>
+          <Link
+            href="/profile"
+            className="flex items-center justify-center h-9 w-9 rounded-full overflow-hidden"
+          >
+            <Image
+              src="/assets/ankur.jpg"
+              alt="Profile"
+              width={36}
+              height={36}
+              className="object-cover"
+            />
+          </Link>
         </div>
       </header>
 
-      {/* ── MOBILE BOTTOM BAR ── */}
+      {/* MOBILE BOTTOM BAR */}
       <nav className="
-        md:hidden
-        fixed bottom-0 left-0 right-0 z-50
-        flex items-center justify-around
-        h-14 px-2
+        md:hidden fixed bottom-0 left-0 right-0 z-50
+        flex items-center justify-around h-14 px-2
         bg-white border-t border-gray-100
         dark:bg-gray-900 dark:border-gray-800
       ">
@@ -308,73 +314,68 @@ export default function SideNav() {
         ))}
       </nav>
 
-      {/* ── DESKTOP SIDEBAR ── */}
+      {/* DESKTOP SIDEBAR */}
       <div className="
-        hidden md:flex
-        group
-        h-screen
-        w-16 hover:w-44
-        flex-col
-        border-e border-gray-100
-        bg-white
+        hidden md:flex group h-screen w-16 hover:w-44
+        flex-col border-e border-gray-100 bg-white
         transition-all duration-300
         dark:border-gray-800 dark:bg-gray-900
-        shrink-0
         overflow-hidden
       ">
         <Logo />
 
-<div className="flex flex-col flex-1">
-  {/* Top navigation */}
-  <ul className="flex flex-col gap-4 pt-5 px-3">
-    {sidebarItems.map(({ icon, label }) => (
-      <li key={label}>
-        <SidebarLink icon={icon} label={label} />
-      </li>
-    ))}
-  </ul>
+        <div className="flex flex-col flex-1">
+          <ul className="flex flex-col gap-4 pt-5 px-3">
+            {sidebarItems.map(({ icon, label }) => (
+              <li key={label}>
+                <SidebarLink icon={icon} label={label} />
+              </li>
+            ))}
+          </ul>
 
-  {/* Profile pushed to bottom */}
-  <div className="mt-auto px-3 pb-3">
-    <a
-      className="
-        flex items-center gap-3
-        h-10 w-full
-        rounded-lg px-2
-        text-gray-900 dark:text-white
-        hover:bg-gray-100 dark:hover:bg-gray-800
-        transition-all duration-300
-        overflow-hidden
-      "
-    >
-      <span className="shrink-0 w-7 h-7 rounded-full overflow-hidden flex items-center justify-center">
-        <Image
-          src="/assets/ankur.jpg"
-          alt="Profile"
-          width={28}
-          height={28}
-          className="object-cover rounded-full"
-        />
-      </span>
+          {/* PROFILE (FIXED) */}
+          <div className="mt-auto px-3 pb-3">
+            <Link
+              href="/profile"
+              className="
+                flex items-center gap-3
+                h-10 w-full
+                rounded-lg px-2
+                text-gray-900 dark:text-white
+                hover:bg-gray-100 dark:hover:bg-gray-800
+                transition-all duration-300
+                overflow-hidden
+              "
+            >
+              <span className="shrink-0 w-7 h-7 rounded-full overflow-hidden flex items-center justify-center">
+                <Image
+                  src="/assets/ankur.jpg"
+                  alt="Profile"
+                  width={28}
+                  height={28}
+                  className="object-cover rounded-full"
+                />
+              </span>
 
-      <span
-        className="
-          whitespace-nowrap text-sm font-medium
-          opacity-0 w-0
-          group-hover:opacity-100 group-hover:w-auto
-          transition-all duration-300
-          text-gray-900 dark:text-white
-        "
-      >
-        Profile
-      </span>
-    </a>
-  </div>
-</div>
+              <span className="
+                whitespace-nowrap text-sm font-medium
+                opacity-0 w-0
+                group-hover:opacity-100 group-hover:w-auto
+                transition-all duration-300
+              ">
+                Profile
+              </span>
+            </Link>
+          </div>
+        </div>
+
         <div className="mt-auto border-t border-gray-100 p-3 dark:border-gray-800">
-          <SidebarLink icon={<LogIn size={20} />} label="Login" />
+          <SidebarLink icon={<LogIn size={20}  className="group-hover:text-red-500"  />} label="Login" />
         </div>
       </div>
     </>
   );
 }
+
+
+
