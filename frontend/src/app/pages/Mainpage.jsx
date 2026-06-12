@@ -25,9 +25,9 @@
 
 // version  2 
 
-
+import FeedCards from "../components/FeedCards";
 import SideNav from "../components/SideNav";
-
+import FollowingPeople from "../components/FollowingPeople"; // 👈 Add this
 export default function MainPage() {
   return (
     <div className="flex h-screen w-screen bg-gray-50 dark:bg-gray-950">
@@ -43,12 +43,15 @@ export default function MainPage() {
         pb-20      /* clears the mobile bottom bar */
         md:pt-6 md:pb-6
       ">
-        <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
-          Main Page
-        </h1>
-        <p className="text-gray-600 dark:text-gray-300 mt-2">
-          This is your chat app dashboard layout.
-        </p>
+        <div className="hidden md:flex justify-center">
+  <p className="text-xl font-semibold">tensai</p>
+</div>
+          <div className="mt-6">
+          <FollowingPeople />
+        </div>
+
+        <FeedCards />
+
       </div>
     </div>
   );

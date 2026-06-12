@@ -1,0 +1,262 @@
+
+
+
+
+
+// new version  
+
+// "use client";
+
+// import { useState } from "react";
+
+// import CommunityList from "../components/community/CommunityList";
+// import CommunityChat from "../components/community/CommunityChat";
+// import CommunityInfo from "../components/community/CommunityInfo";
+
+// /*
+// |--------------------------------------------------------------------------
+// | Demo Community Data
+// |--------------------------------------------------------------------------
+// | NOTE:
+// | Later, all of this data should come from the backend.
+// |
+// | community.image      -> Community profile image
+// | community.name       -> Community name
+// | community.members    -> Number of members
+// |
+// | ownerImage           -> Community owner's profile image
+// | ownerName            -> Community owner's name
+// |--------------------------------------------------------------------------
+// */
+
+// const COMMUNITY = {
+//   id: 1,
+
+//   // Community information
+//   name: "Community",
+//   members: "1.2k",
+//   image: "/assets/ankur.jpg",
+
+//   // Community owner information
+//   ownerName: "Ankur Sama",
+//   ownerImage: "/assets/ankur.jpg",
+// };
+
+// /*
+// |--------------------------------------------------------------------------
+// | Demo Member List
+// |--------------------------------------------------------------------------
+// | Later this list will come from the backend.
+// |--------------------------------------------------------------------------
+// */
+// const MEMBERS = [
+//   {
+//     id: 1,
+//     name: "Ankur Sama",
+//     image: "/assets/ankur.jpg",
+//   },
+//   {
+//     id: 2,
+//     name: "Riya",
+//     image: "/assets/user1.jpg",
+//   },
+//   {
+//     id: 3,
+//     name: "Rahul",
+//     image: "/assets/user2.jpg",
+//   },
+//   {
+//     id: 4,
+//     name: "Priya",
+//     image: "/assets/user3.jpg",
+//   },
+//   {
+//     id: 5,
+//     name: "Aman",
+//     image: "/assets/user4.jpg",
+//   },
+// ];
+
+// /*
+// |--------------------------------------------------------------------------
+// | Demo Messages
+// |--------------------------------------------------------------------------
+// | Later this will come from backend/database.
+// |--------------------------------------------------------------------------
+// */
+// const MESSAGES = [
+//   {
+//     id: 1,
+//     user: "Riya",
+//     text: "Hey everyone 👋",
+//     image: "/assets/user1.jpg",
+//     isOwn: false,
+//   },
+//   {
+//     id: 2,
+//     user: "Rahul",
+//     text: "Welcome to the community!",
+//     image: "/assets/user2.jpg",
+//     isOwn: false,
+//   },
+//   {
+//     id: 3,
+//     user: "You",
+//     text: "Happy to be here 🚀",
+//     image: "/assets/ankur.jpg",
+//     isOwn: true,
+//   },
+// ];
+// export default function CommunityLayout() {
+//   const [message, setMessage] = useState("");
+
+//   // MOBILE VIEW STATE
+//   const [mobileView, setMobileView] = useState("list"); 
+//   // "list" | "chat"
+
+//   return (
+//     <div className="flex h-screen bg-white text-black dark:bg-black dark:text-white">
+
+//       {/* LEFT - LIST */}
+//       <div
+//         className={`
+//           w-full md:w-[300px]
+//           border-r border-gray-200 dark:border-gray-800
+//           ${mobileView === "chat" ? "hidden md:block" : "block"}
+//         `}
+//       >
+//         <CommunityList
+//           community={COMMUNITY}
+//           members={MEMBERS}
+//           onOpenChat={() => setMobileView("chat")}
+//         />
+//       </div>
+
+//       {/* CENTER - CHAT */}
+//       <div
+//         className={`
+//           flex-1
+//           ${mobileView === "list" ? "hidden md:flex" : "flex"}
+//         `}
+//       >
+//         <CommunityChat
+//           community={COMMUNITY}
+//           messages={MESSAGES}
+//           message={message}
+//           setMessage={setMessage}
+//           onBack={() => setMobileView("list")}
+//         />
+//       </div>
+
+//       {/* RIGHT - INFO (desktop only) */}
+//       <div className="hidden lg:block w-[320px] border-l border-gray-200 dark:border-gray-800">
+//         <CommunityInfo community={COMMUNITY} />
+//       </div>
+
+//     </div>
+//   );
+// }
+
+
+
+
+"use client";
+
+import { useState } from "react";
+import CommunityBottomNav from "../components/community/CommunityBottomNav";
+import CommunityList from "../components/community/CommunityList";
+import CommunityChat from "../components/community/CommunityChat";
+import CommunityInfo from "../components/community/CommunityInfo";
+
+const COMMUNITY = {
+  id: 1,
+  name: "Community",
+  members: "1.2k",
+  image: "/assets/ankur.jpg",
+  ownerName: "Ankur Sama",
+  ownerImage: "/assets/ankur.jpg",
+};
+
+const MEMBERS = [
+  { id: 1, name: "Ankur Sama", image: "/assets/ankur.jpg" },
+  { id: 2, name: "Riya", image: "/assets/user1.jpg" },
+  { id: 3, name: "Rahul", image: "/assets/user2.jpg" },
+  { id: 4, name: "Priya", image: "/assets/user3.jpg" },
+  { id: 5, name: "Aman", image: "/assets/user4.jpg" },
+];
+
+const MESSAGES = [
+  {
+    id: 1,
+    user: "Riya",
+    text: "Hey everyone 👋",
+    image: "/assets/user1.jpg",
+    isOwn: false,
+  },
+  {
+    id: 2,
+    user: "Rahul",
+    text: "Welcome to the community!",
+    image: "/assets/user2.jpg",
+    isOwn: false,
+  },
+  {
+    id: 3,
+    user: "You",
+    text: "Happy to be here 🚀",
+    image: "/assets/ankur.jpg",
+    isOwn: true,
+  },
+];
+
+export default function CommunityLayout() {
+  const [message, setMessage] = useState("");
+  const [mobileView, setMobileView] = useState("list");
+
+  return (
+    <div className="flex h-screen bg-white text-black dark:bg-black dark:text-white  overflow-hidden">
+
+      {/* LEFT - LIST */}
+      <div
+        className={`
+          w-full md:w-[300px]
+          border-r border-gray-200 dark:border-gray-800
+          ${mobileView === "chat" ? "hidden md:block" : "block"}
+        `}
+      >
+        <CommunityList
+          community={COMMUNITY}
+          members={MEMBERS}
+          onOpenChat={() => setMobileView("chat")}
+          hideBackButton={true}   // ✅ IMPORTANT CHANGE
+        />
+      </div>
+
+      {/* CENTER - CHAT */}
+      <div
+        className={`
+          flex-1
+          ${mobileView === "list" ? "hidden md:flex" : "flex"}
+        `}
+      >
+        <CommunityChat
+          community={COMMUNITY}
+          messages={MESSAGES}
+          message={message}
+          setMessage={setMessage}
+          onBack={() => setMobileView("list")}
+        />
+      </div>
+     
+
+      {/* RIGHT - INFO */}
+      <div className="hidden lg:block w-[320px] border-l border-gray-200 dark:border-gray-800">
+        <CommunityInfo community={COMMUNITY} />
+      </div>
+       <CommunityBottomNav
+  onOpenChat={() => setMobileView("chat")}
+/>
+
+    </div>
+  );
+}
