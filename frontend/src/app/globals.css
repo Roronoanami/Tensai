@@ -124,6 +124,22 @@
     --sidebar-ring: oklch(0.556 0 0);
 }
 
+.input {
+  @apply px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-700 
+  bg-white dark:bg-gray-800 text-sm outline-none focus:ring-2 focus:ring-blue-500;
+}
+
+
+/* Hide scrollbar but keep scrolling enabled */
+.hide-scrollbar {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;

@@ -37,7 +37,7 @@ export default function CommunityBottomNav({
       </Link>
 
       {/* CHAT → OPENS COMMUNITY CHAT */}
-      <button onClick={onOpenChat}>
+      <button >
         <Icon icon={<Send size={20} />} />
       </button>
 

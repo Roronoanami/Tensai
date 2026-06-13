@@ -26,13 +26,33 @@
 
 
 
+
+
+// best   advance versiion    
+
+
 "use client";
 
 import Image from "next/image";
+import { useEffect, useState } from "react";
 
 export default function CommunityInfo({ community }) {
+  const [isDarkTheme, setIsDarkTheme] = useState(false);
+
+  useEffect(() => {
+    // Detect current theme from document (works with Tailwind dark mode)
+    const isDark = document.documentElement.classList.contains("dark");
+    setIsDarkTheme(isDark);
+  }, []);
+
   return (
-    <div className="h-full overflow-y-auto bg-white p-6 dark:bg-black">
+    <div
+      className="h-full overflow-y-auto p-6 transition-colors duration-300"
+      style={{
+        backgroundColor: isDarkTheme ? "#ffffff" : "#000000",
+        color: isDarkTheme ? "#000000" : "#ffffff",
+      }}
+    >
       <div className="flex flex-col items-center">
         <Image
           src={community.image}
@@ -46,7 +66,7 @@ export default function CommunityInfo({ community }) {
           {community.name}
         </h2>
 
-        <p className="mt-1 text-sm text-gray-500">
+        <p className="mt-1 text-sm opacity-70">
           {community.members} members
         </p>
       </div>
@@ -54,15 +74,14 @@ export default function CommunityInfo({ community }) {
       <div className="mt-8 space-y-4 text-sm">
         <div>
           <h3 className="font-semibold">About</h3>
-          <p className="mt-1 text-gray-500">
-            Demo community description. Later this will come from
-            your Spring Boot backend.
+          <p className="mt-1 opacity-70">
+            Demo community description. Later this will come from your Spring Boot backend.
           </p>
         </div>
 
         <div>
           <h3 className="font-semibold">Rules</h3>
-          <ul className="mt-1 list-disc pl-5 text-gray-500">
+          <ul className="mt-1 list-disc pl-5 opacity-70">
             <li>Be respectful.</li>
             <li>No spam.</li>
             <li>Help fellow members.</li>
