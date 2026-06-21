@@ -8,7 +8,7 @@ function FollowingPeople() {
     { id: 2, image: "/assets/user2.jpg" },
     { id: 3, image: "/assets/user3.jpg" },
     { id: 4, image: "/assets/user4.jpg" },
-    { id: 5, image: "/assets/user5.jpg" },
+   
   ];
 
   return (

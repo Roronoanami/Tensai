@@ -628,7 +628,7 @@
 
 
 "use client";
-
+import NotificationPage from "../pages/NotificationPage";
 import { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
@@ -641,6 +641,7 @@ import {
   SquareChartGantt,
   BadgePlus,
   LogIn,
+  Bookmark,
 } from "lucide-react";
 
 function NavLink({ icon, label, className = "" }) {
@@ -714,19 +715,20 @@ export default function SideNav() {
       label: "Search",
       href: "/search",
     },
+  
     {
-      icon: <BellDot size={20} className="group-hover:text-red-500" />,
-      label: "Notifications",
-      href: "/notifications",
-    },
+  icon: <BellDot size={20} className="group-hover:text-red-500" />,
+  label: "Notifications",
+  href: "/notifications",
+}
   ];
 
   const sidebarItems = [
     ...bottomBarIcons,
     {
-      icon: <BadgePlus size={20} className="group-hover:text-pink-500" />,
-      label: "New",
-      href: "/new",
+      icon: <Bookmark  size={20} className="group-hover:text-pink-500" />,
+      label: "Save",
+      href: "/saved",
     },
   ];
 

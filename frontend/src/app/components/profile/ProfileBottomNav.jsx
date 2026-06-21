@@ -1,6 +1,6 @@
 "use client";
 
-import { Home, Search, Bookmark } from "lucide-react";
+import { Home,Send, Search, Bookmark } from "lucide-react";
 import Link from "next/link";
 
 function Icon({ icon }) {
@@ -24,6 +24,10 @@ export default function ProfileBottomNav() {
 
       <Link href="/search">
         <Icon icon={<Search size={20} />} />
+      </Link>
+
+      <Link href="/messages">
+        <Icon icon={<Send size={20} />} />
       </Link>
 
       <Link href="/saved">

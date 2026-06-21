@@ -575,7 +575,6 @@ import ProfileLayout from "../pages/ProfileLayout";
 import ProfileInfo from "../components/profile/ProfileInfo";
 import ProfileActivity from "../components/profile/ProfileActivity";
 import EnhanceProfile from "../components/profile/EnhanceProfile";
-
 export default function ProfilePageUser() {
   const [showEnhance, setShowEnhance] = useState(false);
 
