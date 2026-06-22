@@ -692,9 +692,15 @@ console.log("PROFILE STATE:", profile);
   Portfolio
 </a>
         {/* CONNECTIONS */}
-        <p className="mt-2 text-sm font-medium text-blue-600 cursor-pointer">
-          36 connections
+        <div className="flex gap-4">
+          <p className="mt-2 text-sm font-medium text-blue-600 cursor-pointer">
+          connections
         </p>
+        <p className="mt-2 text-sm font-medium text-blue-600 cursor-pointer">
+          followers
+        </p>
+        </div>
+
 
         {/* ACTION BUTTONS */}
         <div className="mt-5 flex flex-wrap gap-3">

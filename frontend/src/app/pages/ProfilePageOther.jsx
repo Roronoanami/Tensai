@@ -19,7 +19,11 @@ export default function ProfilePageOther({ username }) {
 
       {/* SAME ACTIVITY SECTION */}
       <div className="mt-6 md:mt-8">
-        <ProfileActivity profile={profile} />
+<ProfileActivity
+  isOwnProfile={false}
+  userId={profile?.userId}
+  username={profile?.username}
+/>
       </div>
 
     </ProfileLayout>

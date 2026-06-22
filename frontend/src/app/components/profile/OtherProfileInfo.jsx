@@ -132,10 +132,15 @@ export default function OtherProfileInfo({ username }) {
             <ExternalLink size={14} />
             Portfolio
           </a>
-
-          <p className="mt-2 text-sm font-medium text-blue-600 cursor-pointer">
+          
+          <div className="flex gap-4">
+            <p className="mt-2 text-sm font-medium text-blue-600 cursor-pointer">
             {profile.connections || 0} connections
           </p>
+          <p className="mt-2 text-sm font-medium text-blue-600 cursor-pointer">
+            {profile.followers|| 0} followers
+          </p>
+          </div>
 
           {/* ================= ACTIONS ================= */}
           <div className="mt-5 flex flex-wrap gap-3">

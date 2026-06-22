@@ -568,6 +568,51 @@
 
 // new   most advance 
 
+
+
+
+// "use client";
+
+// import { useState } from "react";
+// import ProfileLayout from "../pages/ProfileLayout";
+// import ProfileInfo from "../components/profile/ProfileInfo";
+// import ProfileActivity from "../components/profile/ProfileActivity";
+// import EnhanceProfile from "../components/profile/EnhanceProfile";
+
+// export default function ProfilePageUser() {
+//   const [showEnhance, setShowEnhance] = useState(false);
+
+//   // ✅ FIX: profile state was missing
+//   const [profile, setProfile] = useState(null);
+
+//   return (
+//     <ProfileLayout>
+//       <ProfileInfo
+//         onOpenEnhance={() => setShowEnhance(true)}
+//         setProfile={setProfile}   // important if ProfileInfo fetches data
+//       />
+
+//       <div className="mt-6 md:mt-8">
+//         <ProfileActivity
+//           isOwnProfile={true}
+//           userId={profile?.id}
+//           username={profile?.username}
+//         />
+//       </div>
+
+//       <EnhanceProfile
+//         open={showEnhance}
+//         onClose={() => setShowEnhance(false)}
+//       />
+//     </ProfileLayout>
+//   );
+// } 
+
+
+
+
+
+
 "use client";
 
 import { useState } from "react";
@@ -575,21 +620,33 @@ import ProfileLayout from "../pages/ProfileLayout";
 import ProfileInfo from "../components/profile/ProfileInfo";
 import ProfileActivity from "../components/profile/ProfileActivity";
 import EnhanceProfile from "../components/profile/EnhanceProfile";
+
 export default function ProfilePageUser() {
   const [showEnhance, setShowEnhance] = useState(false);
+  const [profile, setProfile] = useState(null);
 
   return (
     <ProfileLayout>
-  <ProfileInfo onOpenEnhance={() => setShowEnhance(true)} />
+      {/* PROFILE HEADER */}
+      <ProfileInfo
+        onOpenEnhance={() => setShowEnhance(true)}
+        setProfile={setProfile}
+      />
 
-  <div className="mt-6 md:mt-8">
-    <ProfileActivity />
-  </div>
+      {/* ACTIVITY SECTION (always render, no blocking) */}
+      <div className="mt-6 md:mt-8">
+        <ProfileActivity
+          isOwnProfile={true}
+          userId={profile?.id}
+          username={profile?.username}
+        />
+      </div>
 
-  <EnhanceProfile
-    open={showEnhance}
-    onClose={() => setShowEnhance(false)}
-  />
-</ProfileLayout>
+      {/* ENHANCE MODAL */}
+      <EnhanceProfile
+        open={showEnhance}
+        onClose={() => setShowEnhance(false)}
+      />
+    </ProfileLayout>
   );
 }
