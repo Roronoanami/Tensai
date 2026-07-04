@@ -935,19 +935,280 @@
 // more advance 
 
 
+// "use client";
+
+// import { useEffect, useState, useRef } from "react";
+// import Image from "next/image";
+// import { ChevronLeft, ChevronRight, Plus, Pencil, Trash2 } from "lucide-react";
+
+// import {
+//   getMyActivities,
+//   getUserActivitiesByUsername,
+//   deleteActivity,
+//   // createActivity,
+//   // updateActivity
+// } from "@/services/activityService";
+// import ProfileDetail from "./ProfileDetail";
+// import ProfileActivityCreate from "./ProfileActivityCreate";
+
+// export default function ProfileActivity({ username, userId, isOwnProfile }) {
+//   const [activeTab, setActiveTab] = useState("posts");
+//   const [selectedItem, setSelectedItem] = useState(null);
+//   const [openCreate, setOpenCreate] = useState(false);
+
+//   const [activities, setActivities] = useState([]);
+//   const [loading, setLoading] = useState(true);
+//   const [editData, setEditData] = useState(null);
+
+//   const scrollRef = useRef(null);
+
+//   const scroll = (dir) => {
+//     if (!scrollRef.current) return;
+
+//     scrollRef.current.scrollBy({
+//       left: dir === "left" ? -320 : 320,
+//       behavior: "smooth",
+//     });
+//   };
+
+//   // ================= FETCH =================
+//   useEffect(() => {
+//     const fetchActivities = async () => {
+//       try {
+//         setLoading(true);
+
+//         let data = [];
+
+//         if (isOwnProfile) {
+//           data = await getMyActivities(userId);
+//         } else {
+//           data = await getUserActivitiesByUsername(username);
+//         }
+
+//         setActivities(data || []);
+//       } catch (err) {
+//         console.log("Activity fetch error:", err);
+//       } finally {
+//         setLoading(false);
+//       }
+//     };
+
+//     if (userId || username) fetchActivities();
+//   }, [userId, username, isOwnProfile]);
+
+//   // ================= DELETE =================
+//   const handleDelete = async (id) => {
+//     if (!userId) return;
+
+//     try {
+//       await deleteActivity(id, userId);
+//       setActivities((prev) => prev.filter((a) => a.id !== id));
+//     } catch (err) {
+//       console.log("Delete failed:", err);
+//     }
+//   };
+
+//   // ================= FILTER =================
+//   const posts = activities.filter((a) => a.type === "post");
+//   const projects = activities.filter((a) => a.type === "project");
+//   const skills = activities.filter((a) => a.type === "skill");
+
+//   return (
+//     <section className="max-w-5xl mx-auto mt-4 px-3 md:px-4">
+//       <div className="rounded-2xl border bg-white dark:bg-black p-5">
+
+//         {/* HEADER */}
+//         <div className="flex justify-between mb-4">
+//           <h2 className="text-xl font-semibold">Activity</h2>
+
+//           {isOwnProfile && (
+
+//             <div className="flex gap-2">
+//   {/* Create Activity */}
+//   <button
+//     onClick={() => {
+//       setEditData(null);
+//       setOpenCreate(true);
+//     }}
+//     className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800"
+//     title="Create Activity"
+//   >
+//     <Plus size={18} />
+//   </button>
+
+ 
+// </div>
+//           )}
+//         </div>
+
+//         {/* TABS */}
+//         <div className="flex gap-3 mb-6">
+//           {["posts", "projects", "skills"].map((tab) => (
+//             <button
+//               key={tab}
+//               onClick={() => setActiveTab(tab)}
+//               className={`px-4 py-2 rounded-full text-sm ${
+//                 activeTab === tab
+//                   ? "bg-blue-600 text-white"
+//                   : "border"
+//               }`}
+//             >
+//               {tab.toUpperCase()}
+//             </button>
+//           ))}
+//         </div>
+
+//         {loading && <p>Loading...</p>}
+
+// {/* POSTS */}
+// {activeTab === "posts" && (
+//   <div className="relative">
+
+//     {/* Left Arrow (Desktop Only) */}
+//     <button
+//       onClick={() => scroll("left")}
+//       className="hidden md:flex absolute left-0 top-1/2 -translate-y-1/2 z-10 h-10 w-10 items-center justify-center rounded-full bg-white dark:bg-gray-900 border shadow"
+//     >
+//       <ChevronLeft size={20} />
+//     </button>
+
+//     {/* Right Arrow (Desktop Only) */}
+//     <button
+//       onClick={() => scroll("right")}
+//       className="hidden md:flex absolute right-0 top-1/2 -translate-y-1/2 z-10 h-10 w-10 items-center justify-center rounded-full bg-white dark:bg-gray-900 border shadow"
+//     >
+//       <ChevronRight size={20} />
+//     </button>
+
+//     <div
+//       ref={scrollRef}
+//       className="flex gap-4 overflow-x-auto pb-2 px-12 hide-scrollbar"
+//     >
+//       {posts.map((post) => (
+//         <div
+//           key={post.id}
+//           className="min-w-[280px] border rounded-xl overflow-hidden relative"
+//         >
+//           <Image
+//             src={post.imageUrl || "/assets/default.jpg"}
+//             alt={post.title}
+//             width={400}
+//             height={200}
+//             className="h-40 w-full object-cover"
+//           />
+
+//           <div className="p-3">
+//             <h3>{post.title}</h3>
+//           </div>
+//         </div>
+//       ))}
+//     </div>
+//   </div>
+// )}
+
+// {/* PROJECTS */}
+// {activeTab === "projects" && (
+//   <div className="relative">
+
+//     {/* Left Arrow (Desktop Only) */}
+//     <button
+//       onClick={() => scroll("left")}
+//       className="hidden md:flex absolute left-0 top-1/2 -translate-y-1/2 z-10 h-10 w-10 items-center justify-center rounded-full bg-white dark:bg-gray-900 border shadow"
+//     >
+//       <ChevronLeft size={20} />
+//     </button>
+
+//     {/* Right Arrow (Desktop Only) */}
+//     <button
+//       onClick={() => scroll("right")}
+//       className="hidden md:flex absolute right-0 top-1/2 -translate-y-1/2 z-10 h-10 w-10 items-center justify-center rounded-full bg-white dark:bg-gray-900 border shadow"
+//     >
+//       <ChevronRight size={20} />
+//     </button>
+
+//     <div
+//       ref={scrollRef}
+//       className="flex gap-4 overflow-x-auto pb-2 px-12 hide-scrollbar"
+//     >
+//       {projects.map((p) => (
+//         <div
+//           key={p.id}
+//           className="min-w-[280px] border rounded-xl overflow-hidden"
+//         >
+//           <Image
+//             src={p.imageUrl || "/assets/default.jpg"}
+//             alt={p.title}
+//             width={400}
+//             height={200}
+//             className="h-40 w-full object-cover"
+//           />
+
+//           <div className="p-3">
+//             <h3>{p.title}</h3>
+//             <p className="text-sm text-gray-500">
+//               {p.techStack}
+//             </p>
+//           </div>
+//         </div>
+//       ))}
+//     </div>
+
+//   </div>
+// )}
+
+//         {/* SKILLS */}
+//         {activeTab === "skills" && (
+//           <div className="flex flex-wrap gap-2">
+//             {skills.map((s) => (
+//               <span
+//                 key={s.id || s.title || s.techStack}
+//                 className="px-3 py-1 border rounded-full"
+//               >
+//                 {s.title || s.techStack}
+//               </span>
+//             ))}
+//           </div>
+//         )}
+
+//         {/* DETAIL MODAL */}
+//         <ProfileDetail
+//           open={!!selectedItem}
+//           data={selectedItem}
+//           onClose={() => setSelectedItem(null)}
+//         />
+
+//         {/* CREATE / EDIT MODAL */}
+//         <ProfileActivityCreate
+//           open={openCreate}
+//           onClose={() => {
+//             setOpenCreate(false);
+//             setEditData(null);
+//           }}
+//           editData={editData}
+//           userId={userId}
+//         />
+//       </div>
+//     </section>
+//   );
+// }
+
+
+
+
+
+
 "use client";
 
 import { useEffect, useState, useRef } from "react";
 import Image from "next/image";
-import { ChevronLeft, ChevronRight, Plus, Pencil, Trash2 } from "lucide-react";
+import { ChevronLeft, ChevronRight, Plus } from "lucide-react";
 
 import {
   getMyActivities,
   getUserActivitiesByUsername,
   deleteActivity,
-  createActivity,
-  updateActivity
 } from "@/services/activityService";
+
 import ProfileDetail from "./ProfileDetail";
 import ProfileActivityCreate from "./ProfileActivityCreate";
 
@@ -960,12 +1221,14 @@ export default function ProfileActivity({ username, userId, isOwnProfile }) {
   const [loading, setLoading] = useState(true);
   const [editData, setEditData] = useState(null);
 
-  const scrollRef = useRef(null);
+  // ✅ FIXED: separate refs (important bug fix)
+  const postScrollRef = useRef(null);
+  const projectScrollRef = useRef(null);
 
-  const scroll = (dir) => {
-    if (!scrollRef.current) return;
+  const scroll = (dir, ref) => {
+    if (!ref?.current) return;
 
-    scrollRef.current.scrollBy({
+    ref.current.scrollBy({
       left: dir === "left" ? -320 : 320,
       behavior: "smooth",
     });
@@ -1003,6 +1266,7 @@ export default function ProfileActivity({ username, userId, isOwnProfile }) {
     try {
       await deleteActivity(id, userId);
       setActivities((prev) => prev.filter((a) => a.id !== id));
+      setSelectedItem(null);
     } catch (err) {
       console.log("Delete failed:", err);
     }
@@ -1024,25 +1288,13 @@ export default function ProfileActivity({ username, userId, isOwnProfile }) {
           {isOwnProfile && (
             <div className="flex gap-2">
               <button
-                onClick={() => setOpenCreate(true)}
+                onClick={() => {
+                  setEditData(null);
+                  setOpenCreate(true);
+                }}
                 className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800"
               >
                 <Plus size={18} />
-                
-              </button>
-              <button
-                onClick={() => setOpenCreate(true)}
-                className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800"
-              >
-                <Pencil size={18} />
-                
-              </button>
-              <button
-                onClick={() => setOpenCreate(true)}
-                className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800"
-              >
-                <Trash2 size={18} />
-                
               </button>
             </div>
           )}
@@ -1055,9 +1307,7 @@ export default function ProfileActivity({ username, userId, isOwnProfile }) {
               key={tab}
               onClick={() => setActiveTab(tab)}
               className={`px-4 py-2 rounded-full text-sm ${
-                activeTab === tab
-                  ? "bg-blue-600 text-white"
-                  : "border"
+                activeTab === tab ? "bg-blue-600 text-white" : "border"
               }`}
             >
               {tab.toUpperCase()}
@@ -1067,14 +1317,33 @@ export default function ProfileActivity({ username, userId, isOwnProfile }) {
 
         {loading && <p>Loading...</p>}
 
-        {/* POSTS */}
+        {/* ================= POSTS ================= */}
         {activeTab === "posts" && (
           <div className="relative">
-            <div ref={scrollRef} className="flex gap-4 overflow-x-auto pb-2">
+
+            <button
+              onClick={() => scroll("left", postScrollRef)}
+              className="hidden md:flex absolute left-0 top-1/2 -translate-y-1/2 z-10 h-10 w-10 items-center justify-center rounded-full bg-white dark:bg-gray-900 border shadow"
+            >
+              <ChevronLeft size={20} />
+            </button>
+
+            <button
+              onClick={() => scroll("right", postScrollRef)}
+              className="hidden md:flex absolute right-0 top-1/2 -translate-y-1/2 z-10 h-10 w-10 items-center justify-center rounded-full bg-white dark:bg-gray-900 border shadow"
+            >
+              <ChevronRight size={20} />
+            </button>
+
+            <div
+              ref={postScrollRef}
+              className="flex gap-4 overflow-x-auto pb-2 px-12 hide-scrollbar"
+            >
               {posts.map((post) => (
                 <div
                   key={post.id}
-                  className="min-w-[280px] border rounded-xl overflow-hidden relative"
+                  onClick={() => setSelectedItem(post)}
+                  className="min-w-[280px] border rounded-xl overflow-hidden cursor-pointer"
                 >
                   <Image
                     src={post.imageUrl || "/assets/default.jpg"}
@@ -1087,60 +1356,64 @@ export default function ProfileActivity({ username, userId, isOwnProfile }) {
                   <div className="p-3">
                     <h3>{post.title}</h3>
                   </div>
-
-                  {isOwnProfile && (
-                    <div className="absolute top-2 right-2 flex gap-2">
-                      <button
-                        onClick={() => {
-                          setEditData(post);
-                          setOpenCreate(true);
-                        }}
-                        className="p-1 bg-white rounded"
-                      >
-                        <Pencil size={14} />
-                      </button>
-
-                      <button
-                        onClick={() => handleDelete(post.id)}
-                        className="p-1 bg-white rounded"
-                      >
-                        <Trash2 size={14} />
-                      </button>
-                    </div>
-                  )}
                 </div>
               ))}
             </div>
           </div>
         )}
 
-        {/* PROJECTS */}
+        {/* ================= PROJECTS ================= */}
         {activeTab === "projects" && (
-          <div className="flex gap-4 overflow-x-auto">
-            {projects.map((p) => (
-              <div key={p.id} className="min-w-[280px] border rounded-xl">
-                <Image
-                  src={p.imageUrl || "/assets/default.jpg"}
-                  alt={p.title}
-                  width={400}
-                  height={200}
-                  className="h-40 w-full object-cover"
-                />
-                <div className="p-3">
-                  <h3>{p.title}</h3>
-                  <p className="text-sm text-gray-500">{p.techStack}</p>
+          <div className="relative">
+
+            <button
+              onClick={() => scroll("left", projectScrollRef)}
+              className="hidden md:flex absolute left-0 top-1/2 -translate-y-1/2 z-10 h-10 w-10 items-center justify-center rounded-full bg-white dark:bg-gray-900 border shadow"
+            >
+              <ChevronLeft size={20} />
+            </button>
+
+            <button
+              onClick={() => scroll("right", projectScrollRef)}
+              className="hidden md:flex absolute right-0 top-1/2 -translate-y-1/2 z-10 h-10 w-10 items-center justify-center rounded-full bg-white dark:bg-gray-900 border shadow"
+            >
+              <ChevronRight size={20} />
+            </button>
+
+            <div
+              ref={projectScrollRef}
+              className="flex gap-4 overflow-x-auto pb-2 px-12 hide-scrollbar"
+            >
+              {projects.map((p) => (
+                <div
+                  key={p.id}
+                  onClick={() => setSelectedItem(p)}
+                  className="min-w-[280px] border rounded-xl overflow-hidden cursor-pointer"
+                >
+                  <Image
+                    src={p.imageUrl || "/assets/default.jpg"}
+                    alt={p.title}
+                    width={400}
+                    height={200}
+                    className="h-40 w-full object-cover"
+                  />
+
+                  <div className="p-3">
+                    <h3>{p.title}</h3>
+                    <p className="text-sm text-gray-500">{p.techStack}</p>
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         )}
 
-        {/* SKILLS */}
+        {/* ================= SKILLS ================= */}
         {activeTab === "skills" && (
           <div className="flex flex-wrap gap-2">
             {skills.map((s) => (
               <span
-                key={s.id || s.title || s.techStack}
+                key={s.id}
                 className="px-3 py-1 border rounded-full"
               >
                 {s.title || s.techStack}
@@ -1149,14 +1422,20 @@ export default function ProfileActivity({ username, userId, isOwnProfile }) {
           </div>
         )}
 
-        {/* DETAIL MODAL */}
+        {/* ================= DETAIL MODAL ================= */}
         <ProfileDetail
           open={!!selectedItem}
           data={selectedItem}
           onClose={() => setSelectedItem(null)}
+          isOwnProfile={isOwnProfile}
+          onEdit={(item) => {
+            setEditData(item);
+            setOpenCreate(true);
+          }}
+          onDelete={handleDelete}
         />
 
-        {/* CREATE / EDIT MODAL */}
+        {/* ================= CREATE MODAL ================= */}
         <ProfileActivityCreate
           open={openCreate}
           onClose={() => {

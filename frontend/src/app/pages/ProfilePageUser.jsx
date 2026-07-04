@@ -613,6 +613,44 @@
 
 
 
+// "use client";
+
+// import { useState } from "react";
+// import ProfileLayout from "../pages/ProfileLayout";
+// import ProfileInfo from "../components/profile/ProfileInfo";
+// import ProfileActivity from "../components/profile/ProfileActivity";
+// import EnhanceProfile from "../components/profile/EnhanceProfile";
+
+// export default function ProfilePageUser() {
+//   const [showEnhance, setShowEnhance] = useState(false);
+//   const [profile, setProfile] = useState(null);
+
+//   return (
+//     <ProfileLayout>
+//       {/* PROFILE HEADER */}
+//       <ProfileInfo
+//         onOpenEnhance={() => setShowEnhance(true)}
+//         setProfile={setProfile}
+//       />
+
+//       {/* ACTIVITY SECTION (always render, no blocking) */}
+//       <div className="mt-6 md:mt-8">
+//         <ProfileActivity
+//           isOwnProfile={true}
+//           userId={profile?.id}
+//           username={profile?.username}
+//         />
+//       </div>
+
+//       {/* ENHANCE MODAL */}
+//       <EnhanceProfile
+//         open={showEnhance}
+//         onClose={() => setShowEnhance(false)}
+//       />
+//     </ProfileLayout>
+//   );
+// }
+
 "use client";
 
 import { useState } from "react";
@@ -625,6 +663,9 @@ export default function ProfilePageUser() {
   const [showEnhance, setShowEnhance] = useState(false);
   const [profile, setProfile] = useState(null);
 
+  // 👇 DEBUG
+  console.log("PROFILE FROM PARENT:", profile);
+
   return (
     <ProfileLayout>
       {/* PROFILE HEADER */}
@@ -633,13 +674,13 @@ export default function ProfilePageUser() {
         setProfile={setProfile}
       />
 
-      {/* ACTIVITY SECTION (always render, no blocking) */}
+      {/* ACTIVITY SECTION */}
       <div className="mt-6 md:mt-8">
-        <ProfileActivity
-          isOwnProfile={true}
-          userId={profile?.id}
-          username={profile?.username}
-        />
+         <ProfileActivity
+  isOwnProfile={true}
+  userId={profile?.userId}
+  username={profile?.username}
+/>
       </div>
 
       {/* ENHANCE MODAL */}
