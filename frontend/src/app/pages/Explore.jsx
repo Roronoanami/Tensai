@@ -189,7 +189,7 @@ export default function SearchPage() {
 
       {/* FILTER TABS */}
       <div className="flex gap-2 mb-3 px-1">
-        {["all", "post", "people", "project"].map((t) => (
+        {["people", "posts", "project"].map((t) => (
           <button
             key={t}
             onClick={() => setTab(t)}

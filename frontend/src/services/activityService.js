@@ -179,8 +179,27 @@ console.log("USER ID =", userId);
 };
 
 // ================= GET USER ACTIVITIES =================
+// export const getUserActivitiesByUsername = async (username) => {
+//   const token = localStorage.getItem("token");
+
+//   const res = await fetch(`${BASE_URL}/user/${username}`, {
+//     headers: {
+//       Authorization: `Bearer ${token}`,
+//     },
+//   });
+
+//   if (!res.ok) {
+//     throw new Error("Failed to fetch user activities");
+//   }
+
+//   return res.json();
+// };
+
+
 export const getUserActivitiesByUsername = async (username) => {
   const token = localStorage.getItem("token");
+
+  console.log("Fetching activities for:", username);
 
   const res = await fetch(`${BASE_URL}/user/${username}`, {
     headers: {
@@ -188,13 +207,18 @@ export const getUserActivitiesByUsername = async (username) => {
     },
   });
 
+  console.log("Status:", res.status);
+
   if (!res.ok) {
     throw new Error("Failed to fetch user activities");
   }
 
-  return res.json();
-};
+  const data = await res.json();
 
+  console.log("Returned activities:", data);
+
+  return data;
+};
 // ================= CREATE ACTIVITY =================
 export const createActivity = async (userId, formData) => {
   const token = localStorage.getItem("token");

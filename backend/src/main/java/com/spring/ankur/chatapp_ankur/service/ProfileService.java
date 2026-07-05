@@ -937,42 +937,46 @@ public class ProfileService {
     // =========================
     // MAPPER
     // =========================
-    private ProfileResponse mapToResponse(Profile profile) {
+  private ProfileResponse mapToResponse(Profile profile) {
 
-        ProfileResponse response = new ProfileResponse();
+    ProfileResponse response = new ProfileResponse();
 
-        response.setId(profile.getId());
-        response.setUserId(profile.getUserId());
+    User user = userRepository.findById(profile.getUserId())
+            .orElseThrow(() -> new RuntimeException("User not found"));
 
-        response.setProfileImage(profile.getProfileImage());
-        response.setCoverImage(profile.getCoverImage());
+    response.setId(profile.getId());
+    response.setUserId(profile.getUserId());
+    response.setUsername(user.getUsername());
 
-        response.setFirstName(profile.getFirstName());
-        response.setLastName(profile.getLastName());
+    response.setProfileImage(profile.getProfileImage());
+    response.setCoverImage(profile.getCoverImage());
 
-        response.setGender(profile.getGender());
-        response.setHeadline(profile.getHeadline());
-        response.setAbout(profile.getAbout());
+    response.setFirstName(profile.getFirstName());
+    response.setLastName(profile.getLastName());
 
-        response.setCollege(profile.getCollege());
-        response.setDegree(profile.getDegree());
-        response.setCurrentlyStudying(profile.isCurrentlyStudying());
+    response.setGender(profile.getGender());
+    response.setHeadline(profile.getHeadline());
+    response.setAbout(profile.getAbout());
 
-        response.setCompanyName(profile.getCompanyName());
-        response.setPosition(profile.getPosition());
-        response.setCurrentlyWorking(profile.isCurrentlyWorking());
+    response.setCollege(profile.getCollege());
+    response.setDegree(profile.getDegree());
+    response.setCurrentlyStudying(profile.isCurrentlyStudying());
 
-        response.setCountry(profile.getCountry());
-        response.setState(profile.getState());
-        response.setCity(profile.getCity());
+    response.setCompanyName(profile.getCompanyName());
+    response.setPosition(profile.getPosition());
+    response.setCurrentlyWorking(profile.isCurrentlyWorking());
 
-        response.setPhoneNumber(profile.getPhoneNumber());
-        response.setLinkedinUrl(profile.getLinkedinUrl());
-        response.setInstagramUrl(profile.getInstagramUrl());
+    response.setCountry(profile.getCountry());
+    response.setState(profile.getState());
+    response.setCity(profile.getCity());
 
-        response.setWebsiteUrl(profile.getWebsiteUrl());
-        response.setPortfolioUrl(profile.getPortfolioUrl());
+    response.setPhoneNumber(profile.getPhoneNumber());
+    response.setLinkedinUrl(profile.getLinkedinUrl());
+    response.setInstagramUrl(profile.getInstagramUrl());
 
-        return response;
-    }
+    response.setWebsiteUrl(profile.getWebsiteUrl());
+    response.setPortfolioUrl(profile.getPortfolioUrl());
+
+    return response;
+}
 }

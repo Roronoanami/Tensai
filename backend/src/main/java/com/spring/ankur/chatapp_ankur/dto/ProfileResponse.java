@@ -14,6 +14,7 @@ public class ProfileResponse {
     private String id;
 
     private String userId;
+    private String username;
 
     // Media and profile photo
     private String profileImage;
