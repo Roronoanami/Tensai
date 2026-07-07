@@ -7,7 +7,36 @@ import java.util.List;
 
 public interface ActivityRepository extends MongoRepository<Activity, String> {
 
-List<Activity> findByUserIdOrderByCreatedAtDesc(String userId);
+    /*
+     * Get all activities of a user
+     * Used in Profile Page
+     */
+    List<Activity> findByUserIdOrderByCreatedAtDesc(String userId);
 
-List<Activity> findByUsernameOrderByCreatedAtDesc(String username);
+    /*
+     * Get activities by username
+     * (Can be useful in some profile lookups)
+     */
+    List<Activity> findByUsernameOrderByCreatedAtDesc(String username);
+
+    /*
+     * Global Search
+     *
+     * Searches EVERY activity in MongoDB.
+     *
+     * It matches:
+     *  - title
+     *  - OR techStack
+     *
+     * Example:
+     * keyword = "spring"
+     *
+     * Matches:
+     *  Title = "Spring Boot Chat App"
+     *  TechStack = "React, Spring Boot, MongoDB"
+     */
+    List<Activity> findByTitleContainingIgnoreCaseOrTechStackContainingIgnoreCase(
+            String title,
+            String techStack
+    );
 }

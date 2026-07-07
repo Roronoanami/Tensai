@@ -405,13 +405,25 @@ public class SecurityConfig {
             .sessionManagement(session ->
                 session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             )
+            // .authorizeHttpRequests(auth -> auth
+            //     .requestMatchers("/api/auth/**").permitAll()
+            //     .requestMatchers("/api/profile/public/**").permitAll()
+            //     .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+            //     .requestMatchers("/api/profile/me").authenticated()
+            //     .anyRequest().authenticated()
+            // );
+
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/api/auth/**").permitAll()
-                .requestMatchers("/api/profile/public/**").permitAll()
-                .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-                .requestMatchers("/api/profile/me").authenticated()
-                .anyRequest().authenticated()
-            );
+    .requestMatchers("/api/auth/**").permitAll()
+    .requestMatchers("/api/profile/public/**").permitAll()
+
+    // 👇 Add this
+    .requestMatchers("/api/search/**").permitAll()
+
+    .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+    .requestMatchers("/api/profile/me").authenticated()
+    .anyRequest().authenticated()
+);
 
         http.addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
 
@@ -443,3 +455,4 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 }
+

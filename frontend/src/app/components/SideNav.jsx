@@ -627,12 +627,292 @@
 
 
 
+// "use client";
+// import NotificationPage from "../pages/NotificationPage";
+// import { useState, useRef, useEffect } from "react";
+// import Image from "next/image";
+// import Link from "next/link";
+// import Logo from "./Logo";
+// import {
+//   Home,
+//   Send,
+//   Search,
+//   BellDot,
+//   SquareChartGantt,
+//   BadgePlus,
+//   LogIn,
+//   Bookmark,
+// } from "lucide-react";
+
+// function NavLink({ icon, label, className = "" }) {
+//   return (
+//     <div
+//       title={label}
+//       className={`
+//         group flex items-center justify-center
+//         h-10 w-10 rounded-lg
+//         text-gray-900 dark:text-white
+//         hover:bg-gray-100 dark:hover:bg-gray-800
+//         transition-colors
+//         ${className}
+//       `}
+//     >
+//       {icon}
+//     </div>
+//   );
+// }
+
+// function SidebarLink({ icon, label }) {
+//   return (
+//     <div
+//       title={label}
+//       className="
+//         group flex items-center gap-3
+//         h-15 w-full
+//         rounded-lg px-2
+//         text-gray-900 dark:text-white
+//         hover:bg-gray-100 dark:hover:bg-gray-800
+//         transition-all duration-300
+//         overflow-hidden
+//       "
+//     >
+//       <span className="shrink-0 flex items-center justify-center w-5 h-5">
+//         {icon}
+//       </span>
+
+//       <span className="
+//         whitespace-nowrap text-sm font-medium
+//         opacity-0 w-0
+//         group-hover:opacity-100 group-hover:w-auto
+//         transition-all duration-300
+//       ">
+//         {label}
+//       </span>
+//     </div>
+//   );
+// }
+
+// export default function SideNav() {
+//   const [openCommunity, setOpenCommunity] = useState(false);
+//   const bottomBarIcons = [
+//     {
+//       icon: <Home size={20} className="group-hover:text-blue-500" />,
+//       label: "Home",
+//       href: "/main",
+//     },
+//     {
+//   icon: <SquareChartGantt size={20} className="group-hover:text-green-500" />,
+//   label: "Community",
+//   href: "/community",
+// },
+//     {
+//       icon: <Send size={20} className="group-hover:text-purple-500" />,
+//       label: "Messages",
+//       href: "/messages",
+//     },
+//     {
+//       icon: <Search size={20} className="group-hover:text-yellow-500" />,
+//       label: "Search",
+//       href: "/search",
+//     },
+  
+//     {
+//   icon: <BellDot size={20} className="group-hover:text-red-500" />,
+//   label: "Notifications",
+//   href: "/notifications",
+// }
+//   ];
+
+//   const sidebarItems = [
+//     ...bottomBarIcons,
+//     {
+//       icon: <Bookmark  size={20} className="group-hover:text-pink-500" />,
+//       label: "Save",
+//       href: "/saved",
+//     },
+//   ];
+
+//   return (
+//     <>
+//       {/* MOBILE TOP BAR */}
+//       <header className="
+//         md:hidden fixed top-0 left-0 right-0 z-50
+//         flex items-center h-14 px-3
+//         bg-white border-b border-gray-100
+//         dark:bg-gray-900 dark:border-gray-800
+//       ">
+//         <div className="flex-1 flex items-center justify-start">
+//           <NavLink icon={<BadgePlus size={20} className="group-hover:text-blue-500" />} label="New" />
+//         </div>
+
+//         <div className="flex items-center justify-center">
+//           <p className="text-red-600">Tensai</p>
+//         </div>
+
+//         <div className="flex-1 flex items-center justify-end">
+//           <Link
+//             href="/profile"
+//             className="flex items-center justify-center h-9 w-9 rounded-full overflow-hidden"
+//           >
+//             <Image
+//               src="/assets/ankur.jpg"
+//               alt="Profile"
+//               width={36}
+//               height={36}
+//               className="object-cover"
+//             />
+//           </Link>
+//         </div>
+//       </header>
+
+//       {/* MOBILE BOTTOM BAR */}
+//       <nav className="
+//         md:hidden
+//         fixed bottom-0 left-0 right-0
+//         z-[99999]
+//         flex items-center justify-around
+//         h-14 px-2
+//         bg-white border-t border-gray-200
+//         dark:bg-gray-900 dark:border-gray-800
+//       ">
+//            {bottomBarIcons.map(({ icon, label, href }) => (
+//   <div key={label} className="relative">
+    
+//     {label === "Community" ? (
+//       <button onClick={() => setOpenCommunity(!openCommunity)}>
+//         <NavLink icon={icon} label={label} />
+//       </button>
+//     ) : (
+//       <Link href={href}>
+//         <NavLink icon={icon} label={label} />
+//       </Link>
+//     )}
+
+//     {/* DROPDOWN */}
+//     {label === "Community" && openCommunity && (
+//       <div className="
+//         absolute bottom-14 left-1/2 -translate-x-1/2
+//         bg-white dark:bg-gray-900
+//         border border-gray-200 dark:border-gray-800
+//         rounded-lg shadow-lg
+//         w-28 text-sm
+//       ">
+//         <Link href="/community" className="block px-3 py-2 hover:bg-gray-100 dark:hover:bg-gray-800">
+//           Create
+//         </Link>
+//         <Link href="/community" className="block px-3 py-2 hover:bg-gray-100 dark:hover:bg-gray-800">
+//           Join
+//         </Link>
+//       </div>
+//     )}
+
+//   </div>
+// ))}
+//       </nav>
+
+//       {/* DESKTOP SIDEBAR */}
+//       <div className="
+//         hidden md:flex group h-screen w-16 hover:w-44
+//         flex-col border-e border-gray-100 bg-white
+//         transition-all duration-300
+//         dark:border-gray-800 dark:bg-gray-900
+//         overflow-hidden
+//       ">
+//         <Logo />
+
+//         <div className="flex flex-col flex-1">
+//           <ul className="flex flex-col gap-4 pt-5 px-3">
+//             {sidebarItems.map(({ icon, label, href }) => (
+//               <li key={label} className="relative">
+//   {label === "Community" ? (
+//     <>
+//       <button
+//         onClick={() => setOpenCommunity(!openCommunity)}
+//         className="w-full"
+//       >
+//         <SidebarLink icon={icon} label={label} />
+//       </button>
+
+//       {openCommunity && (
+//         <div className="
+//           absolute left-14 top-0
+//           bg-white dark:bg-gray-900
+//           border border-gray-200 dark:border-gray-800
+//           rounded-lg shadow-lg
+//           w-28 text-sm
+//           z-50
+//         ">
+//           <Link href="/community" className="block px-3 py-2 hover:bg-gray-100 dark:hover:bg-gray-800">
+//             Create
+//           </Link>
+//           <Link href="/community" className="block px-3 py-2 hover:bg-gray-100 dark:hover:bg-gray-800">
+//             Join
+//           </Link>
+//         </div>
+//       )}
+//     </>
+//   ) : (
+//     <Link href={href}>
+//       <SidebarLink icon={icon} label={label} />
+//     </Link>
+//   )}
+// </li>
+//             ))}
+//           </ul>
+
+//           {/* PROFILE */}
+//           <div className="mt-auto px-3 pb-3">
+//             <Link
+//               href="/profile"
+//               className="
+//                 flex items-center gap-3
+//                 h-10 w-full
+//                 rounded-lg px-2
+//                 text-gray-900 dark:text-white
+//                 hover:bg-gray-100 dark:hover:bg-gray-800
+//                 transition-all duration-300
+//                 overflow-hidden
+//               "
+//             >
+//               <span className="shrink-0 w-7 h-7 rounded-full overflow-hidden flex items-center justify-center">
+//                 <Image
+//                   src="/assets/ankur.jpg"
+//                   alt="Profile"
+//                   width={28}
+//                   height={28}
+//                   className="object-cover rounded-full"
+//                 />
+//               </span>
+
+//               <span className="
+//                 whitespace-nowrap text-sm font-medium
+//                 opacity-0 w-0
+//                 group-hover:opacity-100 group-hover:w-auto
+//                 transition-all duration-300
+//               ">
+//                 Profile
+//               </span>
+//             </Link>
+//           </div>
+//         </div>
+
+//         <div className="mt-auto border-t border-gray-100 p-3 dark:border-gray-800">
+//           <SidebarLink icon={<LogIn size={20} className="group-hover:text-red-500" />} label="Login" />
+//         </div>
+//       </div>
+//     </>
+//   );
+// } 
+
+
+
 "use client";
-import NotificationPage from "../pages/NotificationPage";
-import { useState, useRef, useEffect } from "react";
+
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import Logo from "./Logo";
+
 import {
   Home,
   Send,
@@ -643,6 +923,7 @@ import {
   LogIn,
   Bookmark,
 } from "lucide-react";
+
 
 function NavLink({ icon, label, className = "" }) {
   return (
@@ -662,6 +943,7 @@ function NavLink({ icon, label, className = "" }) {
   );
 }
 
+
 function SidebarLink({ icon, label }) {
   return (
     <div
@@ -680,226 +962,604 @@ function SidebarLink({ icon, label }) {
         {icon}
       </span>
 
-      <span className="
+      <span
+        className="
         whitespace-nowrap text-sm font-medium
         opacity-0 w-0
         group-hover:opacity-100 group-hover:w-auto
         transition-all duration-300
-      ">
+      "
+      >
         {label}
       </span>
     </div>
   );
 }
 
+
 export default function SideNav() {
+
+
   const [openCommunity, setOpenCommunity] = useState(false);
+
+
+  // ================= PROFILE IMAGE =================
+  const [profileImage, setProfileImage] = useState(
+    "/assets/ankur.jpg"
+  );
+
+
+  // ================= FETCH PROFILE =================
+  useEffect(() => {
+
+
+    const fetchProfileImage = async () => {
+
+
+      try {
+
+        const token = localStorage.getItem("token");
+
+
+        if (!token) {
+          return;
+        }
+
+
+        const response = await fetch(
+          "http://localhost:8081/api/profile/me",
+          {
+            headers:{
+              Authorization:`Bearer ${token}`
+            }
+          }
+        );
+
+
+        if(!response.ok){
+          console.log("Unable to load sidebar profile");
+          return;
+        }
+
+
+        const data = await response.json();
+
+
+        console.log(
+          "SIDEBAR PROFILE:",
+          data
+        );
+
+
+        if(data.profileImage){
+
+          setProfileImage(
+            data.profileImage
+          );
+
+        }
+
+
+      }
+      catch(error){
+
+        console.error(
+          "Sidebar profile error:",
+          error
+        );
+
+      }
+
+
+    };
+
+
+    fetchProfileImage();
+
+
+  }, []);
+
+
+
+
   const bottomBarIcons = [
+
     {
-      icon: <Home size={20} className="group-hover:text-blue-500" />,
-      label: "Home",
-      href: "/main",
+      icon:<Home size={20} className="group-hover:text-blue-500" />,
+      label:"Home",
+      href:"/main",
     },
+
+
     {
-  icon: <SquareChartGantt size={20} className="group-hover:text-green-500" />,
-  label: "Community",
-  href: "/community",
-},
-    {
-      icon: <Send size={20} className="group-hover:text-purple-500" />,
-      label: "Messages",
-      href: "/messages",
+      icon:<SquareChartGantt size={20} className="group-hover:text-green-500" />,
+      label:"Community",
+      href:"/community",
     },
+
+
     {
-      icon: <Search size={20} className="group-hover:text-yellow-500" />,
-      label: "Search",
-      href: "/search",
+      icon:<Send size={20} className="group-hover:text-purple-500" />,
+      label:"Messages",
+      href:"/messages",
     },
-  
+
+
     {
-  icon: <BellDot size={20} className="group-hover:text-red-500" />,
-  label: "Notifications",
-  href: "/notifications",
-}
+      icon:<Search size={20} className="group-hover:text-yellow-500" />,
+      label:"Search",
+      href:"/search",
+    },
+
+
+    {
+      icon:<BellDot size={20} className="group-hover:text-red-500" />,
+      label:"Notifications",
+      href:"/notifications",
+    }
+
   ];
 
+
+
   const sidebarItems = [
+
     ...bottomBarIcons,
+
     {
-      icon: <Bookmark  size={20} className="group-hover:text-pink-500" />,
-      label: "Save",
-      href: "/saved",
+      icon:<Bookmark size={20} className="group-hover:text-pink-500" />,
+      label:"Save",
+      href:"/saved",
     },
+
   ];
+
+
 
   return (
     <>
-      {/* MOBILE TOP BAR */}
-      <header className="
-        md:hidden fixed top-0 left-0 right-0 z-50
-        flex items-center h-14 px-3
-        bg-white border-b border-gray-100
-        dark:bg-gray-900 dark:border-gray-800
-      ">
-        <div className="flex-1 flex items-center justify-start">
-          <NavLink icon={<BadgePlus size={20} className="group-hover:text-blue-500" />} label="New" />
-        </div>
+    {/* MOBILE TOP BAR */}
 
-        <div className="flex items-center justify-center">
-          <p className="text-red-600">Tensai</p>
-        </div>
+<header className="
+md:hidden fixed top-0 left-0 right-0 z-50
+flex items-center h-14 px-3
+bg-white border-b border-gray-100
+dark:bg-gray-900 dark:border-gray-800
+">
 
-        <div className="flex-1 flex items-center justify-end">
-          <Link
-            href="/profile"
-            className="flex items-center justify-center h-9 w-9 rounded-full overflow-hidden"
-          >
-            <Image
-              src="/assets/ankur.jpg"
-              alt="Profile"
-              width={36}
-              height={36}
-              className="object-cover"
-            />
-          </Link>
-        </div>
-      </header>
+  <div className="flex-1 flex items-center justify-start">
 
-      {/* MOBILE BOTTOM BAR */}
-      <nav className="
-        md:hidden
-        fixed bottom-0 left-0 right-0
-        z-[99999]
-        flex items-center justify-around
-        h-14 px-2
-        bg-white border-t border-gray-200
-        dark:bg-gray-900 dark:border-gray-800
-      ">
-           {bottomBarIcons.map(({ icon, label, href }) => (
-  <div key={label} className="relative">
-    
-    {label === "Community" ? (
-      <button onClick={() => setOpenCommunity(!openCommunity)}>
-        <NavLink icon={icon} label={label} />
-      </button>
-    ) : (
-      <Link href={href}>
-        <NavLink icon={icon} label={label} />
-      </Link>
-    )}
-
-    {/* DROPDOWN */}
-    {label === "Community" && openCommunity && (
-      <div className="
-        absolute bottom-14 left-1/2 -translate-x-1/2
-        bg-white dark:bg-gray-900
-        border border-gray-200 dark:border-gray-800
-        rounded-lg shadow-lg
-        w-28 text-sm
-      ">
-        <Link href="/community" className="block px-3 py-2 hover:bg-gray-100 dark:hover:bg-gray-800">
-          Create
-        </Link>
-        <Link href="/community" className="block px-3 py-2 hover:bg-gray-100 dark:hover:bg-gray-800">
-          Join
-        </Link>
-      </div>
-    )}
+    <NavLink
+      icon={
+        <BadgePlus 
+          size={20}
+          className="group-hover:text-blue-500"
+        />
+      }
+      label="New"
+    />
 
   </div>
-))}
-      </nav>
 
-      {/* DESKTOP SIDEBAR */}
-      <div className="
-        hidden md:flex group h-screen w-16 hover:w-44
-        flex-col border-e border-gray-100 bg-white
-        transition-all duration-300
-        dark:border-gray-800 dark:bg-gray-900
-        overflow-hidden
-      ">
-        <Logo />
 
-        <div className="flex flex-col flex-1">
-          <ul className="flex flex-col gap-4 pt-5 px-3">
-            {sidebarItems.map(({ icon, label, href }) => (
-              <li key={label} className="relative">
-  {label === "Community" ? (
-    <>
-      <button
-        onClick={() => setOpenCommunity(!openCommunity)}
-        className="w-full"
-      >
-        <SidebarLink icon={icon} label={label} />
-      </button>
+  <div className="flex items-center justify-center">
 
-      {openCommunity && (
-        <div className="
-          absolute left-14 top-0
-          bg-white dark:bg-gray-900
-          border border-gray-200 dark:border-gray-800
-          rounded-lg shadow-lg
-          w-28 text-sm
-          z-50
-        ">
-          <Link href="/community" className="block px-3 py-2 hover:bg-gray-100 dark:hover:bg-gray-800">
-            Create
-          </Link>
-          <Link href="/community" className="block px-3 py-2 hover:bg-gray-100 dark:hover:bg-gray-800">
-            Join
-          </Link>
-        </div>
-      )}
-    </>
-  ) : (
-    <Link href={href}>
-      <SidebarLink icon={icon} label={label} />
-    </Link>
-  )}
+    <p className="text-red-600">
+      Tensai
+    </p>
+
+  </div>
+
+
+
+  <div className="flex-1 flex items-center justify-end">
+
+
+<Link
+  href="/profile"
+  className="
+  flex items-center justify-center
+  h-9 w-9 rounded-full overflow-hidden
+  "
+>
+  <Image
+    src={profileImage}
+    alt="Profile"
+    width={36}
+    height={36}
+    className="h-full w-full object-cover rounded-full"
+  />
+</Link>
+
+    
+
+
+  </div>
+
+
+</header>
+
+
+
+
+
+{/* MOBILE BOTTOM BAR */}
+
+<nav className="
+md:hidden
+fixed bottom-0 left-0 right-0
+z-[99999]
+flex items-center justify-around
+h-14 px-2
+bg-white border-t border-gray-200
+dark:bg-gray-900 dark:border-gray-800
+">
+
+
+{
+bottomBarIcons.map(({icon,label,href})=>(
+
+
+<div key={label} className="relative">
+
+
+{
+label==="Community" ? (
+
+<button
+onClick={()=>
+setOpenCommunity(!openCommunity)
+}
+>
+
+<NavLink
+icon={icon}
+label={label}
+/>
+
+</button>
+
+
+):(
+
+
+<Link href={href}>
+
+<NavLink
+icon={icon}
+label={label}
+/>
+
+</Link>
+
+
+)
+}
+
+
+
+
+{
+label==="Community" &&
+openCommunity && (
+
+<div
+className="
+absolute bottom-14 left-1/2 -translate-x-1/2
+bg-white dark:bg-gray-900
+border border-gray-200 dark:border-gray-800
+rounded-lg shadow-lg
+w-28 text-sm
+"
+>
+
+
+<Link
+href="/community"
+className="
+block px-3 py-2
+hover:bg-gray-100
+dark:hover:bg-gray-800
+"
+>
+
+Create
+
+</Link>
+
+
+
+<Link
+href="/community"
+className="
+block px-3 py-2
+hover:bg-gray-100
+dark:hover:bg-gray-800
+"
+>
+
+Join
+
+</Link>
+
+
+</div>
+
+)
+
+}
+
+
+</div>
+
+
+))
+}
+
+
+</nav>
+
+
+
+
+
+
+
+{/* DESKTOP SIDEBAR */}
+
+<div
+className="
+hidden md:flex group h-screen w-16 hover:w-44
+flex-col border-e border-gray-100 bg-white
+transition-all duration-300
+dark:border-gray-800 dark:bg-gray-900
+overflow-hidden
+"
+>
+
+
+<Logo />
+
+
+
+<div className="flex flex-col flex-1">
+
+
+<ul className="flex flex-col gap-4 pt-5 px-3">
+
+
+{
+sidebarItems.map(({icon,label,href})=>(
+
+
+<li
+key={label}
+className="relative"
+>
+
+
+{
+label==="Community" ? (
+
+
+<>
+
+<button
+onClick={()=>
+setOpenCommunity(!openCommunity)
+}
+
+className="w-full"
+>
+
+
+<SidebarLink
+icon={icon}
+label={label}
+/>
+
+
+</button>
+
+
+
+{
+openCommunity && (
+
+<div
+className="
+absolute left-14 top-0
+bg-white dark:bg-gray-900
+border border-gray-200 dark:border-gray-800
+rounded-lg shadow-lg
+w-28 text-sm
+z-50
+"
+>
+
+
+<Link
+href="/community"
+className="
+block px-3 py-2
+hover:bg-gray-100
+dark:hover:bg-gray-800
+"
+>
+
+Create
+
+</Link>
+
+
+<Link
+href="/community"
+className="
+block px-3 py-2
+hover:bg-gray-100
+dark:hover:bg-gray-800
+"
+>
+
+Join
+
+</Link>
+
+
+</div>
+
+)
+
+}
+
+
+</>
+
+
+):(
+
+
+<Link href={href}>
+
+<SidebarLink
+icon={icon}
+label={label}
+/>
+
+</Link>
+
+
+)
+
+}
+
+
 </li>
-            ))}
-          </ul>
 
-          {/* PROFILE */}
-          <div className="mt-auto px-3 pb-3">
-            <Link
-              href="/profile"
-              className="
-                flex items-center gap-3
-                h-10 w-full
-                rounded-lg px-2
-                text-gray-900 dark:text-white
-                hover:bg-gray-100 dark:hover:bg-gray-800
-                transition-all duration-300
-                overflow-hidden
-              "
-            >
-              <span className="shrink-0 w-7 h-7 rounded-full overflow-hidden flex items-center justify-center">
-                <Image
-                  src="/assets/ankur.jpg"
-                  alt="Profile"
-                  width={28}
-                  height={28}
-                  className="object-cover rounded-full"
-                />
-              </span>
 
-              <span className="
-                whitespace-nowrap text-sm font-medium
-                opacity-0 w-0
-                group-hover:opacity-100 group-hover:w-auto
-                transition-all duration-300
-              ">
-                Profile
-              </span>
-            </Link>
-          </div>
-        </div>
+))
 
-        <div className="mt-auto border-t border-gray-100 p-3 dark:border-gray-800">
-          <SidebarLink icon={<LogIn size={20} className="group-hover:text-red-500" />} label="Login" />
-        </div>
-      </div>
-    </>
-  );
-} 
+}
+
+
+</ul>
+
+
+
+
+
+
+{/* PROFILE */}
+
+<div className="mt-auto px-3 pb-3">
+
+
+<Link
+
+href="/profile"
+
+className="
+flex items-center gap-3
+h-10 w-full
+rounded-lg px-2
+text-gray-900 dark:text-white
+hover:bg-gray-100 dark:hover:bg-gray-800
+transition-all duration-300
+overflow-hidden
+"
+
+>
+
+
+<span
+className="
+shrink-0 w-7 h-7
+rounded-full overflow-hidden
+flex items-center justify-center
+"
+>
+
+
+<Image
+  src={profileImage}
+  alt="Profile"
+  width={28}
+  height={28}
+  className="
+  h-full w-full
+  object-cover
+  rounded-full
+  "
+/>
+
+
+</span>
+
+
+
+
+<span
+className="
+whitespace-nowrap text-sm font-medium
+opacity-0 w-0
+group-hover:opacity-100
+group-hover:w-auto
+transition-all duration-300
+"
+>
+
+Profile
+
+</span>
+
+
+
+</Link>
+
+
+</div>
+
+
+
+</div>
+
+
+
+
+
+
+<div
+className="
+mt-auto border-t border-gray-100 p-3
+dark:border-gray-800
+"
+>
+
+
+<SidebarLink
+
+icon={
+<LogIn
+size={20}
+className="group-hover:text-red-500"
+/>
+}
+
+label="Login"
+
+/>
+
+
+</div>
+
+
+
+</div>
+
+
+
+</>
+
+);
+
+}
