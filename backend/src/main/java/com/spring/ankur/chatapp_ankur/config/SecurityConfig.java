@@ -405,24 +405,74 @@ public class SecurityConfig {
             .sessionManagement(session ->
                 session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             )
-            // .authorizeHttpRequests(auth -> auth
-            //     .requestMatchers("/api/auth/**").permitAll()
-            //     .requestMatchers("/api/profile/public/**").permitAll()
-            //     .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-            //     .requestMatchers("/api/profile/me").authenticated()
-            //     .anyRequest().authenticated()
-            // );
+  
 
-            .authorizeHttpRequests(auth -> auth
-    .requestMatchers("/api/auth/**").permitAll()
-    .requestMatchers("/api/profile/public/**").permitAll()
+//            .authorizeHttpRequests(auth -> auth
 
-    // 👇 Add this
-    .requestMatchers("/api/search/**").permitAll()
+//         .requestMatchers(HttpMethod.OPTIONS, "/**")
+//         .permitAll()
 
-    .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-    .requestMatchers("/api/profile/me").authenticated()
-    .anyRequest().authenticated()
+//         .requestMatchers("/api/auth/**")
+//         .permitAll()
+
+//         .requestMatchers("/api/profile/public/**")
+//         .permitAll()
+
+//         .requestMatchers("/api/search/**")
+//         .permitAll()
+
+//         .requestMatchers("/api/profile/me")
+//         .authenticated()
+
+//         .anyRequest()
+//         .authenticated()
+// );
+
+
+// new 
+
+
+.authorizeHttpRequests(auth -> auth
+
+    // OPTIONS
+    .requestMatchers(HttpMethod.OPTIONS, "/**")
+    .permitAll()
+
+    // AUTH
+    .requestMatchers("/api/auth/**")
+    .permitAll()
+
+    // PROFILE
+    .requestMatchers("/api/profile/public/**")
+    .permitAll()
+
+    .requestMatchers("/api/profile/me")
+    .authenticated()
+
+    // SEARCH
+    .requestMatchers("/api/search/**")
+    .permitAll()
+
+    // FOLLOW (PUBLIC)
+    .requestMatchers(HttpMethod.GET, "/api/follow/followers/**")
+    .permitAll()
+
+    .requestMatchers(HttpMethod.GET, "/api/follow/following/**")
+    .permitAll()
+
+    // FOLLOW (LOGIN REQUIRED)
+    .requestMatchers(HttpMethod.GET, "/api/follow/status/**")
+    .authenticated()
+
+    .requestMatchers(HttpMethod.POST, "/api/follow/**")
+    .authenticated()
+
+    .requestMatchers(HttpMethod.DELETE, "/api/follow/**")
+    .authenticated()
+
+    // EVERYTHING ELSE
+    .anyRequest()
+    .authenticated()
 );
 
         http.addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
