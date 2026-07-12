@@ -71,7 +71,7 @@ Currently, I'm focused on building **Mingo**, a professional networking and real
 
 # 📈 What I'm Working On
 
-## 🚀 Mingo
+## 🚀 Tensai
 
 A modern professional networking and communication platform inspired by LinkedIn, Discord, and modern social platforms.
 
