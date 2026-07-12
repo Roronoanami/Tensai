@@ -2,7 +2,7 @@ package com.spring.ankur.chatapp_ankur.repositories;
 
 import com.spring.ankur.chatapp_ankur.entities.Notification;
 import org.springframework.data.mongodb.repository.MongoRepository;
-
+import java.util.Optional;
 import java.util.List;
 
 public interface NotificationRepository extends MongoRepository<Notification, String> {
@@ -14,7 +14,7 @@ public interface NotificationRepository extends MongoRepository<Notification, St
     List<Notification> findByReceiverUserIdAndReadFalseOrderByCreatedAtDesc(
             String receiverUserId
     );
-
+      Optional<Notification> findByReferenceId(String referenceId);
     // Unread notification count
     long countByReceiverUserIdAndReadFalse(String receiverUserId);
 

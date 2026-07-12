@@ -163,7 +163,7 @@
 
 
 package com.spring.ankur.chatapp_ankur.controller;
-
+import com.spring.ankur.chatapp_ankur.dto.ConnectionCountResponse;
 import com.spring.ankur.chatapp_ankur.dto.ConnectionStatusResponse;
 import com.spring.ankur.chatapp_ankur.entities.Connection;
 import com.spring.ankur.chatapp_ankur.service.ConnectionService;
@@ -317,5 +317,18 @@ public class ConnectionController {
         );
 
     }
+
+    // =====================================
+// CONNECTION COUNT
+// =====================================
+@GetMapping("/count/{username}")
+public ResponseEntity<ConnectionCountResponse> getConnectionCount(
+        @PathVariable String username
+) {
+
+    return ResponseEntity.ok(
+            connectionService.getConnectionCount(username)
+    );
+}
 
 }

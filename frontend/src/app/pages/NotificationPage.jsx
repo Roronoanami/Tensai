@@ -321,43 +321,65 @@ export default function NotificationPage() {
                 {n.message}
 
               </p>
-              {
- n.type === "CONNECTION_REQUEST" && (
-<button
-className="mt-2 bg-blue-600 text-white px-3 py-1 rounded-full"
-onClick={async()=>{
-
-const token = localStorage.getItem("token");
-
-
-const response = await fetch(
-`http://localhost:8081/api/connection/accept/${n.referenceId}`,
 {
-method:"PUT",
-headers:{
-Authorization:`Bearer ${token}`
-}
-}
-);
+  n.type === "CONNECTION_REQUEST" && (
 
+    n.connectionAccepted ? (
 
-if(response.ok){
+      <span className="mt-2 inline-block rounded-full bg-green-100 text-green-700 px-3 py-1 text-xs font-semibold">
+        ✓ Connected
+      </span>
 
-  // remove accepted notification from UI
-  setNotifications((prev)=>
-    prev.filter(
-      (item)=>item.id !== n.id
+    ) : (
+
+      <button
+        className="mt-2 bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded-full text-sm"
+        onClick={async () => {
+
+          const token = localStorage.getItem("token");
+
+          try {
+
+            const response = await fetch(
+              `http://localhost:8081/api/connection/accept/${n.referenceId}`,
+              {
+                method: "PUT",
+                headers: {
+                  Authorization: `Bearer ${token}`
+                }
+              }
+            );
+
+            if (response.ok) {
+
+              setNotifications(prev =>
+                prev.map(item =>
+                  item.id === n.id
+                    ? {
+                        ...item,
+                        connectionAccepted: true,
+                        message: "You are now connected."
+                      }
+                    : item
+                )
+              );
+
+            }
+
+          } catch (error) {
+
+            console.error(error);
+
+          }
+
+        }}
+      >
+        Accept
+      </button>
+
     )
-  );
 
-}
-
-
-}}
->
-Accept
-</button>
- )
+  )
 }
 
 
