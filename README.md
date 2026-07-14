@@ -1,115 +1,88 @@
 # 👋 Hi, I'm Ankur Sama
 
-## Full-Stack Developer | Java • Spring Boot • React • Next.js
+## 🚀 Full-Stack Developer | Java • Spring Boot • React • Next.js
 
-I'm a passionate Full-Stack Developer who enjoys building scalable, secure, and modern web applications. I love designing backend architectures, developing REST APIs, and creating responsive frontend experiences that solve real-world problems.
+I'm a Full-Stack Developer passionate about building scalable, secure, and modern web applications.
 
-Currently, I'm focused on building **Mingo**, a professional networking and real-time communication platform while continuously improving my software engineering skills.
+I enjoy designing backend architectures, creating REST APIs, building real-time systems, and developing clean user experiences.
+
+Currently building **Tensai** — a professional networking and real-time communication platform.
 
 ---
 
 ## 🌍 About Me
 
-* 🇮🇳 Based in India
-* 💻 Currently building **Mingo**
-* 🌱 Learning **System Design, Spring Security, Docker, Cloud Technologies, and Microservices**
-* 🤝 Open to collaborating on **Java, Spring Boot, React, Next.js, and Full-Stack projects**
-* ⚡ I enjoy transforming complex ideas into clean, scalable software.
+- 🇮🇳 Based in India
+- 💻 Building **Tensai**
+- 🌱 Learning **System Design, Docker, Cloud, Microservices**
+- 🤝 Open to collaborating on **Java, Spring Boot, React, Next.js projects**
+- ⚡ Passionate about turning ideas into scalable software
 
 ---
 
-# 🚀 Tech Stack
+# 🛠️ Tech Stack
+
 
 ### Languages
 
-* Java
-* JavaScript
-* SQL
-* HTML5
-* CSS3
+<img src="https://skillicons.dev/icons?i=java,js,html,css,sql" />
+
 
 ### Frontend
 
-* React
-* Next.js
-* Tailwind CSS
-* Redux
+<img src="https://skillicons.dev/icons?i=react,nextjs,tailwind,redux" />
+
 
 ### Backend
 
-* Spring Boot
-* Spring Security
-* Hibernate
-* JPA
-* REST APIs
-* JWT Authentication
-* WebSockets (STOMP)
+<img src="https://skillicons.dev/icons?i=spring,hibernate" />
 
-### Databases
+- Spring Boot
+- Spring Security
+- REST APIs
+- JWT Authentication
+- WebSockets (STOMP)
 
-* MySQL
-* MongoDB
 
-### Tools
+### Database
 
-* Git
-* GitHub
-* Postman
-* Maven
-* IntelliJ IDEA
-* VS Code
+<img src="https://skillicons.dev/icons?i=mysql,mongodb" />
+
+
+### Tools & Platforms
+
+<img src="https://skillicons.dev/icons?i=git,github,vscode,idea,docker,postman" />
+
 
 ### Currently Exploring
 
-* Docker
-* AWS
-* CI/CD
-* Microservices
-* System Design
+<img src="https://skillicons.dev/icons?i=aws,kubernetes" />
+
+- Microservices
+- CI/CD
+- System Design
+- Cloud Architecture
 
 ---
 
-# 📈 What I'm Working On
+# 🚀 Featured Project
 
-## 🚀 Tensai
+## 🔥 Tensai
 
-A modern professional networking and communication platform inspired by LinkedIn, Discord, and modern social platforms.
+A professional networking and communication platform inspired by LinkedIn, Discord, and modern social platforms.
 
-### Features
+### ✨ Features
 
-* Secure JWT Authentication
-* User Profiles
-* Follow & Connection System
-* Real-Time Chat (WebSockets)
-* Communities
-* Activity Feed (Posts & Projects)
-* Notifications
-* Search Users & Activities
-* Responsive UI
-* Modern Dashboard
+- 🔐 JWT Authentication
+- 👤 User Profiles
+- 🤝 Follow & Connection System
+- 💬 Real-Time Chat
+- 🌐 Communities
+- 📝 Activity Feed
+- 🔔 Notifications
+- 🔍 Search System
+- 📱 Responsive UI
 
-### Tech Stack
+### ⚙️ Architecture
 
-* **Frontend:** Next.js, React, Tailwind CSS
-* **Backend:** Spring Boot, Spring Security
-* **Database:** MySQL & MongoDB
-* **Authentication:** JWT
-* **Real-Time Communication:** WebSockets (STOMP)
-
----
-
-# 📊 GitHub Goals
-
-* Build production-ready Full-Stack applications
-* Write clean and maintainable code
-* Learn scalable software architecture
-* Contribute to open-source projects
-* Continuously improve as a Software Engineer
-
----
-
-# 📫 Connect With Me
-
-I'm always happy to connect with developers, collaborate on interesting projects, and discuss software engineering.
-
-⭐ If you like my projects, consider giving them a star!
+**Frontend**
