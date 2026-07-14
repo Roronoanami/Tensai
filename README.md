@@ -14,18 +14,17 @@ Currently building **Tensai** — a professional networking and real-time commun
 
 - 🇮🇳 Based in India
 - 💻 Building **Tensai**
-- 🌱 Learning **System Design, Docker, Cloud, Microservices**
-- 🤝 Open to collaborating on **Java, Spring Boot, React, Next.js projects**
+- 🌱 Learning **System Design, Docker, Cloud, and Microservices**
+- 🤝 Open to collaborating on **Java, Spring Boot, React, and Next.js projects**
 - ⚡ Passionate about turning ideas into scalable software
 
 ---
 
 # 🛠️ Tech Stack
 
-
 ### Languages
 
-<img src="https://skillicons.dev/icons?i=java,js,html,css,sql" />
+<img src="https://skillicons.dev/icons?i=java,js,html,css" />
 
 
 ### Frontend
@@ -35,10 +34,11 @@ Currently building **Tensai** — a professional networking and real-time commun
 
 ### Backend
 
-<img src="https://skillicons.dev/icons?i=spring,hibernate" />
+<img src="https://skillicons.dev/icons?i=spring" />
 
 - Spring Boot
 - Spring Security
+- Hibernate / JPA
 - REST APIs
 - JWT Authentication
 - WebSockets (STOMP)
@@ -49,14 +49,14 @@ Currently building **Tensai** — a professional networking and real-time commun
 <img src="https://skillicons.dev/icons?i=mysql,mongodb" />
 
 
-### Tools & Platforms
+### Tools
 
 <img src="https://skillicons.dev/icons?i=git,github,vscode,idea,docker,postman" />
 
 
 ### Currently Exploring
 
-<img src="https://skillicons.dev/icons?i=aws,kubernetes" />
+<img src="https://skillicons.dev/icons?i=aws" />
 
 - Microservices
 - CI/CD
@@ -69,7 +69,7 @@ Currently building **Tensai** — a professional networking and real-time commun
 
 ## 🔥 Tensai
 
-A professional networking and communication platform inspired by LinkedIn, Discord, and modern social platforms.
+A professional networking and real-time communication platform inspired by LinkedIn, Discord, and modern social platforms.
 
 ### ✨ Features
 
