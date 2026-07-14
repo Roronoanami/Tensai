@@ -29,7 +29,7 @@ Currently building **Tensai** — a professional networking and real-time commun
 
 ### Frontend
 
-<img src="https://skillicons.dev/icons?i=react,nextjs,tailwind,redux" />
+<img src="https://skillicons.dev/icons?i=react,nextjs,tailwind," />
 
 
 ### Backend
@@ -46,17 +46,17 @@ Currently building **Tensai** — a professional networking and real-time commun
 
 ### Database
 
-<img src="https://skillicons.dev/icons?i=mysql,mongodb" />
+<img src="https://skillicons.dev/icons?i=mongodb" />
 
 
 ### Tools
 
-<img src="https://skillicons.dev/icons?i=git,github,vscode,idea,docker,postman" />
+<img src="https://skillicons.dev/icons?i=git,github,vscode,postman" />
 
 
 ### Currently Exploring
 
-<img src="https://skillicons.dev/icons?i=aws" />
+<img src="https://skillicons.dev/icons?i=aws,docker" />
 
 - Microservices
 - CI/CD
