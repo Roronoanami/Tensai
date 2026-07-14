@@ -175,10 +175,742 @@
 
 
 
+// "use client";
+
+// import { useState } from "react";
+// import Image from "next/image";
+// import {
+//   X,
+//   Heart,
+//   MessageCircle,
+//   Share2,
+//   Bookmark,
+//   Smile,
+//   Calendar,
+//   Code,
+//   ExternalLink,
+//   Pencil,
+//   Trash2,
+// } from "lucide-react";
+
+// export default function ProfileDetail({
+//   open,
+//   onClose,
+//   data,
+//   isOwnProfile = false,
+//   onEdit,
+//   onDelete,
+// }) {
+//   const [showComments, setShowComments] = useState(false);
+//   const [expanded, setExpanded] = useState(false);
+
+//   if (!open || !data) return null;
+
+//   const isProject = data.type === "project";
+//   const image = data.imageUrl || "/assets/default.jpg";
+
+//   return (
+//     <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
+
+//       <div className="relative w-full max-w-3xl max-h-[95vh] overflow-y-auto rounded-2xl bg-white dark:bg-black border border-gray-200 dark:border-gray-800">
+
+//         {/* CLOSE */}
+//         <button
+//           onClick={onClose}
+//           className="absolute right-4 top-4 z-20 rounded-full p-2 hover:bg-gray-100 dark:hover:bg-gray-800"
+//         >
+//           <X size={20} />
+//         </button>
+
+//         {/* IMAGE */}
+//         <div className="relative h-72 w-full bg-gray-200 dark:bg-gray-900">
+//           <Image src={image} alt={data.title} fill className="object-cover" />
+//         </div>
+
+//         <div className="p-6">
+
+//           {/* TYPE */}
+//           <span className="px-3 py-1 text-xs rounded-full bg-blue-100 dark:bg-blue-900 text-blue-600 dark:text-blue-300">
+//             {isProject ? "PROJECT" : "POST"}
+//           </span>
+
+//           {/* TITLE */}
+//           <h2 className="mt-4 text-3xl font-bold">
+//             {data.title}
+//           </h2>
+
+//           {/* DESCRIPTION */}
+//           {data.description && (
+//             <>
+//               <p
+//                 className={`mt-4 text-gray-600 dark:text-gray-300 whitespace-pre-line ${
+//                   expanded ? "" : "line-clamp-4"
+//                 }`}
+//               >
+//                 {data.description}
+//               </p>
+
+//               {data.description.length > 150 && (
+//                 <button
+//                   onClick={() => setExpanded(!expanded)}
+//                   className="mt-2 text-sm text-blue-600 hover:underline"
+//                 >
+//                   {expanded ? "Show less" : "Read more"}
+//                 </button>
+//               )}
+//             </>
+//           )}
+
+//           {/* PROJECT EXTRA INFO */}
+//           {isProject && (
+//             <div className="mt-6 space-y-3">
+
+//               {data.techStack && (
+//                 <div className="flex items-center gap-2">
+//                   <Code size={18} />
+//                   <span>{data.techStack}</span>
+//                 </div>
+//               )}
+
+//               {data.projectUrl && (
+//                 <a
+//                   href={data.projectUrl}
+//                   target="_blank"
+//                   className="flex items-center gap-2 text-blue-600 hover:underline"
+//                 >
+//                   <ExternalLink size={18} />
+//                   Live Project
+//                 </a>
+//               )}
+
+//               {data.githubUrl && (
+//                 <a
+//                   href={data.githubUrl}
+//                   target="_blank"
+//                   className="flex items-center gap-2 text-blue-600 hover:underline"
+//                 >
+//                   <ExternalLink size={18} />
+//                   GitHub
+//                 </a>
+//               )}
+//             </div>
+//           )}
+
+//           {/* DATE */}
+//           {data.createdAt && (
+//             <div className="mt-5 flex items-center gap-2 text-sm text-gray-500">
+//               <Calendar size={16} />
+//               {new Date(data.createdAt).toLocaleString()}
+//             </div>
+//           )}
+
+//           {/* OWNER ACTIONS */}
+//           {isOwnProfile && (
+//             <div className="mt-6 flex gap-3">
+
+//               <button
+//                 onClick={() => onEdit?.(data)}
+//                 className="flex items-center gap-2 px-4 py-2 border rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800"
+//               >
+//                 <Pencil size={16} />
+//                 Edit
+//               </button>
+
+//               <button
+//                 onClick={() => onDelete?.(data.id)}
+//                 className="flex items-center gap-2 px-4 py-2 border border-red-400 text-red-500 rounded-lg hover:bg-red-50 dark:hover:bg-red-900/20"
+//               >
+//                 <Trash2 size={16} />
+//                 Delete
+//               </button>
+
+//             </div>
+//           )}
+
+//           {/* ACTION BAR */}
+//           <div className="mt-8 border-t pt-5 flex items-center justify-between">
+
+//             <div className="flex gap-6">
+
+//               <button className="flex items-center gap-2 hover:text-red-500">
+//                 <Heart size={20} />
+//                 Like
+//               </button>
+
+//               <button
+//                 onClick={() => setShowComments(!showComments)}
+//                 className="flex items-center gap-2 hover:text-blue-500"
+//               >
+//                 <MessageCircle size={20} />
+//                 Comment
+//               </button>
+
+//               <button className="flex items-center gap-2 hover:text-green-500">
+//                 <Share2 size={20} />
+//                 Share
+//               </button>
+
+//             </div>
+
+//             <button className="hover:text-yellow-500">
+//               <Bookmark size={20} />
+//             </button>
+
+//           </div>
+
+//           {/* COMMENTS */}
+//           {showComments && (
+//             <div className="mt-5 border-t pt-5">
+
+//               <div className="flex gap-2">
+//                 <input
+//                   placeholder="Write a comment..."
+//                   className="flex-1 px-4 py-2 rounded-full border bg-transparent text-sm"
+//                 />
+//                 <button className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800">
+//                   <Smile size={18} />
+//                 </button>
+//               </div>
+
+//               <div className="mt-4 text-sm text-gray-500 text-center">
+//                 No comments yet
+//               </div>
+
+//             </div>
+//           )}
+
+//         </div>
+//       </div>
+//     </div>
+//   );
+// }
+
+// "use client";
+
+// import { useState, useEffect } from "react";
+// import Image from "next/image";
+
+// import {
+//   likeActivity,
+//   unlikeActivity,
+//   getLikeStatus,
+// } from "@/services/activityService";
+
+// import {
+//   X,
+//   Heart,
+//   MessageCircle,
+//   Share2,
+//   Bookmark,
+//   Smile,
+//   Calendar,
+//   Code,
+//   ExternalLink,
+//   Pencil,
+//   Trash2,
+// } from "lucide-react";
+
+
+// export default function ProfileDetail({
+//   open,
+//   onClose,
+//   data,
+//   isOwnProfile = false,
+//   onEdit,
+//   onDelete,
+// }) {
+
+//   const [showComments, setShowComments] = useState(false);
+//   const [expanded, setExpanded] = useState(false);
+
+//   const [liked, setLiked] = useState(false);
+//   const [likeCount, setLikeCount] = useState(0);
+
+
+
+//   // ================= LOAD LIKE STATUS =================
+
+//   useEffect(() => {
+
+//     if (!open || !data?.id) return;
+
+
+//     setLikeCount(data.likeCount || 0);
+//     setLiked(false);
+
+
+//     const fetchLikeStatus = async () => {
+
+//       try {
+
+//         const response = await getLikeStatus(data.id);
+
+//         setLiked(response.liked);
+
+
+//       } catch (error) {
+
+//         console.error("LIKE STATUS ERROR:", error);
+
+//       }
+
+//     };
+
+
+//     fetchLikeStatus();
+
+
+//   }, [open, data]);
+
+
+
+
+
+//   // ================= LIKE BUTTON =================
+
+//   const handleLike = async () => {
+
+//     try {
+
+
+//       let response;
+
+
+//       if (liked) {
+
+//         response = await unlikeActivity(data.id);
+
+//       } else {
+
+//         response = await likeActivity(data.id);
+
+//       }
+
+
+
+//       console.log("LIKE RESPONSE:", response);
+
+
+
+//       setLiked(response.liked);
+
+//       setLikeCount(response.count);
+
+
+
+//     } catch (error) {
+
+
+//       console.error("LIKE ERROR:", error);
+
+
+//     }
+
+//   };
+
+
+
+
+
+//   if (!open || !data) return null;
+
+
+//   const isProject = data.type === "project";
+
+//   const image = data.imageUrl || "/assets/default.jpg";
+
+
+
+
+
+//   return (
+//     <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
+
+
+//       <div className="relative w-full max-w-3xl max-h-[95vh] overflow-y-auto rounded-2xl bg-white dark:bg-black border border-gray-200 dark:border-gray-800">
+
+
+
+//         {/* CLOSE */}
+
+//         <button
+//           onClick={onClose}
+//           className="absolute right-4 top-4 z-20 rounded-full p-2 hover:bg-gray-100 dark:hover:bg-gray-800"
+//         >
+
+//           <X size={20}/>
+
+//         </button>
+
+
+
+
+
+//         {/* IMAGE */}
+
+//         <div className="relative h-72 w-full bg-gray-200 dark:bg-gray-900">
+
+//           <Image
+//             src={image}
+//             alt={data.title}
+//             fill
+//             className="object-cover"
+//           />
+
+//         </div>
+
+
+
+
+
+//         <div className="p-6">
+
+
+
+//           {/* TYPE */}
+
+//           <span className="px-3 py-1 text-xs rounded-full bg-blue-100 dark:bg-blue-900 text-blue-600 dark:text-blue-300">
+
+//             {isProject ? "PROJECT" : "POST"}
+
+//           </span>
+
+
+
+
+
+//           {/* TITLE */}
+
+//           <h2 className="mt-4 text-3xl font-bold">
+
+//             {data.title}
+
+//           </h2>
+
+
+
+
+
+//           {/* DESCRIPTION */}
+
+//           {data.description && (
+
+//             <>
+
+//               <p
+//                 className={`mt-4 text-gray-600 dark:text-gray-300 whitespace-pre-line ${
+//                   expanded ? "" : "line-clamp-4"
+//                 }`}
+//               >
+
+//                 {data.description}
+
+//               </p>
+
+
+
+//               {data.description.length > 150 && (
+
+//                 <button
+//                   onClick={() => setExpanded(!expanded)}
+//                   className="mt-2 text-sm text-blue-600 hover:underline"
+//                 >
+
+//                   {expanded ? "Show less" : "Read more"}
+
+//                 </button>
+
+//               )}
+
+//             </>
+
+//           )}
+
+
+
+
+
+
+
+//           {/* PROJECT EXTRA INFO */}
+
+//           {isProject && (
+
+//             <div className="mt-6 space-y-3">
+
+
+//               {data.techStack && (
+
+//                 <div className="flex items-center gap-2">
+
+//                   <Code size={18}/>
+
+//                   <span>{data.techStack}</span>
+
+//                 </div>
+
+//               )}
+
+
+
+
+
+//               {data.projectUrl && (
+
+//                 <a
+//                   href={data.projectUrl}
+//                   target="_blank"
+//                   className="flex items-center gap-2 text-blue-600 hover:underline"
+//                 >
+
+//                   <ExternalLink size={18}/>
+
+//                   Live Project
+
+//                 </a>
+
+//               )}
+
+
+
+
+
+//               {data.githubUrl && (
+
+//                 <a
+//                   href={data.githubUrl}
+//                   target="_blank"
+//                   className="flex items-center gap-2 text-blue-600 hover:underline"
+//                 >
+
+//                   <ExternalLink size={18}/>
+
+//                   GitHub
+
+//                 </a>
+
+//               )}
+
+
+//             </div>
+
+//           )}
+
+
+
+
+
+
+
+//           {/* DATE */}
+
+//           {data.createdAt && (
+
+//             <div className="mt-5 flex items-center gap-2 text-sm text-gray-500">
+
+//               <Calendar size={16}/>
+
+//               {new Date(data.createdAt).toLocaleString()}
+
+//             </div>
+
+//           )}
+
+
+
+
+
+
+
+//           {/* OWNER ACTIONS */}
+
+//           {isOwnProfile && (
+
+//             <div className="mt-6 flex gap-3">
+
+
+//               <button
+//                 onClick={() => onEdit?.(data)}
+//                 className="flex items-center gap-2 px-4 py-2 border rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800"
+//               >
+
+//                 <Pencil size={16}/>
+
+//                 Edit
+
+//               </button>
+
+
+
+
+//               <button
+//                 onClick={() => onDelete?.(data.id)}
+//                 className="flex items-center gap-2 px-4 py-2 border border-red-400 text-red-500 rounded-lg hover:bg-red-50 dark:hover:bg-red-900/20"
+//               >
+
+//                 <Trash2 size={16}/>
+
+//                 Delete
+
+//               </button>
+
+
+//             </div>
+
+//           )}
+
+
+
+
+
+
+
+//           {/* ACTION BAR */}
+
+//           <div className="mt-8 border-t pt-5 flex items-center justify-between">
+
+
+//             <div className="flex gap-6">
+
+
+
+//               <button
+//                 onClick={handleLike}
+//                 className={`flex items-center gap-2 ${
+//                   liked
+//                     ? "text-red-500"
+//                     : "hover:text-red-500"
+//                 }`}
+//               >
+
+//                 <Heart
+//                   size={20}
+//                   fill={liked ? "currentColor" : "none"}
+//                 />
+
+//                 Like ({likeCount})
+
+//               </button>
+
+
+
+
+
+//               <button
+//                 onClick={() => setShowComments(!showComments)}
+//                 className="flex items-center gap-2 hover:text-blue-500"
+//               >
+
+//                 <MessageCircle size={20}/>
+
+//                 Comment
+
+//               </button>
+
+
+
+
+
+//               <button className="flex items-center gap-2 hover:text-green-500">
+
+//                 <Share2 size={20}/>
+
+//                 Share
+
+//               </button>
+
+
+
+//             </div>
+
+
+
+
+
+//             <button className="hover:text-yellow-500">
+
+//               <Bookmark size={20}/>
+
+//             </button>
+
+
+
+//           </div>
+
+
+
+
+
+
+
+//           {/* COMMENTS */}
+
+//           {showComments && (
+
+//             <div className="mt-5 border-t pt-5">
+
+
+//               <div className="flex gap-2">
+
+
+//                 <input
+//                   placeholder="Write a comment..."
+//                   className="flex-1 px-4 py-2 rounded-full border bg-transparent text-sm"
+//                 />
+
+
+
+//                 <button className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800">
+
+//                   <Smile size={18}/>
+
+//                 </button>
+
+
+//               </div>
+
+
+
+//               <div className="mt-4 text-sm text-gray-500 text-center">
+
+//                 No comments yet
+
+//               </div>
+
+
+//             </div>
+
+//           )}
+
+
+
+//         </div>
+
+
+//       </div>
+
+
+//     </div>
+//   );
+// }
+
+
+
+
+
+
+
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
+
+import {
+  likeActivity,
+  unlikeActivity,
+  getLikeStatus,
+  getLikeCount,
+} from "@/services/activityService";
 import {
   X,
   Heart,
@@ -193,6 +925,7 @@ import {
   Trash2,
 } from "lucide-react";
 
+
 export default function ProfileDetail({
   open,
   onClose,
@@ -201,186 +934,464 @@ export default function ProfileDetail({
   onEdit,
   onDelete,
 }) {
+
   const [showComments, setShowComments] = useState(false);
   const [expanded, setExpanded] = useState(false);
+  const [loadingLike, setLoadingLike] = useState(false);
+  const [liked, setLiked] = useState(false);
+  const [likeCount, setLikeCount] = useState(0);
+
+
+
+  // ================= LOAD LIKE STATUS =================
+
+
+useEffect(() => {
+  if (!open || !data?.id) return;
+
+  let mounted = true;
+
+  setLiked(false);
+  setLikeCount(0);
+  setShowComments(false);
+setExpanded(false);
+
+  const fetchLikeData = async () => {
+    try {
+      const statusRes = await getLikeStatus(data.id);
+      const countRes = await getLikeCount(data.id);
+
+      if (!mounted) return;
+
+      setLiked(statusRes.liked);
+      setLikeCount(countRes.count);
+
+    } catch (error) {
+      console.error("LIKE ERROR:", error);
+    }
+  };
+
+  fetchLikeData();
+
+  return () => {
+    mounted = false;
+  };
+}, [open, data?.id]);
+
+
+  // ================= LIKE BUTTON =================
+
+const handleLike = async () => {
+  if (!data?.id || loadingLike) return;
+
+  setLoadingLike(true);
+
+  try {
+    let response;
+
+    if (liked) {
+      response = await unlikeActivity(data.id);
+    } else {
+      response = await likeActivity(data.id);
+    }
+
+    setLiked(response.liked);
+    setLikeCount(response.likeCount);
+
+  } catch (error) {
+    console.error("LIKE ERROR:", error);
+  } finally {
+    setLoadingLike(false);
+  }
+};
+
+
+
+
 
   if (!open || !data) return null;
 
+
   const isProject = data.type === "project";
+
   const image = data.imageUrl || "/assets/default.jpg";
+
+
+
+
 
   return (
     <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
 
+
       <div className="relative w-full max-w-3xl max-h-[95vh] overflow-y-auto rounded-2xl bg-white dark:bg-black border border-gray-200 dark:border-gray-800">
 
+
+
         {/* CLOSE */}
+
         <button
           onClick={onClose}
           className="absolute right-4 top-4 z-20 rounded-full p-2 hover:bg-gray-100 dark:hover:bg-gray-800"
         >
-          <X size={20} />
+
+          <X size={20}/>
+
         </button>
 
+
+
+
+
         {/* IMAGE */}
+
         <div className="relative h-72 w-full bg-gray-200 dark:bg-gray-900">
-          <Image src={image} alt={data.title} fill className="object-cover" />
+
+          <Image
+            src={image}
+            alt={data.title}
+            fill
+            className="object-cover"
+          />
+
         </div>
+
+
+
+
 
         <div className="p-6">
 
+
+
           {/* TYPE */}
+
           <span className="px-3 py-1 text-xs rounded-full bg-blue-100 dark:bg-blue-900 text-blue-600 dark:text-blue-300">
+
             {isProject ? "PROJECT" : "POST"}
+
           </span>
 
+
+
+
+
           {/* TITLE */}
+
           <h2 className="mt-4 text-3xl font-bold">
+
             {data.title}
+
           </h2>
 
+
+
+
+
           {/* DESCRIPTION */}
+
           {data.description && (
+
             <>
+
               <p
                 className={`mt-4 text-gray-600 dark:text-gray-300 whitespace-pre-line ${
                   expanded ? "" : "line-clamp-4"
                 }`}
               >
+
                 {data.description}
+
               </p>
 
+
+
               {data.description.length > 150 && (
+
                 <button
                   onClick={() => setExpanded(!expanded)}
                   className="mt-2 text-sm text-blue-600 hover:underline"
                 >
+
                   {expanded ? "Show less" : "Read more"}
+
                 </button>
+
               )}
+
             </>
+
           )}
 
+
+
+
+
+
+
           {/* PROJECT EXTRA INFO */}
+
           {isProject && (
+
             <div className="mt-6 space-y-3">
 
+
               {data.techStack && (
+
                 <div className="flex items-center gap-2">
-                  <Code size={18} />
+
+                  <Code size={18}/>
+
                   <span>{data.techStack}</span>
+
                 </div>
+
               )}
 
+
+
+
+
               {data.projectUrl && (
+
                 <a
                   href={data.projectUrl}
                   target="_blank"
                   className="flex items-center gap-2 text-blue-600 hover:underline"
                 >
-                  <ExternalLink size={18} />
+
+                  <ExternalLink size={18}/>
+
                   Live Project
+
                 </a>
+
               )}
 
+
+
+
+
               {data.githubUrl && (
+
                 <a
                   href={data.githubUrl}
                   target="_blank"
                   className="flex items-center gap-2 text-blue-600 hover:underline"
                 >
-                  <ExternalLink size={18} />
+
+                  <ExternalLink size={18}/>
+
                   GitHub
+
                 </a>
+
               )}
+
+
             </div>
+
           )}
+
+
+
+
+
+
 
           {/* DATE */}
+
           {data.createdAt && (
+
             <div className="mt-5 flex items-center gap-2 text-sm text-gray-500">
-              <Calendar size={16} />
+
+              <Calendar size={16}/>
+
               {new Date(data.createdAt).toLocaleString()}
+
             </div>
+
           )}
 
+
+
+
+
+
+
           {/* OWNER ACTIONS */}
+
           {isOwnProfile && (
+
             <div className="mt-6 flex gap-3">
+
 
               <button
                 onClick={() => onEdit?.(data)}
                 className="flex items-center gap-2 px-4 py-2 border rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800"
               >
-                <Pencil size={16} />
+
+                <Pencil size={16}/>
+
                 Edit
+
               </button>
+
+
+
 
               <button
                 onClick={() => onDelete?.(data.id)}
                 className="flex items-center gap-2 px-4 py-2 border border-red-400 text-red-500 rounded-lg hover:bg-red-50 dark:hover:bg-red-900/20"
               >
-                <Trash2 size={16} />
+
+                <Trash2 size={16}/>
+
                 Delete
+
               </button>
 
+
             </div>
+
           )}
 
+
+
+
+
+
+
           {/* ACTION BAR */}
+
           <div className="mt-8 border-t pt-5 flex items-center justify-between">
+
 
             <div className="flex gap-6">
 
-              <button className="flex items-center gap-2 hover:text-red-500">
-                <Heart size={20} />
-                Like
+
+
+                  <button
+  onClick={handleLike}
+  disabled={loadingLike}
+  className={`flex items-center gap-2 ${
+    liked
+      ? "text-red-500"
+      : "hover:text-red-500"
+  } ${
+    loadingLike
+      ? "opacity-60 cursor-not-allowed"
+      : ""
+  }`}
+>
+
+                <Heart
+                  size={20}
+                  fill={liked ? "currentColor" : "none"}
+                />
+
+                Like ({likeCount})
+
               </button>
+
+
+
+
 
               <button
                 onClick={() => setShowComments(!showComments)}
                 className="flex items-center gap-2 hover:text-blue-500"
               >
-                <MessageCircle size={20} />
+
+                <MessageCircle size={20}/>
+
                 Comment
+
               </button>
 
+
+
+
+
               <button className="flex items-center gap-2 hover:text-green-500">
-                <Share2 size={20} />
+
+                <Share2 size={20}/>
+
                 Share
+
               </button>
+
+
 
             </div>
 
+
+
+
+
             <button className="hover:text-yellow-500">
-              <Bookmark size={20} />
+
+              <Bookmark size={20}/>
+
             </button>
+
+
 
           </div>
 
+
+
+
+
+
+
           {/* COMMENTS */}
+
           {showComments && (
+
             <div className="mt-5 border-t pt-5">
 
+
               <div className="flex gap-2">
+
+
                 <input
                   placeholder="Write a comment..."
                   className="flex-1 px-4 py-2 rounded-full border bg-transparent text-sm"
                 />
+
+
+
                 <button className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800">
-                  <Smile size={18} />
+
+                  <Smile size={18}/>
+
                 </button>
+
+
               </div>
+
+
 
               <div className="mt-4 text-sm text-gray-500 text-center">
+
                 No comments yet
+
               </div>
 
+
             </div>
+
           )}
 
+
+
         </div>
+
+
       </div>
+
+
     </div>
   );
 }

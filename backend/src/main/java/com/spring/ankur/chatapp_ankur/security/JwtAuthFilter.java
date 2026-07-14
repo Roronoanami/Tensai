@@ -56,40 +56,18 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
 
 
-        // ================================
-        // PUBLIC ROUTES
-        // No JWT required
-        // ================================
 
-        // if (
-        //         path.startsWith("/api/auth")
-        //         ||
-        //         path.startsWith("/api/profile/public")
-        //         ||
-        //         path.startsWith("/api/search")
-        // ) {
-
-        //     filterChain.doFilter(request, response);
-        //     return;
-
-        // }
-
-
-        if (
-        path.startsWith("/api/auth")
-        ||
-        path.startsWith("/api/profile/public")
-        ||
-        path.startsWith("/api/search")
-        ||
-        path.startsWith("/api/follow/followers")
-        ||
-        path.startsWith("/api/follow/following")
+if (
+    path.startsWith("/api/auth")
+    || path.startsWith("/api/profile/public")
+    || path.startsWith("/api/search")
+    || path.startsWith("/api/follow/followers")
+    || path.startsWith("/api/follow/following")
+    || path.matches("^/api/activity/.+/like/count$")
 ) {
 
     filterChain.doFilter(request, response);
     return;
-
 }
 
 
@@ -99,8 +77,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
 
 
-        // No token
-        // Continue because some APIs are public
+       
         if (
                 authHeader == null
                 ||
@@ -118,57 +95,31 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         try {
 
 
-            String token = authHeader.substring(7);
+String token = authHeader.substring(7);
 
+String userId = jwtService.extractUserId(token);
 
+System.out.println("JWT User ID = " + userId);
 
-            String userId = jwtService.extractUserId(token);
+if (jwtService.validate(token, userId)) {
 
+    User user = userRepository.findById(userId).orElse(null);
 
+    if (user != null &&
+        SecurityContextHolder.getContext().getAuthentication() == null) {
 
-            if(jwtService.validate(token, userId)){
+        UsernamePasswordAuthenticationToken authentication =
+                new UsernamePasswordAuthenticationToken(
+                        userId,
+                        null,
+                        Collections.emptyList()
+                );
 
+        SecurityContextHolder.getContext().setAuthentication(authentication);
 
-
-                User user =
-                        userRepository
-                                .findById(userId)
-                                .orElse(null);
-
-
-
-
-                if(
-                        user != null
-                        &&
-                        SecurityContextHolder
-                                .getContext()
-                                .getAuthentication()
-                                == null
-                ){
-
-
-
-                    UsernamePasswordAuthenticationToken authentication =
-
-                            new UsernamePasswordAuthenticationToken(
-                                    userId,
-                                    null,
-                                    Collections.emptyList()
-                            );
-
-
-
-                    SecurityContextHolder
-                            .getContext()
-                            .setAuthentication(authentication);
-
-
-                }
-
-
-            }
-
+        System.out.println("JWT AUTHENTICATED");
+    }
+}
 
 
         }
