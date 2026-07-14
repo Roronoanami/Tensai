@@ -178,22 +178,6 @@ console.log("USER ID =", userId);
   return res.json();
 };
 
-// ================= GET USER ACTIVITIES =================
-// export const getUserActivitiesByUsername = async (username) => {
-//   const token = localStorage.getItem("token");
-
-//   const res = await fetch(`${BASE_URL}/user/${username}`, {
-//     headers: {
-//       Authorization: `Bearer ${token}`,
-//     },
-//   });
-
-//   if (!res.ok) {
-//     throw new Error("Failed to fetch user activities");
-//   }
-
-//   return res.json();
-// };
 
 
 export const getUserActivitiesByUsername = async (username) => {
@@ -266,7 +250,6 @@ export const updateActivity = async (id, userId, formData) => {
 
   return text ? JSON.parse(text) : null;
 };
-
 // ================= DELETE ACTIVITY =================
 export const deleteActivity = async (id, userId) => {
   const token = localStorage.getItem("token");
@@ -281,4 +264,80 @@ export const deleteActivity = async (id, userId) => {
   if (!res.ok) {
     throw new Error("Failed to delete activity");
   }
+};
+
+
+// ================= LIKE ACTIVITY =================
+
+export const likeActivity = async (activityId) => {
+  const token = localStorage.getItem("token");
+
+  const res = await fetch(`${BASE_URL}/${activityId}/like`, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  if (!res.ok) {
+    throw new Error("Failed to like activity");
+  }
+
+  return res.json();
+};
+
+
+// ================= UNLIKE ACTIVITY =================
+
+export const unlikeActivity = async (activityId) => {
+  const token = localStorage.getItem("token");
+
+  const res = await fetch(`${BASE_URL}/${activityId}/like`, {
+    method: "DELETE",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  if (!res.ok) {
+    throw new Error("Failed to unlike activity");
+  }
+
+  return res.json();
+};
+
+
+// ================= LIKE STATUS =================
+
+export const getLikeStatus = async (activityId) => {
+  const token = localStorage.getItem("token");
+
+  const res = await fetch(`${BASE_URL}/${activityId}/like/status`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  if (!res.ok) {
+    throw new Error("Failed to get like status");
+  }
+
+  return res.json();
+};
+
+
+// like      count   
+
+
+
+export const getLikeCount = async (activityId) => {
+  const res = await fetch(
+    `${BASE_URL}/${activityId}/like/count`
+  );
+
+  if (!res.ok) {
+    throw new Error("Failed to fetch like count");
+  }
+
+  return res.json();
 };

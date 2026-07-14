@@ -611,72 +611,68 @@ useEffect(() => {
       }
     : {};
 
-  const loadData = async () => {
-    try {
-      // Follow status
-      const statusRes = await fetch(
-        `http://localhost:8081/api/follow/status/${profile.username}`,
-        { headers }
-      );
+const loadData = async () => {
+  try {
+    // Follow status
+    const statusRes = await fetch(
+      `http://localhost:8081/api/follow/status/${profile.username}`,
+      { headers }
+    );
 
-      if (statusRes.ok) {
-        const status = await statusRes.json();
-        setIsFollowing(status.following);
-      }
-
-      // Connection status
-const connectionRes = await fetch(
-  `http://localhost:8081/api/connection/status/${profile.username}`,
-  {
-    headers
-  }
-);
-
-
-if(connectionRes.ok){
-
-  const connectionData = await connectionRes.json();
-
-  setConnectionStatus(connectionData.status);
-
-}
-
-      // Followers count
-      const followerRes = await fetch(
-        `http://localhost:8081/api/follow/followers/${profile.username}`
-      );
-
-      if (followerRes.ok) {
-        const data = await followerRes.json();
-        setFollowers(data.followers);
-      }
-
-      // Following count
-const followerRes = await fetch(
-  `http://localhost:8081/api/follow/followers/${profile.username}`
-);
-
-if (followerRes.ok) {
-  const data = await followerRes.json();
-  setFollowers(data.count);
-}
-
-      // Connection count
-const connectionCountRes = await fetch(
-  `http://localhost:8081/api/connection/count/${profile.username}`,
-  {
-    headers,
-  }
-);
-
-if (connectionCountRes.ok) {
-  const data = await connectionCountRes.json();
-  setConnections(data.count);
-}
-    } catch (err) {
-      console.error(err);
+    if (statusRes.ok) {
+      const status = await statusRes.json();
+      setIsFollowing(status.following);
     }
-  };
+
+    // Connection status
+    const connectionRes = await fetch(
+      `http://localhost:8081/api/connection/status/${profile.username}`,
+      {
+        headers,
+      }
+    );
+
+    if (connectionRes.ok) {
+      const connectionData = await connectionRes.json();
+      setConnectionStatus(connectionData.status);
+    }
+
+    // Followers count
+    const followerRes = await fetch(
+      `http://localhost:8081/api/follow/followers/${profile.username}`
+    );
+
+    if (followerRes.ok) {
+      const data = await followerRes.json();
+      setFollowers(data.count);
+    }
+
+    // Following count
+    const followingRes = await fetch(
+      `http://localhost:8081/api/follow/following/${profile.username}`
+    );
+
+    if (followingRes.ok) {
+      const data = await followingRes.json();
+      setFollowing(data.count);
+    }
+
+    // Connection count
+    const connectionCountRes = await fetch(
+      `http://localhost:8081/api/connection/count/${profile.username}`,
+      {
+        headers,
+      }
+    );
+
+    if (connectionCountRes.ok) {
+      const data = await connectionCountRes.json();
+      setConnections(data.count);
+    }
+  } catch (err) {
+    console.error(err);
+  }
+};
 
   loadData();
 }, [profile]);
@@ -760,7 +756,7 @@ const handleFollow = async () => {
 
       const data = await followerRes.json();
 
-      setFollowers(data.followers);
+     setFollowers(data.count);
 
     }
 

@@ -369,6 +369,120 @@
 
 
 
+// package com.spring.ankur.chatapp_ankur.config;
+
+// import com.spring.ankur.chatapp_ankur.security.JwtAuthFilter;
+// import org.springframework.context.annotation.Bean;
+// import org.springframework.context.annotation.Configuration;
+// import org.springframework.http.HttpMethod;
+// import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+// import org.springframework.security.config.http.SessionCreationPolicy;
+// import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+// import org.springframework.security.crypto.password.PasswordEncoder;
+// import org.springframework.security.web.SecurityFilterChain;
+// import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+// import org.springframework.web.cors.CorsConfiguration;
+// import org.springframework.web.cors.CorsConfigurationSource;
+// import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+// import java.util.List;
+
+// @Configuration
+// public class SecurityConfig {
+
+//     private final JwtAuthFilter jwtAuthFilter;
+
+//     public SecurityConfig(JwtAuthFilter jwtAuthFilter) {
+//         this.jwtAuthFilter = jwtAuthFilter;
+//     }
+
+//     @Bean
+//     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+
+//         http
+//             .csrf(csrf -> csrf.disable())
+//             .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+//             .sessionManagement(session ->
+//                 session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+//             )
+  
+
+
+
+// .authorizeHttpRequests(auth -> auth
+
+//     // OPTIONS
+//     .requestMatchers(HttpMethod.OPTIONS, "/**")
+//     .permitAll()
+
+//     // AUTH
+//     .requestMatchers("/api/auth/**")
+//     .permitAll()
+
+//     // PROFILE
+//     .requestMatchers("/api/profile/public/**")
+//     .permitAll()
+
+//     .requestMatchers("/api/profile/me")
+//     .authenticated()
+
+//     // SEARCH
+//     .requestMatchers("/api/search/**")
+//     .permitAll()
+
+//     // FOLLOW (PUBLIC)
+//     .requestMatchers(HttpMethod.GET, "/api/follow/followers/**")
+//     .permitAll()
+
+//     .requestMatchers(HttpMethod.GET, "/api/follow/following/**")
+//     .permitAll()
+
+//     // FOLLOW (LOGIN REQUIRED)
+//     .requestMatchers(HttpMethod.GET, "/api/follow/status/**")
+//     .authenticated()
+
+//     .requestMatchers(HttpMethod.POST, "/api/follow/**")
+//     .authenticated()
+
+//     .requestMatchers(HttpMethod.DELETE, "/api/follow/**")
+//     .authenticated()
+
+//     // EVERYTHING ELSE
+//     .anyRequest()
+//     .authenticated()
+// );
+
+//         http.addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
+
+//         return http.build();
+//     }
+
+//     @Bean
+//     public CorsConfigurationSource corsConfigurationSource() {
+
+//         CorsConfiguration config = new CorsConfiguration();
+
+//         config.setAllowedOrigins(List.of("http://localhost:3000"));
+
+//         // 🔥 IMPORTANT FIX (this is your missing piece)
+//         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+
+//         config.setAllowedHeaders(List.of("*"));
+
+//         config.setAllowCredentials(true);
+
+//         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+//         source.registerCorsConfiguration("/**", config);
+
+//         return source;
+//     }
+
+//     @Bean
+//     public PasswordEncoder passwordEncoder() {
+//         return new BCryptPasswordEncoder();
+//     }
+// }
+
 package com.spring.ankur.chatapp_ankur.config;
 
 import com.spring.ankur.chatapp_ankur.security.JwtAuthFilter;
@@ -390,119 +504,211 @@ import java.util.List;
 @Configuration
 public class SecurityConfig {
 
+
     private final JwtAuthFilter jwtAuthFilter;
+
 
     public SecurityConfig(JwtAuthFilter jwtAuthFilter) {
         this.jwtAuthFilter = jwtAuthFilter;
     }
 
+
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
+
         http
+
             .csrf(csrf -> csrf.disable())
-            .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+
+
+            .cors(cors ->
+                cors.configurationSource(corsConfigurationSource())
+            )
+
+
             .sessionManagement(session ->
                 session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             )
-  
-
-//            .authorizeHttpRequests(auth -> auth
-
-//         .requestMatchers(HttpMethod.OPTIONS, "/**")
-//         .permitAll()
-
-//         .requestMatchers("/api/auth/**")
-//         .permitAll()
-
-//         .requestMatchers("/api/profile/public/**")
-//         .permitAll()
-
-//         .requestMatchers("/api/search/**")
-//         .permitAll()
-
-//         .requestMatchers("/api/profile/me")
-//         .authenticated()
-
-//         .anyRequest()
-//         .authenticated()
-// );
 
 
-// new 
+
+            .authorizeHttpRequests(auth -> auth
 
 
-.authorizeHttpRequests(auth -> auth
 
-    // OPTIONS
-    .requestMatchers(HttpMethod.OPTIONS, "/**")
-    .permitAll()
+                // OPTIONS
+                .requestMatchers(HttpMethod.OPTIONS, "/**")
+                .permitAll()
 
-    // AUTH
-    .requestMatchers("/api/auth/**")
-    .permitAll()
 
-    // PROFILE
-    .requestMatchers("/api/profile/public/**")
-    .permitAll()
 
-    .requestMatchers("/api/profile/me")
-    .authenticated()
+                // AUTH
+                .requestMatchers("/api/auth/**")
+                .permitAll()
 
-    // SEARCH
-    .requestMatchers("/api/search/**")
-    .permitAll()
 
-    // FOLLOW (PUBLIC)
-    .requestMatchers(HttpMethod.GET, "/api/follow/followers/**")
-    .permitAll()
 
-    .requestMatchers(HttpMethod.GET, "/api/follow/following/**")
-    .permitAll()
+                // PUBLIC PROFILE
+                .requestMatchers("/api/profile/public/**")
+                .permitAll()
 
-    // FOLLOW (LOGIN REQUIRED)
-    .requestMatchers(HttpMethod.GET, "/api/follow/status/**")
-    .authenticated()
 
-    .requestMatchers(HttpMethod.POST, "/api/follow/**")
-    .authenticated()
 
-    .requestMatchers(HttpMethod.DELETE, "/api/follow/**")
-    .authenticated()
+                // SEARCH
+                .requestMatchers("/api/search/**")
+                .permitAll()
 
-    // EVERYTHING ELSE
-    .anyRequest()
-    .authenticated()
+
+
+                // OWN PROFILE
+                .requestMatchers("/api/profile/me")
+                .authenticated()
+
+
+
+                // FOLLOW PUBLIC
+                .requestMatchers(
+                    HttpMethod.GET,
+                    "/api/follow/followers/**",
+                    "/api/follow/following/**"
+                )
+                .permitAll()
+
+
+
+                // FOLLOW AUTH
+                .requestMatchers(
+                    HttpMethod.GET,
+                    "/api/follow/status/**"
+                )
+                .authenticated()
+
+
+                .requestMatchers(
+                    HttpMethod.POST,
+                    "/api/follow/**"
+                )
+                .authenticated()
+
+
+                .requestMatchers(
+                    HttpMethod.DELETE,
+                    "/api/follow/**"
+                )
+                .authenticated()
+
+
+
+                // ==========================
+                // ACTIVITY LIKE
+                // ==========================
+// ==========================
+// ACTIVITY LIKE
+// ==========================
+
+.requestMatchers(
+    HttpMethod.POST,
+    "/api/activity/*/like"
+)
+.authenticated()
+
+.requestMatchers(
+    HttpMethod.DELETE,
+    "/api/activity/*/like"
+)
+.authenticated()
+
+.requestMatchers(
+    HttpMethod.GET,
+    "/api/activity/*/like/status"
+)
+.authenticated()
+
+// PUBLIC LIKE COUNT
+.requestMatchers(
+    HttpMethod.GET,
+    "/api/activity/*/like/count"
+)
+.permitAll()
+
+// ALL OTHER API
+.anyRequest()
+.authenticated()
 );
 
-        http.addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
+
+
+        http.addFilterBefore(
+            jwtAuthFilter,
+            UsernamePasswordAuthenticationFilter.class
+        );
+
 
         return http.build();
+
     }
+
+
+
+
 
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
 
+
         CorsConfiguration config = new CorsConfiguration();
 
-        config.setAllowedOrigins(List.of("http://localhost:3000"));
 
-        // 🔥 IMPORTANT FIX (this is your missing piece)
-        config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+        config.setAllowedOrigins(
+            List.of("http://localhost:3000")
+        );
 
-        config.setAllowedHeaders(List.of("*"));
+
+        config.setAllowedMethods(
+            List.of(
+                "GET",
+                "POST",
+                "PUT",
+                "DELETE",
+                "OPTIONS"
+            )
+        );
+
+
+        config.setAllowedHeaders(
+            List.of("*")
+        );
+
 
         config.setAllowCredentials(true);
 
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", config);
+
+
+        UrlBasedCorsConfigurationSource source =
+                new UrlBasedCorsConfigurationSource();
+
+
+        source.registerCorsConfiguration(
+            "/**",
+            config
+        );
+
 
         return source;
+
     }
+
+
+
+
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
-}
 
+        return new BCryptPasswordEncoder();
+
+    }
+
+}

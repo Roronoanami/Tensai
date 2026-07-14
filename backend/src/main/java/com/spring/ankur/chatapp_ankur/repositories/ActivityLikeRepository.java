@@ -1,15 +1,25 @@
-package com.spring.ankur.chatapp_ankur.repository;
+package com.spring.ankur.chatapp_ankur.repositories;
 
-import com.spring.ankur.chatapp_ankur.entities.Activity;
 import com.spring.ankur.chatapp_ankur.entities.ActivityLike;
-import com.spring.ankur.chatapp_ankur.entities.User;
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.mongodb.repository.MongoRepository;
 
-public interface ActivityLikeRepository extends JpaRepository<ActivityLike, Long> {
+public interface ActivityLikeRepository 
+        extends MongoRepository<ActivityLike, String> {
 
-    boolean existsByActivityAndUser(Activity activity, User user);
 
-    long countByActivity(Activity activity);
+    boolean existsByActivityIdAndUserId(
+            String activityId,
+            String userId
+    );
 
-    void deleteByActivityAndUser(Activity activity, User user);
+
+    long countByActivityId(
+            String activityId
+    );
+
+
+    void deleteByActivityIdAndUserId(
+            String activityId,
+            String userId
+    );
 }
