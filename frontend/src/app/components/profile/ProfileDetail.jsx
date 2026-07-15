@@ -900,6 +900,939 @@
 
 
 
+// "use client";
+
+// import { useState, useEffect } from "react";
+// import Image from "next/image";
+
+// import {
+//   likeActivity,
+//   unlikeActivity,
+//   getLikeStatus,
+//   getLikeCount,
+// } from "@/services/activityService";
+// import {
+//   X,
+//   Heart,
+//   MessageCircle,
+//   Share2,
+//   Bookmark,
+//   Smile,
+//   Calendar,
+//   Code,
+//   ExternalLink,
+//   Pencil,
+//   Trash2,
+// } from "lucide-react";
+
+
+// export default function ProfileDetail({
+//   open,
+//   onClose,
+//   data,
+//   isOwnProfile = false,
+//   onEdit,
+//   onDelete,
+// }) {
+
+//   const [showComments, setShowComments] = useState(false);
+//   const [expanded, setExpanded] = useState(false);
+//   const [loadingLike, setLoadingLike] = useState(false);
+//   const [liked, setLiked] = useState(false);
+//   const [likeCount, setLikeCount] = useState(0);
+
+
+
+//   // ================= LOAD LIKE STATUS =================
+
+
+// useEffect(() => {
+//   if (!open || !data?.id) return;
+
+//   let mounted = true;
+
+//   setLiked(false);
+//   setLikeCount(0);
+//   setShowComments(false);
+// setExpanded(false);
+
+//   const fetchLikeData = async () => {
+//     try {
+//       const statusRes = await getLikeStatus(data.id);
+//       const countRes = await getLikeCount(data.id);
+
+//       if (!mounted) return;
+
+//       setLiked(statusRes.liked);
+//       setLikeCount(countRes.count);
+
+//     } catch (error) {
+//       console.error("LIKE ERROR:", error);
+//     }
+//   };
+
+//   fetchLikeData();
+
+//   return () => {
+//     mounted = false;
+//   };
+// }, [open, data?.id]);
+
+
+//   // ================= LIKE BUTTON =================
+
+// const handleLike = async () => {
+//   if (!data?.id || loadingLike) return;
+
+//   setLoadingLike(true);
+
+//   try {
+//     let response;
+
+//     if (liked) {
+//       response = await unlikeActivity(data.id);
+//     } else {
+//       response = await likeActivity(data.id);
+//     }
+
+//     setLiked(response.liked);
+//     setLikeCount(response.likeCount);
+
+//   } catch (error) {
+//     console.error("LIKE ERROR:", error);
+//   } finally {
+//     setLoadingLike(false);
+//   }
+// };
+
+
+
+
+
+//   if (!open || !data) return null;
+
+
+//   const isProject = data.type === "project";
+
+//   const image = data.imageUrl || "/assets/default.jpg";
+
+
+
+
+
+//   return (
+//     <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
+
+
+//       <div className="relative w-full max-w-3xl max-h-[95vh] overflow-y-auto rounded-2xl bg-white dark:bg-black border border-gray-200 dark:border-gray-800">
+
+
+
+//         {/* CLOSE */}
+
+//         <button
+//           onClick={onClose}
+//           className="absolute right-4 top-4 z-20 rounded-full p-2 hover:bg-gray-100 dark:hover:bg-gray-800"
+//         >
+
+//           <X size={20}/>
+
+//         </button>
+
+
+
+
+
+//         {/* IMAGE */}
+
+//         <div className="relative h-72 w-full bg-gray-200 dark:bg-gray-900">
+
+//           <Image
+//             src={image}
+//             alt={data.title}
+//             fill
+//             className="object-cover"
+//           />
+
+//         </div>
+
+
+
+
+
+//         <div className="p-6">
+
+
+
+//           {/* TYPE */}
+
+//           <span className="px-3 py-1 text-xs rounded-full bg-blue-100 dark:bg-blue-900 text-blue-600 dark:text-blue-300">
+
+//             {isProject ? "PROJECT" : "POST"}
+
+//           </span>
+
+
+
+
+
+//           {/* TITLE */}
+
+//           <h2 className="mt-4 text-3xl font-bold">
+
+//             {data.title}
+
+//           </h2>
+
+
+
+
+
+//           {/* DESCRIPTION */}
+
+//           {data.description && (
+
+//             <>
+
+//               <p
+//                 className={`mt-4 text-gray-600 dark:text-gray-300 whitespace-pre-line ${
+//                   expanded ? "" : "line-clamp-4"
+//                 }`}
+//               >
+
+//                 {data.description}
+
+//               </p>
+
+
+
+//               {data.description.length > 150 && (
+
+//                 <button
+//                   onClick={() => setExpanded(!expanded)}
+//                   className="mt-2 text-sm text-blue-600 hover:underline"
+//                 >
+
+//                   {expanded ? "Show less" : "Read more"}
+
+//                 </button>
+
+//               )}
+
+//             </>
+
+//           )}
+
+
+
+
+
+
+
+//           {/* PROJECT EXTRA INFO */}
+
+//           {isProject && (
+
+//             <div className="mt-6 space-y-3">
+
+
+//               {data.techStack && (
+
+//                 <div className="flex items-center gap-2">
+
+//                   <Code size={18}/>
+
+//                   <span>{data.techStack}</span>
+
+//                 </div>
+
+//               )}
+
+
+
+
+
+//               {data.projectUrl && (
+
+//                 <a
+//                   href={data.projectUrl}
+//                   target="_blank"
+//                   className="flex items-center gap-2 text-blue-600 hover:underline"
+//                 >
+
+//                   <ExternalLink size={18}/>
+
+//                   Live Project
+
+//                 </a>
+
+//               )}
+
+
+
+
+
+//               {data.githubUrl && (
+
+//                 <a
+//                   href={data.githubUrl}
+//                   target="_blank"
+//                   className="flex items-center gap-2 text-blue-600 hover:underline"
+//                 >
+
+//                   <ExternalLink size={18}/>
+
+//                   GitHub
+
+//                 </a>
+
+//               )}
+
+
+//             </div>
+
+//           )}
+
+
+
+
+
+
+
+//           {/* DATE */}
+
+//           {data.createdAt && (
+
+//             <div className="mt-5 flex items-center gap-2 text-sm text-gray-500">
+
+//               <Calendar size={16}/>
+
+//               {new Date(data.createdAt).toLocaleString()}
+
+//             </div>
+
+//           )}
+
+
+
+
+
+
+
+//           {/* OWNER ACTIONS */}
+
+//           {isOwnProfile && (
+
+//             <div className="mt-6 flex gap-3">
+
+
+//               <button
+//                 onClick={() => onEdit?.(data)}
+//                 className="flex items-center gap-2 px-4 py-2 border rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800"
+//               >
+
+//                 <Pencil size={16}/>
+
+//                 Edit
+
+//               </button>
+
+
+
+
+//               <button
+//                 onClick={() => onDelete?.(data.id)}
+//                 className="flex items-center gap-2 px-4 py-2 border border-red-400 text-red-500 rounded-lg hover:bg-red-50 dark:hover:bg-red-900/20"
+//               >
+
+//                 <Trash2 size={16}/>
+
+//                 Delete
+
+//               </button>
+
+
+//             </div>
+
+//           )}
+
+
+
+
+
+
+
+//           {/* ACTION BAR */}
+
+//           <div className="mt-8 border-t pt-5 flex items-center justify-between">
+
+
+//             <div className="flex gap-6">
+
+
+
+//                   <button
+//   onClick={handleLike}
+//   disabled={loadingLike}
+//   className={`flex items-center gap-2 ${
+//     liked
+//       ? "text-red-500"
+//       : "hover:text-red-500"
+//   } ${
+//     loadingLike
+//       ? "opacity-60 cursor-not-allowed"
+//       : ""
+//   }`}
+// >
+
+//                 <Heart
+//                   size={20}
+//                   fill={liked ? "currentColor" : "none"}
+//                 />
+
+//                 Like ({likeCount})
+
+//               </button>
+
+
+
+
+
+//               <button
+//                 onClick={() => setShowComments(!showComments)}
+//                 className="flex items-center gap-2 hover:text-blue-500"
+//               >
+
+//                 <MessageCircle size={20}/>
+
+//                 Comment
+
+//               </button>
+
+
+
+
+
+//               <button className="flex items-center gap-2 hover:text-green-500">
+
+//                 <Share2 size={20}/>
+
+//                 Share
+
+//               </button>
+
+
+
+//             </div>
+
+
+
+
+
+//             <button className="hover:text-yellow-500">
+
+//               <Bookmark size={20}/>
+
+//             </button>
+
+
+
+//           </div>
+
+
+
+
+
+
+
+//           {/* COMMENTS */}
+
+//           {showComments && (
+
+//             <div className="mt-5 border-t pt-5">
+
+
+//               <div className="flex gap-2">
+
+
+//                 <input
+//                   placeholder="Write a comment..."
+//                   className="flex-1 px-4 py-2 rounded-full border bg-transparent text-sm"
+//                 />
+
+
+
+//                 <button className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800">
+
+//                   <Smile size={18}/>
+
+//                 </button>
+
+
+//               </div>
+
+
+
+//               <div className="mt-4 text-sm text-gray-500 text-center">
+
+//                 No comments yet
+
+//               </div>
+
+
+//             </div>
+
+//           )}
+
+
+
+//         </div>
+
+
+//       </div>
+
+
+//     </div>
+//   );
+// }
+
+
+
+
+
+
+// "use client";
+
+// import { useState, useEffect } from "react";
+// import Image from "next/image";
+
+// import {
+//   likeActivity,
+//   unlikeActivity,
+//   getLikeStatus,
+//   getLikeCount,
+// } from "@/services/activityService";
+
+// import {
+//   getComments,
+//   getCommentCount,
+//   addComment,
+//   deleteComment,
+// } from "@/services/commentService";
+// import {
+//   X,
+//   Heart,
+//   MessageCircle,
+//   Share2,
+//   Bookmark,
+//   Smile,
+//   Calendar,
+//   Code,
+//   ExternalLink,
+//   Pencil,
+//   Trash2,
+// } from "lucide-react";
+
+
+// export default function ProfileDetail({
+//   open,
+//   onClose,
+//   data,
+//   isOwnProfile = false,
+//   onEdit,
+//   onDelete,
+// }) {
+
+//   const [showComments, setShowComments] = useState(false);
+//   const [expanded, setExpanded] = useState(false);
+//   const [loadingLike, setLoadingLike] = useState(false);
+//   const [liked, setLiked] = useState(false);
+//   const [likeCount, setLikeCount] = useState(0);
+
+//   const [comments, setComments] = useState([]);
+//   const [commentText, setCommentText] = useState("");
+//   const [commentCount, setCommentCount] = useState(0);
+//   const [loadingComments, setLoadingComments] = useState(false);
+
+//   // ================= LOAD LIKE STATUS =================
+
+
+// useEffect(() => {
+//   if (!open || !data?.id) return;
+
+//   let mounted = true;
+
+//   setLiked(false);
+//   setLikeCount(0);
+//   setShowComments(false);
+// setExpanded(false);
+
+// const fetchData = async () => {
+//   try {
+//     const [
+//       statusRes,
+//       likeCountRes,
+//       commentCountRes,
+//     ] = await Promise.all([
+//       getLikeStatus(data.id),
+//       getLikeCount(data.id),
+//       getCommentCount(data.id),
+//     ]);
+
+//     if (!mounted) return;
+
+//     setLiked(statusRes.liked);
+//     setLikeCount(likeCountRes.count);
+//     setCommentCount(commentCountRes.count);
+
+//   } catch (error) {
+//     console.error(error);
+//   }
+// };
+
+// fetchData();
+
+//   return () => {
+//     mounted = false;
+//   };
+// }, [open, data?.id]);
+
+
+//   // ================= LIKE BUTTON =================
+
+// const handleLike = async () => {
+//   if (!data?.id || loadingLike) return;
+
+//   setLoadingLike(true);
+
+//   try {
+//     let response;
+
+//     if (liked) {
+//       response = await unlikeActivity(data.id);
+//     } else {
+//       response = await likeActivity(data.id);
+//     }
+
+//     setLiked(response.liked);
+//     setLikeCount(response.likeCount);
+
+//   } catch (error) {
+//     console.error("LIKE ERROR:", error);
+//   } finally {
+//     setLoadingLike(false);
+//   }
+// };
+// const loadComments = async () => {
+//   if (!data?.id) return;
+
+//   setLoadingComments(true);
+
+//   try {
+//     const response = await getComments(data.id);
+//     setComments(response);
+//   } catch (error) {
+//     console.error("COMMENT ERROR:", error);
+//   } finally {
+//     setLoadingComments(false);
+//   }
+// };
+
+//   if (!open || !data) return null;
+
+
+//   const isProject = data.type === "project";
+
+//   const image = data.imageUrl || "/assets/default.jpg";
+
+
+// const handleComment = async () => {
+//   if (!commentText.trim()) return;
+
+//   try {
+//     await addComment(data.id, commentText);
+
+//     setCommentText("");
+
+//     await loadComments();
+
+//     const count = await getCommentCount(data.id);
+//     setCommentCount(count.count);
+
+//   } catch (error) {
+//     console.error("COMMENT ERROR:", error);
+//   }
+// };
+//   return (
+//     <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
+
+
+//       <div className="relative w-full max-w-3xl max-h-[95vh] overflow-y-auto rounded-2xl bg-white dark:bg-black border border-gray-200 dark:border-gray-800">
+//         {/* CLOSE*/}
+
+//         <button
+//           onClick={onClose}
+//           className="absolute right-4 top-4 z-20 rounded-full p-2 hover:bg-gray-100 dark:hover:bg-gray-800"
+//         >
+
+//           <X size={20}/>
+
+//         </button>
+
+//         {/* IMAGE */}
+
+//         <div className="relative h-72 w-full bg-gray-200 dark:bg-gray-900">
+
+//           <Image
+//             src={image}
+//             alt={data.title}
+//             fill
+//             className="object-cover"
+//           />
+
+//         </div>
+
+//         <div className="p-6">
+
+//           {/* TYPE */}
+
+//           <span className="px-3 py-1 text-xs rounded-full bg-blue-100 dark:bg-blue-900 text-blue-600 dark:text-blue-300">
+
+//             {isProject ? "PROJECT" : "POST"}
+
+//           </span>
+
+//           {/* TITLE */}
+
+//           <h2 className="mt-4 text-3xl font-bold">
+
+//             {data.title}
+//           </h2>
+
+//           {/* DESCRIPTION */}
+
+//           {data.description && (
+
+//             <>
+//               <p
+//                 className={`mt-4 text-gray-600 dark:text-gray-300 whitespace-pre-line ${
+//                   expanded ? "" : "line-clamp-4"
+//                 }`}
+//               >
+
+//                 {data.description}
+
+//               </p>
+//               {data.description.length > 150 && (
+
+//                 <button
+//                   onClick={() => setExpanded(!expanded)}
+//                   className="mt-2 text-sm text-blue-600 hover:underline"
+//                 >
+
+//                   {expanded ? "Show less" : "Read more"}
+
+//                 </button>
+
+//               )}
+
+//             </>
+
+//           )}
+//           {/* PROJECT EXTRA INFO */}
+
+//           {isProject && (
+
+//             <div className="mt-6 space-y-3">
+//               {data.techStack && (
+
+//                 <div className="flex items-center gap-2">
+
+//                   <Code size={18}/>
+
+//                   <span>{data.techStack}</span>
+
+//                 </div>
+
+//               )}
+
+//               {data.projectUrl && (
+
+//                 <a
+//                   href={data.projectUrl}
+//                   target="_blank"
+//                   className="flex items-center gap-2 text-blue-600 hover:underline"
+//                 >
+
+//                   <ExternalLink size={18}/>
+
+//                   Live Project
+
+//                 </a>
+
+//               )}
+//               {data.githubUrl && (
+
+//                 <a
+//                   href={data.githubUrl}
+//                   target="_blank"
+//                   className="flex items-center gap-2 text-blue-600 hover:underline"
+//                 >
+//                   <ExternalLink size={18}/>
+
+//                   GitHub
+//                 </a>
+//               )}
+//             </div>
+
+//           )}
+//           {/* DATE */}
+//           {data.createdAt && (
+
+//             <div className="mt-5 flex items-center gap-2 text-sm text-gray-500">
+
+//               <Calendar size={16}/>
+
+//               {new Date(data.createdAt).toLocaleString()}
+//             </div>
+//           )}
+//           {/* OWNER ACTIONS */}
+
+//           {isOwnProfile && (
+
+//             <div className="mt-6 flex gap-3">
+
+
+//               <button
+//                 onClick={() => onEdit?.(data)}
+//                 className="flex items-center gap-2 px-4 py-2 border rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800"
+//               >
+//                 <Pencil size={16}/>
+//                 Edit
+//               </button>
+//               <button
+//                 onClick={() => onDelete?.(data.id)}
+//                 className="flex items-center gap-2 px-4 py-2 border border-red-400 text-red-500 rounded-lg hover:bg-red-50 dark:hover:bg-red-900/20"
+//               >
+
+//                 <Trash2 size={16}/>
+//                 Delete
+//               </button>
+//             </div>
+//           )}
+//           {/* ACTION BAR */}
+
+//           <div className="mt-8 border-t pt-5 flex items-center justify-between">
+//             <div className="flex gap-6">
+
+//                   <button
+//   onClick={handleLike}
+//   disabled={loadingLike}
+//   className={`flex items-center gap-2 ${
+//     liked
+//       ? "text-red-500"
+//       : "hover:text-red-500"
+//   } ${
+//     loadingLike
+//       ? "opacity-60 cursor-not-allowed"
+//       : ""
+//   }`}
+// >
+//                 <Heart
+//                   size={20}
+//                   fill={liked ? "currentColor" : "none"}
+//                 />
+//                 Like ({likeCount})
+//               </button>
+//               <button
+//   onClick={async () => {
+//     const next = !showComments;
+//     setShowComments(next);
+//     if (next) {
+//       await loadComments();
+//     }
+//   }}
+//                 className="flex items-center gap-2 hover:text-blue-500"
+//               >
+//                 <MessageCircle size={20}/>
+//                Comment ({commentCount})
+//               </button>
+//               <button className="flex items-center gap-2 hover:text-green-500">
+//                 <Share2 size={20}/>
+//                 Share
+//               </button>
+//             </div>
+//             <button className="hover:text-yellow-500">
+//               <Bookmark size={20}/>
+//             </button>
+//           </div>
+//           {/* COMMENTS */}
+//           {showComments && (
+//             <div className="mt-5 border-t pt-5">
+//               <div className="flex items-center gap-2">
+//   <input
+//     value={commentText}
+//     onChange={(e) => setCommentText(e.target.value)}
+//     placeholder="Write a comment..."
+//     className="flex-1 px-4 py-2 rounded-full border bg-transparent text-sm"
+//   />
+//   {/* Emoji Button */}
+//   <button
+//     className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800"
+//   >
+//     <Smile size={18} />
+//   </button>
+//   {/* Post Button */}
+//   <button
+//     onClick={handleComment}
+//     disabled={!commentText.trim()}
+//     className="px-4 py-2 rounded-full bg-blue-600 text-white text-sm font-medium hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
+//   >
+//     Post
+//   </button>
+// </div>
+//         <div className="mt-5 space-y-4">
+//     {loadingComments && (
+//         <p className="text-center text-sm text-gray-500">
+//             Loading...
+//         </p>
+//     )}
+
+//     {!loadingComments && comments.length === 0 && (
+//         <p className="text-center text-sm text-gray-500">
+//             No comments yet
+//         </p>
+//     )}
+//     {comments.map((comment) => (
+//         <div
+//             key={comment.id}
+//             className="border rounded-xl p-3"
+//         >
+//             <div className="font-semibold">
+//                 {comment.username}
+//             </div>
+//             <div className="text-sm text-gray-600 dark:text-gray-300 mt-1">
+//                 {comment.content}
+//             </div>
+//             <div className="text-xs text-gray-400 mt-2">
+//                 {new Date(comment.createdAt).toLocaleString()}
+//             </div>
+//         </div>
+//     ))}
+// </div>
+//             </div>
+//           )}
+//         </div>
+//       </div>
+
+//     </div>
+//   );
+// }
+
+
+
+
+
 "use client";
 
 import { useState, useEffect } from "react";
@@ -911,6 +1844,13 @@ import {
   getLikeStatus,
   getLikeCount,
 } from "@/services/activityService";
+
+import {
+  getComments,
+  getCommentCount,
+  addComment,
+  deleteComment,
+} from "@/services/commentService";
 import {
   X,
   Heart,
@@ -941,7 +1881,10 @@ export default function ProfileDetail({
   const [liked, setLiked] = useState(false);
   const [likeCount, setLikeCount] = useState(0);
 
-
+  const [comments, setComments] = useState([]);
+  const [commentText, setCommentText] = useState("");
+  const [commentCount, setCommentCount] = useState(0);
+  const [loadingComments, setLoadingComments] = useState(false);
 
   // ================= LOAD LIKE STATUS =================
 
@@ -956,22 +1899,30 @@ useEffect(() => {
   setShowComments(false);
 setExpanded(false);
 
-  const fetchLikeData = async () => {
-    try {
-      const statusRes = await getLikeStatus(data.id);
-      const countRes = await getLikeCount(data.id);
+const fetchData = async () => {
+  try {
+    const [
+      statusRes,
+      likeCountRes,
+      commentCountRes,
+    ] = await Promise.all([
+      getLikeStatus(data.id),
+      getLikeCount(data.id),
+      getCommentCount(data.id),
+    ]);
 
-      if (!mounted) return;
+    if (!mounted) return;
 
-      setLiked(statusRes.liked);
-      setLikeCount(countRes.count);
+    setLiked(statusRes.liked);
+    setLikeCount(likeCountRes.count);
+    setCommentCount(commentCountRes.count);
 
-    } catch (error) {
-      console.error("LIKE ERROR:", error);
-    }
-  };
+  } catch (error) {
+    console.error(error);
+  }
+};
 
-  fetchLikeData();
+fetchData();
 
   return () => {
     mounted = false;
@@ -1004,10 +1955,20 @@ const handleLike = async () => {
     setLoadingLike(false);
   }
 };
+const loadComments = async () => {
+  if (!data?.id) return;
 
+  setLoadingComments(true);
 
-
-
+  try {
+    const response = await getComments(data.id);
+    setComments(response);
+  } catch (error) {
+    console.error("COMMENT ERROR:", error);
+  } finally {
+    setLoadingComments(false);
+  }
+};
 
   if (!open || !data) return null;
 
@@ -1017,18 +1978,29 @@ const handleLike = async () => {
   const image = data.imageUrl || "/assets/default.jpg";
 
 
+const handleComment = async () => {
+  if (!commentText.trim()) return;
 
+  try {
+    await addComment(data.id, commentText);
 
+    setCommentText("");
 
+    await loadComments();
+
+    const count = await getCommentCount(data.id);
+    setCommentCount(count.count);
+
+  } catch (error) {
+    console.error("COMMENT ERROR:", error);
+  }
+};
   return (
     <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
 
 
       <div className="relative w-full max-w-3xl max-h-[95vh] overflow-y-auto rounded-2xl bg-white dark:bg-black border border-gray-200 dark:border-gray-800">
-
-
-
-        {/* CLOSE */}
+        {/* CLOSE*/}
 
         <button
           onClick={onClose}
@@ -1038,10 +2010,6 @@ const handleLike = async () => {
           <X size={20}/>
 
         </button>
-
-
-
-
 
         {/* IMAGE */}
 
@@ -1056,13 +2024,7 @@ const handleLike = async () => {
 
         </div>
 
-
-
-
-
         <div className="p-6">
-
-
 
           {/* TYPE */}
 
@@ -1072,28 +2034,18 @@ const handleLike = async () => {
 
           </span>
 
-
-
-
-
           {/* TITLE */}
 
           <h2 className="mt-4 text-3xl font-bold">
 
             {data.title}
-
           </h2>
-
-
-
-
 
           {/* DESCRIPTION */}
 
           {data.description && (
 
             <>
-
               <p
                 className={`mt-4 text-gray-600 dark:text-gray-300 whitespace-pre-line ${
                   expanded ? "" : "line-clamp-4"
@@ -1103,9 +2055,6 @@ const handleLike = async () => {
                 {data.description}
 
               </p>
-
-
-
               {data.description.length > 150 && (
 
                 <button
@@ -1122,20 +2071,11 @@ const handleLike = async () => {
             </>
 
           )}
-
-
-
-
-
-
-
           {/* PROJECT EXTRA INFO */}
 
           {isProject && (
 
             <div className="mt-6 space-y-3">
-
-
               {data.techStack && (
 
                 <div className="flex items-center gap-2">
@@ -1147,10 +2087,6 @@ const handleLike = async () => {
                 </div>
 
               )}
-
-
-
-
 
               {data.projectUrl && (
 
@@ -1167,11 +2103,6 @@ const handleLike = async () => {
                 </a>
 
               )}
-
-
-
-
-
               {data.githubUrl && (
 
                 <a
@@ -1179,28 +2110,15 @@ const handleLike = async () => {
                   target="_blank"
                   className="flex items-center gap-2 text-blue-600 hover:underline"
                 >
-
                   <ExternalLink size={18}/>
 
                   GitHub
-
                 </a>
-
               )}
-
-
             </div>
 
           )}
-
-
-
-
-
-
-
           {/* DATE */}
-
           {data.createdAt && (
 
             <div className="mt-5 flex items-center gap-2 text-sm text-gray-500">
@@ -1208,17 +2126,8 @@ const handleLike = async () => {
               <Calendar size={16}/>
 
               {new Date(data.createdAt).toLocaleString()}
-
             </div>
-
           )}
-
-
-
-
-
-
-
           {/* OWNER ACTIONS */}
 
           {isOwnProfile && (
@@ -1230,46 +2139,23 @@ const handleLike = async () => {
                 onClick={() => onEdit?.(data)}
                 className="flex items-center gap-2 px-4 py-2 border rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800"
               >
-
                 <Pencil size={16}/>
-
                 Edit
-
               </button>
-
-
-
-
               <button
                 onClick={() => onDelete?.(data.id)}
                 className="flex items-center gap-2 px-4 py-2 border border-red-400 text-red-500 rounded-lg hover:bg-red-50 dark:hover:bg-red-900/20"
               >
 
                 <Trash2 size={16}/>
-
                 Delete
-
               </button>
-
-
             </div>
-
           )}
-
-
-
-
-
-
-
           {/* ACTION BAR */}
 
           <div className="mt-8 border-t pt-5 flex items-center justify-between">
-
-
             <div className="flex gap-6">
-
-
 
                   <button
   onClick={handleLike}
@@ -1284,113 +2170,110 @@ const handleLike = async () => {
       : ""
   }`}
 >
-
                 <Heart
                   size={20}
                   fill={liked ? "currentColor" : "none"}
                 />
-
                 Like ({likeCount})
-
               </button>
-
-
-
-
-
               <button
-                onClick={() => setShowComments(!showComments)}
+  onClick={async () => {
+    const next = !showComments;
+    setShowComments(next);
+    if (next) {
+      await loadComments();
+    }
+  }}
                 className="flex items-center gap-2 hover:text-blue-500"
               >
-
                 <MessageCircle size={20}/>
-
-                Comment
-
+               Comment ({commentCount})
               </button>
-
-
-
-
-
               <button className="flex items-center gap-2 hover:text-green-500">
-
                 <Share2 size={20}/>
-
                 Share
-
               </button>
-
-
-
             </div>
-
-
-
-
-
             <button className="hover:text-yellow-500">
-
               <Bookmark size={20}/>
-
             </button>
-
-
-
           </div>
-
-
-
-
-
-
-
           {/* COMMENTS */}
-
           {showComments && (
-
             <div className="mt-5 border-t pt-5">
+              <div className="flex items-center gap-2">
+<input
+  autoFocus
+  value={commentText}
+  onChange={(e) => setCommentText(e.target.value)}
+  onKeyDown={(e) => {
+    if (e.key === "Enter") {
+      handleComment();
+    }
+  }}
+  placeholder="Write a comment..."
+  className="flex-1 px-4 py-2 rounded-full border bg-transparent text-sm"
+/>
+  {/* Emoji Button */}
+  <button
+    className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800"
+  >
+    <Smile size={18} />
+  </button>
+  {/* Post Button */}
+  <button
+    onClick={handleComment}
+    disabled={!commentText.trim()}
+    className="px-4 py-2 rounded-full bg-blue-600 text-white text-sm font-medium hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
+  >
+    Post
+  </button>
+</div>
+<div className="mt-5 space-y-4 max-h-80 overflow-y-auto pr-2">
+{loadingComments && (
+    <div className="text-center py-4 text-sm text-gray-500">
+        Loading comments...
+    </div>
+)}
+    
+
+    {!loadingComments && comments.length === 0 && (
+        <p className="text-center text-sm text-gray-500">
+            No comments yet
+        </p>
+    )}
 
 
-              <div className="flex gap-2">
 
+{comments.map((comment) => (
+  <div
+    key={comment.id}
+    className="flex items-start gap-3 py-3"
+  >
+    <Image
+      src={comment.profileImage || "/assets/default-avatar.png"}
+      alt={comment.username}
+      width={40}
+      height={40}
+      className="rounded-full object-cover"
+    />
 
-                <input
-                  placeholder="Write a comment..."
-                  className="flex-1 px-4 py-2 rounded-full border bg-transparent text-sm"
-                />
-
-
-
-                <button className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800">
-
-                  <Smile size={18}/>
-
-                </button>
-
-
-              </div>
-
-
-
-              <div className="mt-4 text-sm text-gray-500 text-center">
-
-                No comments yet
-
-              </div>
-
-
-            </div>
-
-          )}
-
-
-
-        </div>
-
-
+    <div className="flex-1">
+      <div className="font-semibold text-sm">
+        {comment.username}
       </div>
 
+      <div className="text-sm text-gray-700 dark:text-gray-300 break-words">
+        {comment.content}
+      </div>
+    </div>
+  </div>
+))}
+</div>
+            </div>
+          )}
+        </div>
+      </div>
 
     </div>
   );
