@@ -49,4 +49,19 @@ public interface ConnectionRepository extends MongoRepository<Connection, String
             String senderId,
             String receiverId
     );
+
+
+
+
+    Optional<Connection> findBySenderIdAndReceiverIdAndStatus(
+        String senderId,
+        String receiverId,
+        ConnectionStatus status
+);
+
+Optional<Connection> findByReceiverIdAndSenderIdAndStatus(
+        String receiverId,
+        String senderId,
+        ConnectionStatus status
+);
 }
