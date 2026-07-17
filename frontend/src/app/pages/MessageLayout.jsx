@@ -204,71 +204,193 @@
 
 
 
+// "use client";
+
+// import { useState } from "react";
+// import ChatList from "../components/messages/ChatList";
+// import ChatWindow from "../components/messages/ChatWindow";
+// import MessageBottomNav from "../components/messages/MessageBottomNav";
+// export default function MessageLayout() {
+//   const [selectedChat, setSelectedChat] = useState(null);
+//   const [isMobileChatOpen, setIsMobileChatOpen] = useState(false);
+//    const [activeTab, setActiveTab] = useState("messages");
+//   const handleSelectChat = (chat) => {
+//     setSelectedChat(chat);
+//     setIsMobileChatOpen(true);
+//   };
+
+//   const handleBack = () => {
+//     setIsMobileChatOpen(false);
+//   };
+
+
+
+
+// return (
+//   <div className="flex h-full w-full md:pb-0">
+
+//     {/* CHAT LIST */}
+//     <div className={`
+//       w-full md:w-[30%]
+//       ${isMobileChatOpen ? "hidden md:block" : "block"}
+//     `}>
+//       <ChatList
+//         selectedChat={selectedChat}
+//         setSelectedChat={handleSelectChat}
+//       />
+//     </div>
+
+//     {/* CHAT WINDOW */}
+//     <div className={`
+//       w-full md:w-[70%]
+//       ${isMobileChatOpen ? "block" : "hidden md:block"}
+//     `}>
+//       <ChatWindow
+//         selectedChat={selectedChat}
+//         onBack={handleBack}
+//       />
+//     </div>
+
+//     {/* 🔥 NEW MESSAGE NAVBAR */}
+//     <MessageBottomNav
+//       onTabChange={(tab) => {
+//         setActiveTab(tab);
+
+//         if (tab === "list") {
+//           setIsMobileChatOpen(false);
+//         }
+
+//         if (tab === "messages") {
+//           if (selectedChat) {
+//             setIsMobileChatOpen(true);
+//           }
+//         }
+//       }}
+//     />
+
+//   </div>
+// );
+// }
+
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ChatList from "../components/messages/ChatList";
 import ChatWindow from "../components/messages/ChatWindow";
 import MessageBottomNav from "../components/messages/MessageBottomNav";
+
 export default function MessageLayout() {
+
   const [selectedChat, setSelectedChat] = useState(null);
   const [isMobileChatOpen, setIsMobileChatOpen] = useState(false);
-   const [activeTab, setActiveTab] = useState("messages");
+  const [activeTab, setActiveTab] = useState("messages");
+
+
   const handleSelectChat = (chat) => {
+
     setSelectedChat(chat);
     setIsMobileChatOpen(true);
+
+    // add browser history entry
+    window.history.pushState(
+      { chatOpen: true },
+      "",
+      window.location.href
+    );
   };
 
-  const handleBack = () => {
-    setIsMobileChatOpen(false);
-  };
+
+  useEffect(() => {
+
+    const handleBack = () => {
+
+      if (isMobileChatOpen) {
+
+        setIsMobileChatOpen(false);
+        setSelectedChat(null);
+
+      }
+
+    };
+
+
+    window.addEventListener(
+      "popstate",
+      handleBack
+    );
+
+
+    return () => {
+      window.removeEventListener(
+        "popstate",
+        handleBack
+      );
+    };
+
+
+  }, [isMobileChatOpen]);
 
 
 
+  return (
 
-return (
-  <div className="flex h-full w-full md:pb-0">
+    <div className="flex h-full w-full md:pb-0">
 
-    {/* CHAT LIST */}
-    <div className={`
-      w-full md:w-[30%]
-      ${isMobileChatOpen ? "hidden md:block" : "block"}
-    `}>
-      <ChatList
-        selectedChat={selectedChat}
-        setSelectedChat={handleSelectChat}
-      />
-    </div>
 
-    {/* CHAT WINDOW */}
-    <div className={`
-      w-full md:w-[70%]
-      ${isMobileChatOpen ? "block" : "hidden md:block"}
-    `}>
-      <ChatWindow
-        selectedChat={selectedChat}
-        onBack={handleBack}
-      />
-    </div>
+      {/* CHAT LIST */}
 
-    {/* 🔥 NEW MESSAGE NAVBAR */}
-    <MessageBottomNav
-      onTabChange={(tab) => {
-        setActiveTab(tab);
+      <div
+        className={`
+        w-full md:w-[30%]
+        ${isMobileChatOpen ? "hidden md:block" : "block"}
+        `}
+      >
 
-        if (tab === "list") {
-          setIsMobileChatOpen(false);
-        }
+        <ChatList
+          selectedChat={selectedChat}
+          setSelectedChat={handleSelectChat}
+        />
 
-        if (tab === "messages") {
-          if (selectedChat) {
-            setIsMobileChatOpen(true);
+      </div>
+
+
+
+      {/* CHAT WINDOW */}
+
+      <div
+        className={`
+        w-full md:w-[70%]
+        ${isMobileChatOpen ? "block" : "hidden md:block"}
+        `}
+      >
+
+        <ChatWindow
+          selectedChat={selectedChat}
+        />
+
+      </div>
+
+
+
+      <MessageBottomNav
+        onTabChange={(tab)=>{
+
+          setActiveTab(tab);
+
+
+          if(tab==="list"){
+
+            setIsMobileChatOpen(false);
+            setSelectedChat(null);
+
           }
-        }
-      }}
-    />
 
-  </div>
-);
+        }}
+      />
+
+
+    </div>
+
+  );
+
 }
-

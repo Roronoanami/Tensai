@@ -132,6 +132,10 @@
 // }
 
 
+
+
+
+
 package com.spring.ankur.chatapp_ankur.service;
 
 import com.spring.ankur.chatapp_ankur.enums.NotificationType;
@@ -143,8 +147,6 @@ import com.spring.ankur.chatapp_ankur.repositories.FollowRepository;
 import com.spring.ankur.chatapp_ankur.repositories.UserRepository;
 
 import org.springframework.stereotype.Service;
-
-
 @Service
 public class FollowService {
 
@@ -433,5 +435,7 @@ public class FollowService {
         );
 
     }
+
+    
 
 }

@@ -210,69 +210,239 @@
 
 // new advance both me and other 
 
+// package com.spring.ankur.chatapp_ankur.controller;
+// import org.springframework.security.core.context.SecurityContextHolder;
+
+// import com.spring.ankur.chatapp_ankur.dto.NetworkUserResponse;
+// import com.spring.ankur.chatapp_ankur.dto.ProfileRequest;
+// import com.spring.ankur.chatapp_ankur.dto.ProfileResponse;
+// import com.spring.ankur.chatapp_ankur.service.ProfileService;
+
+// import java.util.List;
+
+// import org.springframework.http.MediaType;
+// import org.springframework.http.ResponseEntity;
+// import org.springframework.web.bind.annotation.*;
+
+// @RestController
+// @RequestMapping("/api/profile")
+// public class ProfileController {
+
+//     private final ProfileService profileService;
+
+//     public ProfileController(ProfileService profileService) {
+//         this.profileService = profileService;
+//     }
+
+//     // =========================
+//     // CREATE / UPDATE OWN PROFILE
+//     // =========================
+//     @PostMapping(value = "/me", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+//     public ResponseEntity<ProfileResponse> createOrUpdateMyProfile(
+//             @ModelAttribute ProfileRequest request
+//     ) {
+
+//         String userId = (String) SecurityContextHolder
+//                 .getContext()
+//                 .getAuthentication()
+//                 .getPrincipal();
+
+//         return ResponseEntity.ok(
+//                 profileService.createOrUpdateProfile(userId, request)
+//         );
+//     }
+
+//     // =========================
+//     // GET OWN PROFILE (JWT USER)
+//     // =========================
+//     @GetMapping("/me")
+//     public ResponseEntity<ProfileResponse> getMyProfile() {
+
+//         String userId = (String) SecurityContextHolder
+//                 .getContext()
+//                 .getAuthentication()
+//                 .getPrincipal();
+
+//         return ResponseEntity.ok(
+//                 profileService.getProfileByUserId(userId)
+//         );
+//     }
+
+//     // =========================
+//     // PUBLIC PROFILE (USERNAME BASED)
+//     // =========================
+//     @GetMapping("/public/username/{username}")
+//     public ResponseEntity<ProfileResponse> getProfileByUsername(
+//             @PathVariable String username
+//     ) {
+//         return ResponseEntity.ok(
+//                 profileService.getProfileByUsername(username)
+//         );
+//     }
+
+
+//     // =========================
+// // MY NETWORK
+// // FOLLOWING + CONNECTIONS
+// // =========================
+
+// @GetMapping("/network")
+// public ResponseEntity<?> getMyNetwork(){
+
+//     String userId =
+//             (String) SecurityContextHolder
+//             .getContext()
+//             .getAuthentication()
+//             .getPrincipal();
+
+
+//     return ResponseEntity.ok(
+//             profileService.getMyNetwork(userId)
+//     );
+// }
+
+
+// }
+
+
+
+
 package com.spring.ankur.chatapp_ankur.controller;
 
+import com.spring.ankur.chatapp_ankur.dto.NetworkUserResponse;
 import com.spring.ankur.chatapp_ankur.dto.ProfileRequest;
 import com.spring.ankur.chatapp_ankur.dto.ProfileResponse;
 import com.spring.ankur.chatapp_ankur.service.ProfileService;
+
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
+
 @RestController
 @RequestMapping("/api/profile")
 public class ProfileController {
 
+
     private final ProfileService profileService;
 
-    public ProfileController(ProfileService profileService) {
+
+    public ProfileController(
+            ProfileService profileService
+    ) {
+
         this.profileService = profileService;
+
     }
+
+
 
     // =========================
     // CREATE / UPDATE OWN PROFILE
     // =========================
-    @PostMapping(value = "/me", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+
+    @PostMapping(
+            value = "/me",
+            consumes = MediaType.MULTIPART_FORM_DATA_VALUE
+    )
     public ResponseEntity<ProfileResponse> createOrUpdateMyProfile(
             @ModelAttribute ProfileRequest request
     ) {
 
-        String userId = (String) SecurityContextHolder
+
+        String userId =
+                (String) SecurityContextHolder
                 .getContext()
                 .getAuthentication()
                 .getPrincipal();
 
+
         return ResponseEntity.ok(
-                profileService.createOrUpdateProfile(userId, request)
+                profileService.createOrUpdateProfile(
+                        userId,
+                        request
+                )
         );
+
     }
 
+
+
+
+
     // =========================
-    // GET OWN PROFILE (JWT USER)
+    // GET OWN PROFILE
     // =========================
+
     @GetMapping("/me")
     public ResponseEntity<ProfileResponse> getMyProfile() {
 
-        String userId = (String) SecurityContextHolder
+
+        String userId =
+                (String) SecurityContextHolder
                 .getContext()
                 .getAuthentication()
                 .getPrincipal();
 
+
         return ResponseEntity.ok(
-                profileService.getProfileByUserId(userId)
+                profileService.getProfileByUserId(
+                        userId
+                )
         );
+
     }
 
+
+
+
+
     // =========================
-    // PUBLIC PROFILE (USERNAME BASED)
+    // PUBLIC PROFILE
     // =========================
+
     @GetMapping("/public/username/{username}")
     public ResponseEntity<ProfileResponse> getProfileByUsername(
             @PathVariable String username
     ) {
+
+
         return ResponseEntity.ok(
-                profileService.getProfileByUsername(username)
+                profileService.getProfileByUsername(
+                        username
+                )
         );
+
     }
+
+
+
+
+
+    // =========================
+    // MY NETWORK
+    // FOLLOWING + CONNECTIONS
+    // =========================
+
+    @GetMapping("/network")
+    public ResponseEntity<List<NetworkUserResponse>> getMyNetwork(){
+
+
+        String userId =
+                (String) SecurityContextHolder
+                .getContext()
+                .getAuthentication()
+                .getPrincipal();
+
+
+
+   return ResponseEntity.ok(
+        profileService.getNetworkUsers(userId)
+);
+
+    }
+
 }

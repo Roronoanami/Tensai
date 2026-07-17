@@ -1,11 +1,27 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
-import { Home, Search, Send, BellDot } from "lucide-react";
+import { Home, Search, BellDot } from "lucide-react";
+
+// function Icon({ icon }) {
+//   return (
+//     <div className="flex items-center justify-center text-gray-900 dark:text-white">
+//       {icon}
+//     </div>
+//   );
+// }
 
 function Icon({ icon }) {
   return (
-    <div className="flex items-center justify-center text-gray-900 dark:text-white">
+    <div
+      className="
+        flex items-center justify-center
+        text-gray-600
+        dark:text-gray-300
+        hover:text-blue-500
+        transition-colors
+      "
+    >
       {icon}
     </div>
   );
@@ -24,15 +40,18 @@ export default function MessageBottomNav() {
     ">
 
       <Link href="/main">
-        <Icon icon={<Home size={20} />} />
+        <Icon icon={<Home 
+  size={20} 
+  className="text-gray-600 hover:text-blue-500"
+/> } />
       </Link>
 
       <Link href="/search">
         <Icon icon={<Search size={20} />} />
       </Link>
 
-      <Link href="/messages">
-        <Icon icon={<Send size={20} />} />
+      <Link href="/notifications">
+        <Icon icon={<BellDot size={20} />} />
       </Link>
 
        {/* PROFILE (REPLACES BELL) */}

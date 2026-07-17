@@ -64,4 +64,13 @@ Optional<Connection> findByReceiverIdAndSenderIdAndStatus(
         String senderId,
         ConnectionStatus status
 );
+
+
+List<Connection> findBySenderIdAndStatusOrReceiverIdAndStatus(
+        String senderId,
+        ConnectionStatus senderStatus,
+        String receiverId,
+        ConnectionStatus receiverStatus
+);
+
 }

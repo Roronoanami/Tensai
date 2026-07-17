@@ -730,6 +730,7 @@
 
 package com.spring.ankur.chatapp_ankur.service;
 
+import com.spring.ankur.chatapp_ankur.dto.NetworkUserResponse;
 import com.spring.ankur.chatapp_ankur.dto.ProfileRequest;
 import com.spring.ankur.chatapp_ankur.dto.ProfileResponse;
 import com.spring.ankur.chatapp_ankur.entities.Profile;
@@ -737,6 +738,13 @@ import com.spring.ankur.chatapp_ankur.entities.User;
 import com.spring.ankur.chatapp_ankur.repositories.ProfileRepository;
 import com.spring.ankur.chatapp_ankur.repositories.UserRepository;
 import org.springframework.stereotype.Service;
+import com.spring.ankur.chatapp_ankur.entities.Follow;
+import com.spring.ankur.chatapp_ankur.entities.Connection;
+import com.spring.ankur.chatapp_ankur.entities.ConnectionStatus;
+import com.spring.ankur.chatapp_ankur.repositories.FollowRepository;
+import com.spring.ankur.chatapp_ankur.repositories.ConnectionRepository;
+import java.util.*;
+
 
 @Service
 public class ProfileService {
@@ -744,16 +752,22 @@ public class ProfileService {
     private final ProfileRepository profileRepository;
     private final CloudinaryService cloudinaryService;
     private final UserRepository userRepository; // ✅ FIXED
+    private final FollowRepository followRepository;
+private final ConnectionRepository connectionRepository;
+   public ProfileService(
+        ProfileRepository profileRepository,
+        CloudinaryService cloudinaryService,
+        UserRepository userRepository,
+        FollowRepository followRepository,
+        ConnectionRepository connectionRepository
+) {
 
-    public ProfileService(
-            ProfileRepository profileRepository,
-            CloudinaryService cloudinaryService,
-            UserRepository userRepository
-    ) {
-        this.profileRepository = profileRepository;
-        this.cloudinaryService = cloudinaryService;
-        this.userRepository = userRepository;
-    }
+    this.profileRepository = profileRepository;
+    this.cloudinaryService = cloudinaryService;
+    this.userRepository = userRepository;
+    this.followRepository = followRepository;
+    this.connectionRepository = connectionRepository;
+}
 
     // =========================
     // CREATE / UPDATE OWN PROFILE
@@ -978,5 +992,106 @@ public class ProfileService {
     response.setPortfolioUrl(profile.getPortfolioUrl());
 
     return response;
+}
+
+// =========================
+// FOLLOWING + CONNECTION NETWORK
+// =========================
+public List<NetworkUserResponse> getNetworkUsers(String userId){
+
+    Set<String> userIds = new HashSet<>();
+
+
+    // FOLLOWING USERS
+    List<Follow> follows =
+            followRepository.findByFollowerId(userId);
+
+
+    for(Follow follow : follows){
+
+        userIds.add(
+            follow.getFollowingId()
+        );
+
+    }
+
+
+
+    // CONNECTED USERS (SENDER)
+    List<Connection> sent =
+            connectionRepository
+            .findBySenderIdAndStatus(
+                userId,
+                ConnectionStatus.CONNECTED
+            );
+
+
+    for(Connection c : sent){
+
+        userIds.add(
+            c.getReceiverId()
+        );
+
+    }
+
+
+
+
+    // CONNECTED USERS (RECEIVER)
+    List<Connection> received =
+            connectionRepository
+            .findByReceiverIdAndStatus(
+                userId,
+                ConnectionStatus.CONNECTED
+            );
+
+
+    for(Connection c : received){
+
+        userIds.add(
+            c.getSenderId()
+        );
+
+    }
+
+
+
+    List<NetworkUserResponse> result =
+            new ArrayList<>();
+
+
+    for(String id : userIds){
+
+
+        Profile profile =
+            profileRepository
+            .findByUserId(id)
+            .orElse(null);
+
+
+        User user =
+            userRepository
+            .findById(id)
+            .orElse(null);
+
+
+        if(user != null){
+
+            result.add(
+                new NetworkUserResponse(
+                    user.getUsername(),
+                    profile != null 
+                    ? profile.getProfileImage()
+                    : null
+                )
+            );
+
+        }
+
+    }
+
+
+    return result;
+
 }
 }

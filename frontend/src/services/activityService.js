@@ -152,20 +152,208 @@
 
 
 
-const BASE_URL = "http://localhost:8081/api/activity";
-
-// ================= GET MY ACTIVITIES =================
-export const getMyActivities = async (userId) => {
-  const token = localStorage.getItem("token");
+// // const BASE_URL = "http://localhost:8081/api/activity";
+// const API_URL = `${process.env.NEXT_PUBLIC_API_URL}/activity`;
+// // ================= GET MY ACTIVITIES =================
+// export const getMyActivities = async (userId) => {
+//   const token = localStorage.getItem("token");
  
 
 
 
-console.log("TOKEN =", token);
-console.log("USER ID =", userId); 
+// console.log("TOKEN =", token);
+// console.log("USER ID =", userId); 
 
 
-  const res = await fetch(`${BASE_URL}/me?userId=${userId}`, {
+//   const res = await fetch(`${BASE_URL}/me?userId=${userId}`, {
+//     headers: {
+//       Authorization: `Bearer ${token}`,
+//     },
+//   });
+
+//   if (!res.ok) {
+//     throw new Error("Failed to fetch activities");
+//   }
+
+//   return res.json();
+// };
+
+
+
+// export const getUserActivitiesByUsername = async (username) => {
+//   const token = localStorage.getItem("token");
+
+//   console.log("Fetching activities for:", username);
+
+//   const res = await fetch(`${BASE_URL}/user/${username}`, {
+//     headers: {
+//       Authorization: `Bearer ${token}`,
+//     },
+//   });
+
+//   console.log("Status:", res.status);
+
+//   if (!res.ok) {
+//     throw new Error("Failed to fetch user activities");
+//   }
+
+//   const data = await res.json();
+
+//   console.log("Returned activities:", data);
+
+//   return data;
+// };
+// // ================= CREATE ACTIVITY =================
+// export const createActivity = async (userId, formData) => {
+//   const token = localStorage.getItem("token");
+
+//   const res = await fetch(`${BASE_URL}?userId=${userId}`, {
+//     method: "POST",
+//     headers: {
+//       Authorization: `Bearer ${token}`,
+//     },
+//     body: formData,
+//   });
+
+//   const text = await res.text();
+
+//   console.log("CREATE STATUS:", res.status);
+//   console.log("CREATE RESPONSE:", text);
+
+//   if (!res.ok) {
+//     throw new Error(text || "Failed to create activity");
+//   }
+
+//   return text ? JSON.parse(text) : null;
+// };
+
+// // ================= UPDATE ACTIVITY =================
+// export const updateActivity = async (id, userId, formData) => {
+//   const token = localStorage.getItem("token");
+
+//   const res = await fetch(`${BASE_URL}/${id}?userId=${userId}`, {
+//     method: "PUT",
+//     headers: {
+//       Authorization: `Bearer ${token}`,
+//     },
+//     body: formData,
+//   });
+
+//   const text = await res.text();
+
+//   console.log("UPDATE STATUS:", res.status);
+//   console.log("UPDATE RESPONSE:", text);
+
+//   if (!res.ok) {
+//     throw new Error(text || "Failed to update activity");
+//   }
+
+//   return text ? JSON.parse(text) : null;
+// };
+// // ================= DELETE ACTIVITY =================
+// export const deleteActivity = async (id, userId) => {
+//   const token = localStorage.getItem("token");
+
+//   const res = await fetch(`${BASE_URL}/${id}?userId=${userId}`, {
+//     method: "DELETE",
+//     headers: {
+//       Authorization: `Bearer ${token}`,
+//     },
+//   });
+
+//   if (!res.ok) {
+//     throw new Error("Failed to delete activity");
+//   }
+// };
+
+
+// // ================= LIKE ACTIVITY =================
+
+// export const likeActivity = async (activityId) => {
+//   const token = localStorage.getItem("token");
+
+//   const res = await fetch(`${BASE_URL}/${activityId}/like`, {
+//     method: "POST",
+//     headers: {
+//       Authorization: `Bearer ${token}`,
+//     },
+//   });
+
+//   if (!res.ok) {
+//     throw new Error("Failed to like activity");
+//   }
+
+//   return res.json();
+// };
+
+
+// // ================= UNLIKE ACTIVITY =================
+
+// export const unlikeActivity = async (activityId) => {
+//   const token = localStorage.getItem("token");
+
+//   const res = await fetch(`${BASE_URL}/${activityId}/like`, {
+//     method: "DELETE",
+//     headers: {
+//       Authorization: `Bearer ${token}`,
+//     },
+//   });
+
+//   if (!res.ok) {
+//     throw new Error("Failed to unlike activity");
+//   }
+
+//   return res.json();
+// };
+
+
+// // ================= LIKE STATUS =================
+
+// export const getLikeStatus = async (activityId) => {
+//   const token = localStorage.getItem("token");
+
+//   const res = await fetch(`${BASE_URL}/${activityId}/like/status`, {
+//     headers: {
+//       Authorization: `Bearer ${token}`,
+//     },
+//   });
+
+//   if (!res.ok) {
+//     throw new Error("Failed to get like status");
+//   }
+
+//   return res.json();
+// };
+
+
+// // like      count   
+
+
+
+// export const getLikeCount = async (activityId) => {
+//   const res = await fetch(
+//     `${BASE_URL}/${activityId}/like/count`
+//   );
+
+//   if (!res.ok) {
+//     throw new Error("Failed to fetch like count");
+//   }
+
+//   return res.json();
+// };
+
+
+const API_URL = `${process.env.NEXT_PUBLIC_API_URL}/activity`;
+
+// ================= GET MY ACTIVITIES =================
+
+export const getMyActivities = async (userId) => {
+  const token = localStorage.getItem("token");
+
+  console.log("TOKEN =", token);
+  console.log("USER ID =", userId);
+
+  const res = await fetch(`${API_URL}/me?userId=${userId}`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -178,14 +366,14 @@ console.log("USER ID =", userId);
   return res.json();
 };
 
-
+// ================= GET USER ACTIVITIES =================
 
 export const getUserActivitiesByUsername = async (username) => {
   const token = localStorage.getItem("token");
 
   console.log("Fetching activities for:", username);
 
-  const res = await fetch(`${BASE_URL}/user/${username}`, {
+  const res = await fetch(`${API_URL}/user/${username}`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -203,11 +391,13 @@ export const getUserActivitiesByUsername = async (username) => {
 
   return data;
 };
+
 // ================= CREATE ACTIVITY =================
+
 export const createActivity = async (userId, formData) => {
   const token = localStorage.getItem("token");
 
-  const res = await fetch(`${BASE_URL}?userId=${userId}`, {
+  const res = await fetch(`${API_URL}?userId=${userId}`, {
     method: "POST",
     headers: {
       Authorization: `Bearer ${token}`,
@@ -228,10 +418,11 @@ export const createActivity = async (userId, formData) => {
 };
 
 // ================= UPDATE ACTIVITY =================
+
 export const updateActivity = async (id, userId, formData) => {
   const token = localStorage.getItem("token");
 
-  const res = await fetch(`${BASE_URL}/${id}?userId=${userId}`, {
+  const res = await fetch(`${API_URL}/${id}?userId=${userId}`, {
     method: "PUT",
     headers: {
       Authorization: `Bearer ${token}`,
@@ -250,11 +441,13 @@ export const updateActivity = async (id, userId, formData) => {
 
   return text ? JSON.parse(text) : null;
 };
+
 // ================= DELETE ACTIVITY =================
+
 export const deleteActivity = async (id, userId) => {
   const token = localStorage.getItem("token");
 
-  const res = await fetch(`${BASE_URL}/${id}?userId=${userId}`, {
+  const res = await fetch(`${API_URL}/${id}?userId=${userId}`, {
     method: "DELETE",
     headers: {
       Authorization: `Bearer ${token}`,
@@ -266,13 +459,12 @@ export const deleteActivity = async (id, userId) => {
   }
 };
 
-
 // ================= LIKE ACTIVITY =================
 
 export const likeActivity = async (activityId) => {
   const token = localStorage.getItem("token");
 
-  const res = await fetch(`${BASE_URL}/${activityId}/like`, {
+  const res = await fetch(`${API_URL}/${activityId}/like`, {
     method: "POST",
     headers: {
       Authorization: `Bearer ${token}`,
@@ -286,13 +478,12 @@ export const likeActivity = async (activityId) => {
   return res.json();
 };
 
-
 // ================= UNLIKE ACTIVITY =================
 
 export const unlikeActivity = async (activityId) => {
   const token = localStorage.getItem("token");
 
-  const res = await fetch(`${BASE_URL}/${activityId}/like`, {
+  const res = await fetch(`${API_URL}/${activityId}/like`, {
     method: "DELETE",
     headers: {
       Authorization: `Bearer ${token}`,
@@ -306,13 +497,12 @@ export const unlikeActivity = async (activityId) => {
   return res.json();
 };
 
-
 // ================= LIKE STATUS =================
 
 export const getLikeStatus = async (activityId) => {
   const token = localStorage.getItem("token");
 
-  const res = await fetch(`${BASE_URL}/${activityId}/like/status`, {
+  const res = await fetch(`${API_URL}/${activityId}/like/status`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -325,15 +515,10 @@ export const getLikeStatus = async (activityId) => {
   return res.json();
 };
 
-
-// like      count   
-
-
+// ================= LIKE COUNT =================
 
 export const getLikeCount = async (activityId) => {
-  const res = await fetch(
-    `${BASE_URL}/${activityId}/like/count`
-  );
+  const res = await fetch(`${API_URL}/${activityId}/like/count`);
 
   if (!res.ok) {
     throw new Error("Failed to fetch like count");

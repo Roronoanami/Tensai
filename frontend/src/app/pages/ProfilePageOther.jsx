@@ -36,7 +36,7 @@ import { useEffect, useState } from "react";
 import ProfileLayout from "../pages/ProfileLayout";
 import OtherProfileInfo from "../components/profile/OtherProfileInfo";
 import ProfileActivity from "../components/profile/ProfileActivity";
-
+import { getPublicProfile } from "@/services/profileService";
 export default function ProfilePageOther({ username }) {
   const [profile, setProfile] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -46,16 +46,22 @@ export default function ProfilePageOther({ username }) {
       try {
         if (!username) return;
 
-        const res = await fetch(
-          `http://localhost:8081/api/profile/public/username/${username}`
-        );
+        // const res = await fetch(
+        //   `http://localhost:8081/api/profile/public/username/${username}`
+        // );
 
-        if (!res.ok) {
-          throw new Error("Failed to fetch profile");
-        }
+        // if (!res.ok) {
+        //   throw new Error("Failed to fetch profile");
+        // }
 
-        const data = await res.json();
+        // const data = await res.json();
+        // setProfile(data);
+
+
+
+        const data = await getPublicProfile(username);
         setProfile(data);
+        
       } catch (err) {
         console.error(err);
       } finally {

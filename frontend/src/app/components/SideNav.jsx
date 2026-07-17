@@ -907,7 +907,7 @@
 
 
 "use client";
-
+import { getMyProfile } from "@/services/profileService";
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
@@ -990,74 +990,38 @@ export default function SideNav() {
 
 
   // ================= FETCH PROFILE =================
-  useEffect(() => {
+useEffect(() => {
+
+  const fetchProfileImage = async () => {
+
+    try {
+
+      const data = await getMyProfile();
+
+      console.log("SIDEBAR PROFILE:", data);
 
 
-    const fetchProfileImage = async () => {
-
-
-      try {
-
-        const token = localStorage.getItem("token");
-
-
-        if (!token) {
-          return;
-        }
-
-
-        const response = await fetch(
-          "http://localhost:8081/api/profile/me",
-          {
-            headers:{
-              Authorization:`Bearer ${token}`
-            }
-          }
-        );
-
-
-        if(!response.ok){
-          console.log("Unable to load sidebar profile");
-          return;
-        }
-
-
-        const data = await response.json();
-
-
-        console.log(
-          "SIDEBAR PROFILE:",
-          data
-        );
-
-
-        if(data.profileImage){
-
-          setProfileImage(
-            data.profileImage
-          );
-
-        }
-
-
-      }
-      catch(error){
-
-        console.error(
-          "Sidebar profile error:",
-          error
-        );
-
+      if (data.profileImage) {
+        setProfileImage(data.profileImage);
       }
 
 
-    };
+    } catch (error) {
+
+      console.error(
+        "Sidebar profile error:",
+        error
+      );
+
+    }
+
+  };
 
 
-    fetchProfileImage();
+  fetchProfileImage();
 
 
-  }, []);
+}, []);
 
 
 
@@ -1129,16 +1093,7 @@ dark:bg-gray-900 dark:border-gray-800
 
   <div className="flex-1 flex items-center justify-start">
 
-    <NavLink
-      icon={
-        <BadgePlus 
-          size={20}
-          className="group-hover:text-blue-500"
-        />
-      }
-      label="New"
-    />
-
+    
   </div>
 
 

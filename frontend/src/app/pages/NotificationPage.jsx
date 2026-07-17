@@ -133,11 +133,11 @@
 
 
 "use client";
-
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import { Home, Send, Search, Bookmark } from "lucide-react";
-
+import { getNotifications } from "@/services/notificationService";
+import { acceptConnection } from "@/services/connectionService";
 export default function NotificationPage() {
 
   const [tab, setTab] = useState("all");
@@ -150,38 +150,44 @@ export default function NotificationPage() {
 
       try {
 
-        const token = localStorage.getItem("token");
+        // const token = localStorage.getItem("token");
 
-        if (!token) {
-          console.error("No token found");
-          return;
-        }
-
-
-        const response = await fetch(
-          "http://localhost:8081/api/notifications",
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
+        // if (!token) {
+        //   console.error("No token found");
+        //   return;
+        // }
 
 
-        if (!response.ok) {
-          console.error(
-            "Notification fetch failed:",
-            response.status
-          );
-          return;
-        }
+        // const response = await fetch(
+        //   "http://localhost:8081/api/notifications",
+        //   {
+        //     headers: {
+        //       Authorization: `Bearer ${token}`,
+        //     },
+        //   }
+        // );
 
 
-        const data = await response.json();
+        // if (!response.ok) {
+        //   console.error(
+        //     "Notification fetch failed:",
+        //     response.status
+        //   );
+        //   return;
+        // }
 
-        console.log("NOTIFICATIONS:", data);
 
-        setNotifications(data);
+        // const data = await response.json();
+
+        // console.log("NOTIFICATIONS:", data);
+
+        // setNotifications(data);
+
+const data = await getNotifications();
+
+console.log("NOTIFICATIONS:", data);
+
+setNotifications(data); 
 
 
       } catch(error) {
@@ -334,45 +340,26 @@ export default function NotificationPage() {
 
       <button
         className="mt-2 bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded-full text-sm"
-        onClick={async () => {
 
-          const token = localStorage.getItem("token");
+         onClick={async () => {
+    try {
+      await acceptConnection(n.referenceId);
 
-          try {
-
-            const response = await fetch(
-              `http://localhost:8081/api/connection/accept/${n.referenceId}`,
-              {
-                method: "PUT",
-                headers: {
-                  Authorization: `Bearer ${token}`
-                }
+      setNotifications((prev) =>
+        prev.map((item) =>
+          item.id === n.id
+            ? {
+                ...item,
+                connectionAccepted: true,
+                message: "You are now connected.",
               }
-            );
-
-            if (response.ok) {
-
-              setNotifications(prev =>
-                prev.map(item =>
-                  item.id === n.id
-                    ? {
-                        ...item,
-                        connectionAccepted: true,
-                        message: "You are now connected."
-                      }
-                    : item
-                )
-              );
-
-            }
-
-          } catch (error) {
-
-            console.error(error);
-
-          }
-
-        }}
+            : item
+        )
+      );
+    } catch (error) {
+      console.error(error);
+    }
+  }}
       >
         Accept
       </button>
