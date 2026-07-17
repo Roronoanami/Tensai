@@ -142,7 +142,7 @@
 
 
 "use client";
-
+import { login, register } from "@/services/authService";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Eye, EyeOff } from "lucide-react";
@@ -182,35 +182,28 @@ export default function LoginPage() {
 
     try {
       if (mode === "register") {
-        // ===========================================
-        // TODO:
-        // Replace this with your Spring Boot API call
-        //
-        // POST /register
-        // {
-        //   username: trimmedUsername,
-        //   email: trimmedEmail,
-        //   password: trimmedPassword
-        // }
-        // ===========================================
 
-        const response = await fetch("http://localhost:8081/api/auth/register", {
-  method: "POST",
-  headers: {
-    "Content-Type": "application/json",
-  },
-  body: JSON.stringify({
-    username: trimmedUsername,
-    email: trimmedEmail,
-    password: trimmedPassword,
-  }),
-});
+//         const response = await fetch("http://localhost:8081/api/auth/register", {
+//   method: "POST",
+//   headers: {
+//     "Content-Type": "application/json",
+//   },
+//   body: JSON.stringify({
+//     username: trimmedUsername,
+//     email: trimmedEmail,
+//     password: trimmedPassword,
+//   }),
+// });
+
+const response = await register(
+  trimmedUsername,
+  trimmedEmail,
+  trimmedPassword
+);
 
 const data = await response.json();
 
-// if (!response.ok) {
-//   throw new Error(data.message || "Registration failed");
-// }
+
 if (!response.ok) {
   console.error("LOGIN ERROR:", data);
   alert(data.message || "Login failed");
@@ -218,30 +211,26 @@ if (!response.ok) {
 }
 
 alert("Registration successful! Please check your email for the OTP.");
-        // Later:
-        // router.push("/verify-otp");
+      
       } else {
-        // ===========================================
-        // TODO:
-        // Replace this with your Spring Boot API call
-        //
-        // POST /login
-        // {
-        //   email: trimmedEmail,
-        //   password: trimmedPassword
-        // }
-        // ===========================================
+        
+//         const response = await fetch("http://localhost:8081/api/auth/login", {
+//   method: "POST",
+//   headers: {
+//     "Content-Type": "application/json",
+//   },
+//   body: JSON.stringify({
+//     email: trimmedEmail,
+//     password: trimmedPassword,
+//   }),
+// });
 
-        const response = await fetch("http://localhost:8081/api/auth/login", {
-  method: "POST",
-  headers: {
-    "Content-Type": "application/json",
-  },
-  body: JSON.stringify({
-    email: trimmedEmail,
-    password: trimmedPassword,
-  }),
-});
+
+const response = await login(
+  trimmedEmail,
+  trimmedPassword
+);
+
 
 const data = await response.json();
 
@@ -249,19 +238,33 @@ if (!response.ok) {
   throw new Error(data.message || "Login failed");
 }
 
-// Save JWT returned by your backend
+// // Save JWT returned by your backend
+// localStorage.setItem("token", data.token);
+
+// // Save logged-in user details
+// localStorage.setItem("user", JSON.stringify(data.user));
+
+// // Navigate to your main page
+// router.push("/main");
+
+
+
+
+// Save JWT
 localStorage.setItem("token", data.token);
 
-// Save logged-in user details
+// Save current user
 localStorage.setItem("user", JSON.stringify(data.user));
 
-// Navigate to your main page
-router.push("/main");
+// Save username separately
+localStorage.setItem("username", data.user.username);
 
-        // Example after backend integration:
-        //
-        // localStorage.setItem("token", response.token);
-        // router.push("/main");
+// Save user id (optional but useful)
+localStorage.setItem("userId", data.user.id);
+
+// Navigate
+router.push("/main");
+        
       }
     } catch (error) {
       console.error(error);

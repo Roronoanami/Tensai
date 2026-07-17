@@ -1,4 +1,5 @@
-const API_URL = "http://localhost:8081/api/comments";
+// const API_URL = "http://localhost:8081/api/comments";
+const API_URL = `${process.env.NEXT_PUBLIC_API_URL}/comments`;
 
 const getToken = () => localStorage.getItem("token");
 

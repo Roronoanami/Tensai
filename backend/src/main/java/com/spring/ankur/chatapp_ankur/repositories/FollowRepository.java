@@ -31,4 +31,5 @@ public interface FollowRepository extends MongoRepository<Follow, String> {
 
     // Get all users followed by a user
     List<Follow> findByFollowerId(String followerId);
+
 }

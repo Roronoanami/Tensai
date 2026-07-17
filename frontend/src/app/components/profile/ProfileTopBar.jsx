@@ -1,6 +1,6 @@
 "use client";
 
-import { CircleChevronLeft, Cog, Menu } from "lucide-react";
+import { Cog, Menu } from "lucide-react";
 import { useTheme } from "next-themes";
 
 import {
@@ -19,12 +19,9 @@ export default function ProfileTopBar() {
   const { theme, setTheme } = useTheme();
 
   return (
-    <div className="flex items-center justify-between px-4 py-3">
-
-      {/* BACK */}
-      <button className="p-2 rounded-full">
-        <CircleChevronLeft className="text-gray-600 hover:text-red-500" />
-      </button>
+    <div className="flex justify-end items-center px-4 py-3">
+      
+      
 
       {/* ACTIONS */}
       <div className="flex items-center gap-2">

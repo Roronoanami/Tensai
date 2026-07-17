@@ -183,7 +183,11 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { ExternalLink } from "lucide-react";
-
+import {
+  getMyProfile,
+  getFollowersCount,
+  getConnectionsCount,
+} from "@/services/profileService";
 export default function ProfileInfo({
   onOpenEnhance,
   setProfile: setParentProfile,
@@ -195,38 +199,42 @@ export default function ProfileInfo({
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const token = localStorage.getItem("token");
+        // const token = localStorage.getItem("token");
 
-        console.log("TOKEN:", token);
+        // console.log("TOKEN:", token);
 
-        if (!token) {
-          console.error("No token found.");
-          return;
-        }
+        // if (!token) {
+        //   console.error("No token found.");
+        //   return;
+        // }
 
-        const headers = {
-          Authorization: `Bearer ${token}`,
-        };
+        // const headers = {
+        //   Authorization: `Bearer ${token}`,
+        // };
 
-        // ================= PROFILE =================
-        const response = await fetch(
-          "http://localhost:8081/api/profile/me",
-          {
-            headers,
-          }
-        );
+        // // ================= PROFILE =================
+        // const response = await fetch(
+        //   "http://localhost:8081/api/profile/me",
+        //   {
+        //     headers,
+        //   }
+        // );
 
-        if (response.status === 401 || response.status === 403) {
-          console.error("Unauthorized");
-          return;
-        }
+        // if (response.status === 401 || response.status === 403) {
+        //   console.error("Unauthorized");
+        //   return;
+        // }
 
-        if (!response.ok) {
-          console.log(await response.text());
-          throw new Error("Failed to fetch profile");
-        }
+        // if (!response.ok) {
+        //   console.log(await response.text());
+        //   throw new Error("Failed to fetch profile");
+        // }
 
-        const data = await response.json();
+        // const data = await response.json();
+            
+
+        const data = await getMyProfile();
+
 
         console.log("PROFILE:", data);
 
@@ -237,26 +245,35 @@ export default function ProfileInfo({
         }
 
         // ================= FOLLOWERS =================
-const followerRes = await fetch(
-  `http://localhost:8081/api/follow/followers/${data.username}`,
-  { headers }
-);
+// const followerRes = await fetch(
+//   `http://localhost:8081/api/follow/followers/${data.username}`,
+//   { headers }
+// );
 
-if (followerRes.ok) {
-  const followerData = await followerRes.json();
-  setFollowers(followerData.count);
-}
+// if (followerRes.ok) {
+//   const followerData = await followerRes.json();
+//   setFollowers(followerData.count);
+// }
+
+const followerData = await getFollowersCount(data.username);
+setFollowers(followerData.count);
 
         // ================= CONNECTIONS =================
-const connectionRes = await fetch(
-  `http://localhost:8081/api/connection/count/${data.username}`,
-  { headers }
-);
+// const connectionRes = await fetch(
+//   `http://localhost:8081/api/connection/count/${data.username}`,
+//   { headers }
+// );
 
-if (connectionRes.ok) {
-  const connectionData = await connectionRes.json();
-  setConnections(connectionData.count);
-}
+// if (connectionRes.ok) {
+//   const connectionData = await connectionRes.json();
+//   setConnections(connectionData.count);
+// }
+
+
+const connectionData = await getConnectionsCount(data.username);
+setConnections(connectionData.count); 
+
+
       } catch (error) {
         console.error(error);
       }
