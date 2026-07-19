@@ -557,9 +557,7 @@ import {
 
 import {
   getChatHistory,
-  connectSocket,
-  subscribeRoom,
-  sendMessageSocket,
+  sendMessage,
 } from "@/services/chatService";
 
 
@@ -616,54 +614,34 @@ function ChatWindow({ selectedChat }) {
 
 
 
-  useEffect(() => {
-
-    if (!selectedChat) return;
-
-
-    const token = localStorage.getItem("token");
-
-
-    connectSocket(token, () => {
-
-
-      subscribeRoom(
-        selectedChat.roomId,
-        (newMessage) => {
-
-          setMessages((prev) => [
-            ...prev,
-            newMessage
-          ]);
-
-        }
-      );
-
-
-    });
-
-
-  }, [selectedChat]);
 
 
 
 
+const handleSend = async () => {
 
-  const handleSend = () => {
+  if (!message.trim()) return;
 
+  try {
 
-    if (!message.trim()) return;
-
-
-    sendMessageSocket(
-      selectedChat.roomId,
+    await sendMessage(
+      selectedChat.name,
       message
     );
 
+    const history = await getChatHistory(
+      selectedChat.roomId
+    );
+
+    setMessages(history);
 
     setMessage("");
 
-  };
+  } catch (err) {
+    console.error(err);
+  }
+
+};
   return (
    <div className="flex flex-col h-full w-full pb-14 md:pb-0">
 

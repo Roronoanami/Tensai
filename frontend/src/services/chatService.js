@@ -148,3 +148,18 @@ export const sendMessageSocket = (
     }),
   });
 };
+
+export const getNetworkUsers = async () => {
+  const response = await fetch(
+    `${API_URL}/profile/network`,
+    {
+      headers: getHeaders(),
+    }
+  );
+
+  if (!response.ok) {
+    throw new Error("Failed to load network users");
+  }
+
+  return response.json();
+};

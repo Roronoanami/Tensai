@@ -280,6 +280,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.spring.ankur.chatapp_ankur.entities.Profile;
+import com.spring.ankur.chatapp_ankur.repositories.ProfileRepository;
 import com.spring.ankur.chatapp_ankur.dto.ChatMessageRequest;
 import com.spring.ankur.chatapp_ankur.dto.ChatMessageResponse;
 import com.spring.ankur.chatapp_ankur.dto.ChatRoomResponse;
@@ -299,10 +301,11 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ChatService {
 
-    private final ChatRoomRepository chatRoomRepository;
-    private final ChatMessageRepository chatMessageRepository;
-    private final UserRepository userRepository;
-    private final ConnectionRepository connectionRepository;
+private final ChatRoomRepository chatRoomRepository;
+private final ChatMessageRepository chatMessageRepository;
+private final UserRepository userRepository;
+private final ConnectionRepository connectionRepository;
+private final ProfileRepository profileRepository;
 
     @Transactional
     public ChatMessageResponse sendMessage(ChatMessageRequest request) {
@@ -439,7 +442,15 @@ public class ChatService {
 
         User otherUser = userRepository.findByUsername(otherUsername)
                 .orElseThrow(() -> new RuntimeException("User not found"));
+Profile profile = profileRepository
+        .findByUserId(otherUser.getId())
+        .orElse(null);
 
+String profileImage = "";
+
+if (profile != null) {
+    profileImage = profile.getProfileImage();
+}
         List<ChatMessage> latestMessages =
                 chatMessageRepository.findByRoomIdOrderByCreatedAtDesc(
                         room.getId(),
@@ -465,7 +476,7 @@ public class ChatService {
                 ConversationResponse.builder()
                         .roomId(room.getId())
                         .username(otherUser.getUsername())
-                        .profileImage("")
+                        .profileImage(profileImage)
                         .lastMessage(lastMessage)
                         .lastMessageTime(lastMessageTime)
                         .unreadCount(unreadCount)
