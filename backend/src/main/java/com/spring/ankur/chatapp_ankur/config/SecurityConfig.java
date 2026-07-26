@@ -730,6 +730,261 @@
 
 
 
+// package com.spring.ankur.chatapp_ankur.config;
+
+// import com.spring.ankur.chatapp_ankur.security.JwtAuthFilter;
+// import org.springframework.context.annotation.Bean;
+// import org.springframework.context.annotation.Configuration;
+// import org.springframework.http.HttpMethod;
+// import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+// import org.springframework.security.config.http.SessionCreationPolicy;
+// import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+// import org.springframework.security.crypto.password.PasswordEncoder;
+// import org.springframework.security.web.SecurityFilterChain;
+// import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+// import org.springframework.web.cors.CorsConfiguration;
+// import org.springframework.web.cors.CorsConfigurationSource;
+// import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+// import java.util.List;
+
+// @Configuration
+// public class SecurityConfig {
+
+
+//     private final JwtAuthFilter jwtAuthFilter;
+
+
+//     public SecurityConfig(JwtAuthFilter jwtAuthFilter) {
+//         this.jwtAuthFilter = jwtAuthFilter;
+//     }
+
+
+
+//     @Bean
+//     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+
+
+//         http
+
+//             .csrf(csrf -> csrf.disable())
+
+
+//             .cors(cors ->
+//                 cors.configurationSource(corsConfigurationSource())
+//             )
+
+
+//             .sessionManagement(session ->
+//                 session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+//             )
+
+
+
+// .authorizeHttpRequests(auth -> auth
+
+//     // OPTIONS
+//     .requestMatchers(HttpMethod.OPTIONS, "/**")
+//     .permitAll()
+
+//     // AUTH
+//     .requestMatchers("/api/auth/**")
+//     .permitAll()
+
+//     // PUBLIC PROFILE
+//     .requestMatchers("/api/profile/public/**")
+//     .permitAll()
+
+//     // SEARCH
+//     .requestMatchers("/api/search/**")
+//     .permitAll()
+
+//     // OWN PROFILE
+//     .requestMatchers("/api/profile/me")
+//     .authenticated()
+
+//     // FOLLOW PUBLIC
+//     .requestMatchers(
+//             HttpMethod.GET,
+//             "/api/follow/followers/**",
+//             "/api/follow/following/**"
+//     )
+//     .permitAll()
+
+//     // FOLLOW AUTH
+//     .requestMatchers(
+//             HttpMethod.GET,
+//             "/api/follow/status/**"
+//     )
+//     .authenticated()
+
+//     .requestMatchers(
+//             HttpMethod.POST,
+//             "/api/follow/**"
+//     )
+//     .authenticated()
+
+//     .requestMatchers(
+//             HttpMethod.DELETE,
+//             "/api/follow/**"
+//     )
+//     .authenticated()
+
+//     // ==========================
+//     // ACTIVITY LIKE
+//     // ==========================
+
+//     .requestMatchers(
+//             HttpMethod.POST,
+//             "/api/activity/*/like"
+//     )
+//     .authenticated()
+
+//     .requestMatchers(
+//             HttpMethod.DELETE,
+//             "/api/activity/*/like"
+//     )
+//     .authenticated()
+
+//     .requestMatchers(
+//             HttpMethod.GET,
+//             "/api/activity/*/like/status"
+//     )
+//     .authenticated()
+
+//     .requestMatchers(
+//             HttpMethod.GET,
+//             "/api/activity/*/like/count"
+//     )
+//     .permitAll()
+
+//     // ==========================
+//     // COMMENTS
+//     // ==========================
+
+//     .requestMatchers(
+//             HttpMethod.GET,
+//             "/api/comments/*"
+//     )
+//     .permitAll()
+
+//     .requestMatchers(
+//             HttpMethod.GET,
+//             "/api/comments/*/count"
+//     )
+//     .permitAll()
+
+//     .requestMatchers(
+//             HttpMethod.POST,
+//             "/api/comments/*"
+//     )
+//     .authenticated()
+
+//     .requestMatchers(
+//             HttpMethod.DELETE,
+//             "/api/comments/*"
+//     )
+//     .authenticated()
+
+
+
+
+//     // ==========================
+// // WEBSOCKET
+// // ==========================
+
+// .requestMatchers("/chat/**")
+// .permitAll()
+//     // ==========================
+//     // ALL OTHER API
+//     // ==========================
+
+//     .anyRequest()
+//     .authenticated()
+// );
+    
+
+
+//         http.addFilterBefore(
+//             jwtAuthFilter,
+//             UsernamePasswordAuthenticationFilter.class
+//         );
+
+
+//         return http.build();
+
+//     }
+
+
+
+
+
+//     @Bean
+//     public CorsConfigurationSource corsConfigurationSource() {
+
+
+//         CorsConfiguration config = new CorsConfiguration();
+
+
+//         // config.setAllowedOrigins(
+//         //     List.of("http://localhost:3000")
+//         // );
+//         config.setAllowedOriginPatterns(
+//     List.of("*")
+// );
+
+
+//         config.setAllowedMethods(
+//             List.of(
+//                 "GET",
+//                 "POST",
+//                 "PUT",
+//                 "DELETE",
+//                 "OPTIONS"
+//             )
+//         );
+
+
+//         config.setAllowedHeaders(
+//             List.of("*")
+//         );
+
+
+//         config.setAllowCredentials(true);
+
+
+
+//         UrlBasedCorsConfigurationSource source =
+//                 new UrlBasedCorsConfigurationSource();
+
+
+//         source.registerCorsConfiguration(
+//             "/**",
+//             config
+//         );
+
+
+//         return source;
+
+//     }
+
+
+
+
+
+//     @Bean
+//     public PasswordEncoder passwordEncoder() {
+
+//         return new BCryptPasswordEncoder();
+
+//     }
+
+// }
+
+
+
+
+
 package com.spring.ankur.chatapp_ankur.config;
 
 import com.spring.ankur.chatapp_ankur.security.JwtAuthFilter;
