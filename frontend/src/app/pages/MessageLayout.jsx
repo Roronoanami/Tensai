@@ -272,6 +272,260 @@
 // );
 // }
 
+
+
+
+
+
+
+
+
+// "use client";
+
+// import { useEffect, useState } from "react";
+// import ChatList from "../components/messages/ChatList";
+// import ChatWindow from "../components/messages/ChatWindow";
+// import MessageBottomNav from "../components/messages/MessageBottomNav";
+
+// export default function MessageLayout() {
+
+//   const [selectedChat, setSelectedChat] = useState(null);
+//   const [isMobileChatOpen, setIsMobileChatOpen] = useState(false);
+//   const [activeTab, setActiveTab] = useState("messages");
+
+
+//   const handleSelectChat = (chat) => {
+
+//     setSelectedChat(chat);
+//     setIsMobileChatOpen(true);
+
+//     // add browser history entry
+//     window.history.pushState(
+//       { chatOpen: true },
+//       "",
+//       window.location.href
+//     );
+//   };
+
+
+//   useEffect(() => {
+
+//     const handleBack = () => {
+
+//       if (isMobileChatOpen) {
+
+//         setIsMobileChatOpen(false);
+//         setSelectedChat(null);
+
+//       }
+
+//     };
+
+
+//     window.addEventListener(
+//       "popstate",
+//       handleBack
+//     );
+
+
+//     return () => {
+//       window.removeEventListener(
+//         "popstate",
+//         handleBack
+//       );
+//     };
+
+
+//   }, [isMobileChatOpen]);
+
+
+
+//   return (
+
+//     <div className="flex h-full w-full md:pb-0">
+
+
+//       {/* CHAT LIST */}
+
+//       <div
+//         className={`
+//         w-full md:w-[30%]
+//         ${isMobileChatOpen ? "hidden md:block" : "block"}
+//         `}
+//       >
+
+//         <ChatList
+//           selectedChat={selectedChat}
+//           setSelectedChat={handleSelectChat}
+//         />
+
+//       </div>
+
+
+
+//       {/* CHAT WINDOW */}
+
+//       <div
+//         className={`
+//         w-full md:w-[70%]
+//         ${isMobileChatOpen ? "block" : "hidden md:block"}
+//         `}
+//       >
+
+//         <ChatWindow
+//           selectedChat={selectedChat}
+//         />
+
+//       </div>
+
+
+
+//       <MessageBottomNav
+//         onTabChange={(tab)=>{
+
+//           setActiveTab(tab);
+
+
+//           if(tab==="list"){
+
+//             setIsMobileChatOpen(false);
+//             setSelectedChat(null);
+
+//           }
+
+//         }}
+//       />
+
+
+//     </div>
+
+//   );
+
+// }
+
+
+
+
+
+
+// "use client";
+
+// import { useEffect, useState } from "react";
+// import ChatList from "../components/messages/ChatList";
+// import ChatWindow from "../components/messages/ChatWindow";
+// import MessageBottomNav from "../components/messages/MessageBottomNav";
+// import { connectSocket } from "@/services/chatService";
+// export default function MessageLayout() {
+
+//   const [selectedChat, setSelectedChat] = useState(null);
+//   const [isMobileChatOpen, setIsMobileChatOpen] = useState(false);
+//   const [activeTab, setActiveTab] = useState("messages");
+
+//   // Used to refresh ChatList when ChatWindow updates messages
+//   const [refreshChats, setRefreshChats] = useState(0);
+
+//   const handleSelectChat = (chat) => {
+
+//     setSelectedChat(chat);
+//     setIsMobileChatOpen(true);
+
+//     window.history.pushState(
+//       { chatOpen: true },
+//       "",
+//       window.location.href
+//     );
+//   };
+
+//   useEffect(() => {
+
+//     const handleBack = () => {
+
+//       if (isMobileChatOpen) {
+//         setIsMobileChatOpen(false);
+//         setSelectedChat(null);
+//       }
+
+//     };
+
+//     window.addEventListener("popstate", handleBack);
+
+//     return () => {
+//       window.removeEventListener("popstate", handleBack);
+//     };
+
+//   }, [isMobileChatOpen]);
+
+
+
+
+
+//   useEffect(() => {
+//   const token = localStorage.getItem("token");
+
+//   if (!token) return;
+
+//   connectSocket(token);
+// }, []);
+//   return (
+
+//     <div className="flex h-full w-full md:pb-0">
+
+//       {/* CHAT LIST */}
+
+//       <div
+//         className={`
+//           w-full md:w-[30%]
+//           ${isMobileChatOpen ? "hidden md:block" : "block"}
+//         `}
+//       >
+
+//         <ChatList
+//           selectedChat={selectedChat}
+//           setSelectedChat={handleSelectChat}
+//           refreshChats={refreshChats}
+//         />
+
+//       </div>
+
+//       {/* CHAT WINDOW */}
+
+//       <div
+//         className={`
+//           w-full md:w-[70%]
+//           ${isMobileChatOpen ? "block" : "hidden md:block"}
+//         `}
+//       >
+
+//         <ChatWindow
+//           selectedChat={selectedChat}
+//           refreshChats={() =>
+//             setRefreshChats((prev) => prev + 1)
+//           }
+//         />
+
+//       </div>
+
+//       <MessageBottomNav
+//         onTabChange={(tab) => {
+
+//           setActiveTab(tab);
+
+//           if (tab === "list") {
+//             setIsMobileChatOpen(false);
+//             setSelectedChat(null);
+//           }
+
+//         }}
+//       />
+
+//     </div>
+
+//   );
+
+// }
+
+
+
 "use client";
 
 import { useEffect, useState } from "react";
@@ -334,8 +588,7 @@ export default function MessageLayout() {
 
   return (
 
-    <div className="flex h-full w-full md:pb-0">
-
+<div className="flex w-full h-[calc(100dvh-56px)] overflow-hidden md:h-full">
 
       {/* CHAT LIST */}
 

@@ -343,8 +343,10 @@
 // };
 
 
-const API_URL = `${process.env.NEXT_PUBLIC_API_URL}/activity`;
+// const API_URL = `${process.env.NEXT_PUBLIC_API_URL}/activity`;
+import { API_URL } from "./api"; // adjust path if api.js is in another folder
 
+const ACTIVITY_API = `${API_URL}/activity`;
 // ================= GET MY ACTIVITIES =================
 
 export const getMyActivities = async (userId) => {
@@ -353,7 +355,7 @@ export const getMyActivities = async (userId) => {
   console.log("TOKEN =", token);
   console.log("USER ID =", userId);
 
-  const res = await fetch(`${API_URL}/me?userId=${userId}`, {
+  const res = await fetch(`${ACTIVITY_API}/me?userId=${userId}`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -373,7 +375,7 @@ export const getUserActivitiesByUsername = async (username) => {
 
   console.log("Fetching activities for:", username);
 
-  const res = await fetch(`${API_URL}/user/${username}`, {
+  const res = await fetch(`${ACTIVITY_API}/user/${username}`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -397,7 +399,7 @@ export const getUserActivitiesByUsername = async (username) => {
 export const createActivity = async (userId, formData) => {
   const token = localStorage.getItem("token");
 
-  const res = await fetch(`${API_URL}?userId=${userId}`, {
+  const res = await fetch(`${ACTIVITY_API}?userId=${userId}`, {
     method: "POST",
     headers: {
       Authorization: `Bearer ${token}`,
@@ -422,7 +424,7 @@ export const createActivity = async (userId, formData) => {
 export const updateActivity = async (id, userId, formData) => {
   const token = localStorage.getItem("token");
 
-  const res = await fetch(`${API_URL}/${id}?userId=${userId}`, {
+  const res = await fetch(`${ACTIVITY_API}/${id}?userId=${userId}`, {
     method: "PUT",
     headers: {
       Authorization: `Bearer ${token}`,
@@ -447,7 +449,7 @@ export const updateActivity = async (id, userId, formData) => {
 export const deleteActivity = async (id, userId) => {
   const token = localStorage.getItem("token");
 
-  const res = await fetch(`${API_URL}/${id}?userId=${userId}`, {
+  const res = await fetch(`${ACTIVITY_API}/${id}?userId=${userId}`, {
     method: "DELETE",
     headers: {
       Authorization: `Bearer ${token}`,
@@ -464,7 +466,7 @@ export const deleteActivity = async (id, userId) => {
 export const likeActivity = async (activityId) => {
   const token = localStorage.getItem("token");
 
-  const res = await fetch(`${API_URL}/${activityId}/like`, {
+  const res = await fetch(`${ACTIVITY_API}/${activityId}/like`, {
     method: "POST",
     headers: {
       Authorization: `Bearer ${token}`,
@@ -483,7 +485,7 @@ export const likeActivity = async (activityId) => {
 export const unlikeActivity = async (activityId) => {
   const token = localStorage.getItem("token");
 
-  const res = await fetch(`${API_URL}/${activityId}/like`, {
+  const res = await fetch(`${ACTIVITY_API}/${activityId}/like`, {
     method: "DELETE",
     headers: {
       Authorization: `Bearer ${token}`,
@@ -502,7 +504,7 @@ export const unlikeActivity = async (activityId) => {
 export const getLikeStatus = async (activityId) => {
   const token = localStorage.getItem("token");
 
-  const res = await fetch(`${API_URL}/${activityId}/like/status`, {
+  const res = await fetch(`${ACTIVITY_API}/${activityId}/like/status`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -518,7 +520,7 @@ export const getLikeStatus = async (activityId) => {
 // ================= LIKE COUNT =================
 
 export const getLikeCount = async (activityId) => {
-  const res = await fetch(`${API_URL}/${activityId}/like/count`);
+  const res = await fetch(`${ACTIVITY_API}/${activityId}/like/count`);
 
   if (!res.ok) {
     throw new Error("Failed to fetch like count");

@@ -907,6 +907,8 @@
 
 
 "use client";
+import CreateCommunityModal from "@/app/components/community/CreateCommunityModal";
+import JoinCommunityModal from "@/app/components/community/JoinCommunityModal";
 import { getMyProfile } from "@/services/profileService";
 import { useState, useEffect } from "react";
 import Image from "next/image";
@@ -981,7 +983,8 @@ export default function SideNav() {
 
 
   const [openCommunity, setOpenCommunity] = useState(false);
-
+  const [showCreateModal, setShowCreateModal] = useState(false);
+const [showJoinModal, setShowJoinModal] = useState(false);
 
   // ================= PROFILE IMAGE =================
   const [profileImage, setProfileImage] = useState(
@@ -1209,7 +1212,7 @@ w-28 text-sm
 >
 
 
-<Link
+{/* <Link
 href="/community"
 className="
 block px-3 py-2
@@ -1220,11 +1223,25 @@ dark:hover:bg-gray-800
 
 Create
 
-</Link>
+</Link> */}
+
+<button
+onClick={() => {
+  setOpenCommunity(false);
+  setShowCreateModal(true);
+}}
+className="
+block w-full text-left px-3 py-2
+hover:bg-gray-100
+dark:hover:bg-gray-800
+"
+>
+Create
+</button>
 
 
 
-<Link
+{/* <Link
 href="/community"
 className="
 block px-3 py-2
@@ -1235,7 +1252,21 @@ dark:hover:bg-gray-800
 
 Join
 
-</Link>
+</Link> */}
+
+<button
+onClick={() => {
+  setOpenCommunity(false);
+  setShowJoinModal(true);
+}}
+className="
+block w-full text-left px-3 py-2
+hover:bg-gray-100
+dark:hover:bg-gray-800
+"
+>
+Join
+</button>
 
 
 </div>
@@ -1333,7 +1364,7 @@ z-50
 >
 
 
-<Link
+{/* <Link
 href="/community"
 className="
 block px-3 py-2
@@ -1344,10 +1375,24 @@ dark:hover:bg-gray-800
 
 Create
 
-</Link>
+</Link> */}
 
 
-<Link
+<button
+onClick={() => {
+  setOpenCommunity(false);
+  setShowCreateModal(true);
+}}
+className="
+block w-full text-left px-3 py-2
+hover:bg-gray-100
+dark:hover:bg-gray-800
+"
+>
+Create
+</button>
+
+{/* <Link
 href="/community"
 className="
 block px-3 py-2
@@ -1358,7 +1403,21 @@ dark:hover:bg-gray-800
 
 Join
 
-</Link>
+</Link> */}
+
+<button
+onClick={() => {
+  setOpenCommunity(false);
+  setShowJoinModal(true);
+}}
+className="
+block w-full text-left px-3 py-2
+hover:bg-gray-100
+dark:hover:bg-gray-800
+"
+>
+Join
+</button>
 
 
 </div>
@@ -1366,7 +1425,6 @@ Join
 )
 
 }
-
 
 </>
 
@@ -1482,7 +1540,7 @@ Profile
 
 
 
-
+{/* 
 <div
 className="
 mt-auto border-t border-gray-100 p-3
@@ -1512,6 +1570,54 @@ label="Login"
 </div>
 
 
+
+</>
+
+);
+
+} */}
+
+
+
+<div
+className="
+mt-auto border-t border-gray-100 p-3
+dark:border-gray-800
+"
+>
+
+<SidebarLink
+
+icon={
+<LogIn
+size={20}
+className="group-hover:text-red-500"
+/>
+}
+
+label="Login"
+
+/>
+
+</div>
+
+</div>
+
+<CreateCommunityModal
+  open={showCreateModal}
+  onClose={() => setShowCreateModal(false)}
+  onCreated={() => {
+    setShowCreateModal(false);
+  }}
+/>
+
+<JoinCommunityModal
+  open={showJoinModal}
+  onClose={() => setShowJoinModal(false)}
+  onJoined={() => {
+    setShowJoinModal(false);
+  }}
+/>
 
 </>
 
