@@ -907,6 +907,7 @@
 
 
 "use client";
+import { useRouter } from "next/navigation";
 import CreateCommunityModal from "@/app/components/community/CreateCommunityModal";
 import JoinCommunityModal from "@/app/components/community/JoinCommunityModal";
 import { getMyProfile } from "@/services/profileService";
@@ -981,7 +982,7 @@ function SidebarLink({ icon, label }) {
 
 export default function SideNav() {
 
-
+const router = useRouter();
   const [openCommunity, setOpenCommunity] = useState(false);
   const [showCreateModal, setShowCreateModal] = useState(false);
 const [showJoinModal, setShowJoinModal] = useState(false);
@@ -1614,8 +1615,14 @@ label="Login"
 <JoinCommunityModal
   open={showJoinModal}
   onClose={() => setShowJoinModal(false)}
-  onJoined={() => {
+  onJoined={(community) => {
+
     setShowJoinModal(false);
+
+    router.push(
+      `/community/${community.communityId}`
+    );
+
   }}
 />
 
