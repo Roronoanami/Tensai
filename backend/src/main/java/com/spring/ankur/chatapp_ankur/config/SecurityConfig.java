@@ -1055,8 +1055,19 @@ public class SecurityConfig {
     .permitAll()
 
     // OWN PROFILE
-    .requestMatchers("/api/profile/me")
-    .authenticated()
+    // .requestMatchers("/api/profile/me")
+    // .authenticated()
+    .requestMatchers(
+        HttpMethod.GET,
+        "/api/profile/me"
+)
+.authenticated()
+
+.requestMatchers(
+        HttpMethod.GET,
+        "/api/profile/network"
+)
+.authenticated()
 
     // FOLLOW PUBLIC
     .requestMatchers(
@@ -1142,20 +1153,45 @@ public class SecurityConfig {
     .authenticated()
 
 
-
-
-    // ==========================
 // WEBSOCKET
-// ==========================
 
 .requestMatchers("/chat/**")
 .permitAll()
-    // ==========================
-    // ALL OTHER API
-    // ==========================
 
-    .anyRequest()
-    .authenticated()
+
+// COMMUNITY
+
+.requestMatchers(
+        HttpMethod.GET,
+        "/api/community/**"
+)
+.permitAll()
+
+
+// .requestMatchers(
+//         HttpMethod.POST,
+//         "/api/community/create"
+// )
+// .authenticated()
+
+
+// .requestMatchers(
+//         HttpMethod.POST,
+//         "/api/community/join"
+// )
+// .authenticated()
+
+.requestMatchers(
+        HttpMethod.POST,
+        "/api/community/**"
+)
+.authenticated()
+// EVERYTHING ELSE
+
+.anyRequest()
+.authenticated()
+
+
 );
     
 

@@ -137,7 +137,7 @@ export default function CommunityList({
 
       {/* MEMBERS */}
       <div className="flex-1 overflow-y-auto">
-        {members.map((member) => (
+        {/* {members.map((member) => (
           <div
             key={member.id}
             className="flex items-center gap-3 px-4 py-3 hover:bg-gray-100 dark:hover:bg-gray-900"
@@ -151,11 +151,48 @@ export default function CommunityList({
             />
             <span className="text-sm">{member.name}</span>
           </div>
-        ))}
+        ))} */}
+
+        
+        {members.map((member) => (
+  <div
+    key={member.userId}
+    className="flex items-center gap-3 px-4 py-3 hover:bg-gray-100 dark:hover:bg-gray-900 cursor-pointer"
+  >
+    <Image
+      src={
+        member.profileImage
+        ||
+        "/assets/user.png"
+      }
+      alt={member.username}
+      width={44}
+      height={44}
+      className="rounded-full object-cover"
+    />
+
+    <div>
+      <p className="text-sm font-medium">
+        {
+          member.firstName
+          ||
+          member.username
+        }
+        {
+          member.lastName &&
+          ` ${member.lastName}`
+        }
+      </p>
+      <p className="text-xs opacity-60">
+        {member.role}
+      </p>
+    </div>
+  </div>
+))}
       </div>
 
       {/* BOTTOM */}
-      <div className="border-t p-2">
+      {/* <div className="border-t p-2">
         <div className="px-3 py-3 flex items-center gap-3">
           <Image
             src={community.ownerImage}
@@ -174,7 +211,71 @@ export default function CommunityList({
         <button className="flex gap-2 px-3 py-3 text-red-500">
           <LogOut size={18} /> Logout
         </button>
+      </div> */}
+
+
+      {/* BOTTOM OWNER */}
+<div className="border-t p-2">
+
+{
+  members
+    .filter(
+      (member)=> member.role === "OWNER"
+    )
+    .map((owner)=>(
+      
+      <div
+        key={owner.userId}
+        className="px-3 py-3 flex items-center gap-3"
+      >
+
+        <Image
+          src={
+            owner.profileImage &&
+            owner.profileImage.trim() !== ""
+            ? owner.profileImage
+            : "/assets/user.png"
+          }
+          width={40}
+          height={40}
+          className="rounded-full object-cover"
+          alt="owner"
+        />
+
+
+        <div>
+
+          <p className="text-sm font-medium">
+            {owner.firstName}
+            {
+              owner.lastName &&
+              ` ${owner.lastName}`
+            }
+          </p>
+
+          <p className="text-xs opacity-60">
+            Owner
+          </p>
+
+        </div>
+
       </div>
+
+  ))
+}
+
+
+<button className="flex gap-2 px-3 py-3">
+  <Settings size={18} /> Settings
+</button>
+
+
+<button className="flex gap-2 px-3 py-3 text-red-500">
+  <LogOut size={18} /> Logout
+</button>
+
+
+</div>
     </div>
   );
 }
