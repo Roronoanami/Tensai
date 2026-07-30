@@ -522,7 +522,7 @@
 
 
 "use client";
-
+import { X } from "lucide-react";
 import { useEffect, useState } from "react";
 
 import CommunityBottomNav from "../components/community/CommunityBottomNav";
@@ -647,17 +647,17 @@ export default function CommunityLayout({
 
       {/* INFO */}
 
-      {showInfo && (
+      {/* {showInfo && (
         <div className="fixed inset-0 z-[999] flex items-center justify-center bg-black/50">
 
           <div className="w-[90%] max-w-md rounded-xl bg-white dark:bg-black relative">
 
-            <button
-              onClick={() => setShowInfo(false)}
-              className="absolute top-3 right-3 p-2 text-black dark:text-white"
-            >
-              ✕
-            </button>
+<button
+  onClick={() => setShowInfo(false)}
+  className="absolute top-3 right-3 z-20 p-2 rounded-md hover:bg-gray-200/50 transition"
+>
+  <X size={22} />
+</button>
 
             <CommunityInfo
               community={community}
@@ -667,7 +667,34 @@ export default function CommunityLayout({
           </div>
 
         </div>
-      )}
+      )} */}
+
+
+      {showInfo && (
+  <div
+    className="fixed inset-0 z-[999] flex items-center justify-center bg-black/50"
+    onClick={() => setShowInfo(false)}
+  >
+    <div
+      className="relative w-[90%] max-w-md rounded-xl bg-white dark:bg-black"
+      onClick={(e) => e.stopPropagation()}
+    >
+
+      {/* <button
+        onClick={() => setShowInfo(false)}
+        className="hidden md:block absolute top-3 right-3 z-20 p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800"
+      >
+        <X size={22} />
+      </button> */}
+
+      <CommunityInfo
+        community={community}
+        status={status}
+      />
+
+    </div>
+  </div>
+)}
 
       {/* BOTTOM NAV */}
 
