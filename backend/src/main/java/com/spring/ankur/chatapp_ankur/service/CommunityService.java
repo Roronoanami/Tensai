@@ -828,6 +828,18 @@
 // }
 
 
+
+
+
+
+
+
+
+
+
+
+
+
 package com.spring.ankur.chatapp_ankur.service;
 
 import java.time.Instant;
@@ -838,12 +850,13 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
+import com.spring.ankur.chatapp_ankur.dto.UpdateCommunityRequest;
 import com.spring.ankur.chatapp_ankur.repositories.ProfileRepository;
 import com.spring.ankur.chatapp_ankur.dto.CommunityMemberResponse;
 import com.spring.ankur.chatapp_ankur.dto.CommunityResponse;
 import com.spring.ankur.chatapp_ankur.dto.CreateCommunityRequest;
 import com.spring.ankur.chatapp_ankur.dto.JoinCommunityRequest;
+import org.springframework.web.multipart.MultipartFile;
 import com.spring.ankur.chatapp_ankur.entities.Community;
 import com.spring.ankur.chatapp_ankur.entities.CommunityMember;
 import com.spring.ankur.chatapp_ankur.entities.User;
@@ -860,6 +873,7 @@ public class CommunityService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final ProfileRepository profileRepository;
+    private final CloudinaryService cloudinaryService;
     // ===================================================
     // CREATE COMMUNITY
     // ===================================================
@@ -1036,6 +1050,8 @@ public class CommunityService {
                         );
 
         // OWNER IS ALREADY MEMBER AFTER CREATION
+System.out.println("LOGIN USER ID = " + user.getId());
+System.out.println("COMMUNITY OWNER ID = " + community.getOwnerId()); 
 
         boolean isOwner =
                 community.getOwnerId()
@@ -1050,20 +1066,36 @@ public class CommunityService {
         }
         // CHECK ALREADY MEMBER
 
+        // boolean alreadyMember =
+        //         communityMemberRepository
+        //                 .existsByCommunityIdAndUserId(
+        //                         community.getCommunityId(),
+        //                         user.getId()
+        //                 );
+
+        // if(alreadyMember){
+
+        //     throw new RuntimeException(
+        //             "You are already a member."
+        //     );
+
+        // }
+
         boolean alreadyMember =
-                communityMemberRepository
-                        .existsByCommunityIdAndUserId(
-                                community.getCommunityId(),
-                                user.getId()
-                        );
+        communityMemberRepository
+        .existsByCommunityIdAndUserId(
+                community.getCommunityId(),
+                user.getId()
+        );
 
-        if(alreadyMember){
 
-            throw new RuntimeException(
-                    "You are already a member."
-            );
+if(alreadyMember){
 
-        }
+    throw new RuntimeException(
+            "You are already a member."
+    );
+
+}
 
         // CHECK COMMUNITY LIMIT
 
@@ -1152,6 +1184,99 @@ public class CommunityService {
                 savedCommunity
         );
     }
+    ////upadte community 
+    @Transactional
+public CommunityResponse updateCommunity(
+        String communityId,
+        UpdateCommunityRequest request,
+        MultipartFile image,
+        String userId
+) {
+
+    Community community =
+            communityRepository
+                    .findByCommunityId(communityId)
+                    .orElseThrow(() ->
+                            new RuntimeException("Community not found")
+                    );
+
+    // Only owner can edit
+    if (!community.getOwnerId().equals(userId)) {
+        throw new RuntimeException(
+                "Only the community owner can edit the community."
+        );
+    }
+
+    // Community Name
+    if (request.getCommunityName() != null &&
+            !request.getCommunityName().trim().isEmpty()) {
+
+        community.setCommunityName(
+                request.getCommunityName().trim()
+        );
+    }
+
+    // Community Image
+//     if (request.getCommunityImage() != null) {
+
+//         community.setCommunityImage(
+//                 request.getCommunityImage().trim()
+//         );
+//     }
+// if (image != null && !image.isEmpty()) {
+
+//     String imageUrl = cloudinaryService.uploadImage(image);
+
+//     community.setCommunityImage(imageUrl);
+// }
+
+if (image != null && !image.isEmpty()) {
+
+    if (!image.getContentType().startsWith("image/")) {
+        throw new RuntimeException("Only image files are allowed.");
+    }
+
+    String imageUrl = cloudinaryService.uploadImage(image);
+
+    community.setCommunityImage(imageUrl);
+}
+
+    // Description
+    if (request.getDescription() != null) {
+
+        community.setDescription(
+                request.getDescription().trim()
+        );
+    }
+
+    // Rules
+    if (request.getRules() != null) {
+
+        community.setRules(
+                request.getRules().trim()
+        );
+    }
+
+    // Max Members
+    if (request.getMaxMembers() != null) {
+
+        if (request.getMaxMembers() < community.getCurrentMembers()) {
+
+            throw new RuntimeException(
+                    "Maximum members cannot be less than current members."
+            );
+        }
+
+        community.setMaxMembers(
+                request.getMaxMembers()
+        );
+    }
+
+    Community savedCommunity =
+            communityRepository.save(community);
+
+    return mapToResponse(savedCommunity);
+}
         // ===================================================
     // VALIDATION
     // ===================================================
@@ -1406,62 +1531,6 @@ public class CommunityService {
 
                 .toList();
     }
-
-    // ===================================================
-    // COMMUNITY STATUS
-    // ===================================================
-
-//     public CommunityStatusResponse getCommunityStatus(
-//             String communityId,
-//             String userId
-//     ){
-
-//         Community community =
-//                 communityRepository
-//                         .findByCommunityId(
-//                                 communityId
-//                         )
-
-//                         .orElseThrow(() ->
-//                                 new RuntimeException(
-//                                         "Community not found"
-//                                 )
-//                         );
-
-//         boolean isOwner =
-//                 community.getOwnerId()
-//                         .equals(userId);
-
-//         Optional<CommunityMember> member =
-//                 communityMemberRepository
-//                         .findByCommunityIdAndUserId(
-//                                 communityId,
-//                                 userId
-//                         );
-
-//         CommunityStatusResponse response =
-//                 new CommunityStatusResponse();
-
-//         response.setOwner(
-//                 isOwner
-//         );
-
-//         response.setMember(
-//                 member.isPresent()
-//         );
-
-//         if(member.isPresent()){
-
-
-//             response.setRole(
-//                     member.get().getRole()
-//             );
-
-
-//         }
-
-//         return response;
-//     }
 
 public CommunityStatusResponse getCommunityStatus(
         String communityId,

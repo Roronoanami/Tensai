@@ -1181,10 +1181,13 @@ public class SecurityConfig {
 
 // COMMUNITY
 
-.requestMatchers(
-        "/api/community/**"
-)
-.authenticated()
+// .requestMatchers(
+//         "/api/community/**"
+// )
+// .authenticated()
+
+.requestMatchers("/api/community/**")
+.permitAll()
 
 // EVERYTHING ELSE
 
