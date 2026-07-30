@@ -1213,18 +1213,7 @@ w-28 text-sm
 >
 
 
-{/* <Link
-href="/community"
-className="
-block px-3 py-2
-hover:bg-gray-100
-dark:hover:bg-gray-800
-"
->
 
-Create
-
-</Link> */}
 
 <button
 onClick={() => {
@@ -1349,7 +1338,6 @@ label={label}
 </button>
 
 
-
 {
 openCommunity && (
 
@@ -1432,7 +1420,6 @@ Join
 
 ):(
 
-
 <Link href={href}>
 
 <SidebarLink
@@ -1444,23 +1431,15 @@ label={label}
 
 
 )
-
 }
 
-
 </li>
-
 
 ))
 
 }
 
-
 </ul>
-
-
-
-
 
 
 {/* PROFILE */}
@@ -1612,10 +1591,26 @@ label="Login"
   }}
 />
 
+{/* <JoinCommunityModal
+  open={showJoinModal}
+  onClose={() => setShowJoinModal(false)}
+  onJoined={(community) => {
+
+    setShowJoinModal(false);
+
+    router.push(
+      `/community/${community.communityId}`
+    );
+
+  }}
+/> */}
+
 <JoinCommunityModal
   open={showJoinModal}
   onClose={() => setShowJoinModal(false)}
   onJoined={(community) => {
+
+    console.log("DATA RECEIVED IN SIDENAV:", community);
 
     setShowJoinModal(false);
 

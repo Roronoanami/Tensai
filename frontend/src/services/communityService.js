@@ -273,8 +273,10 @@ export const createCommunity = async (communityData) => {
   );
 
 
-  const data = await response.json();
+  // const data = await response.json();
+ const text = await response.text();
 
+  const data = text ? JSON.parse(text) : {};
 
   if (!response.ok) {
 
@@ -353,10 +355,42 @@ if (!response.ok) {
 // GET COMMUNITY INFO
 // =====================================
 
+// export const getCommunity = async (
+//   communityId
+// ) => {
+
+
+//   const response = await fetch(
+//     `${COMMUNITY_API_URL}/${communityId}`,
+//     {
+//       method:"GET",
+//       headers:getHeaders(),
+//     }
+//   );
+
+
+//   const data = await response.json();
+
+
+
+//   if(!response.ok){
+
+//     throw new Error(
+//       data.message || 
+//       "Failed to fetch community"
+//     );
+
+//   }
+
+
+//   return data;
+
+// };
+
+
 export const getCommunity = async (
   communityId
 ) => {
-
 
   const response = await fetch(
     `${COMMUNITY_API_URL}/${communityId}`,
@@ -367,8 +401,15 @@ export const getCommunity = async (
   );
 
 
-  const data = await response.json();
+  const text = await response.text();
 
+  let data = {};
+
+  try {
+    data = text ? JSON.parse(text) : {};
+  } catch {
+    throw new Error(text);
+  }
 
 
   if(!response.ok){
@@ -384,9 +425,6 @@ export const getCommunity = async (
   return data;
 
 };
-
-
-
 
 
 // =====================================
@@ -473,4 +511,114 @@ if (!response.ok) {
 
 return data;
 
+};
+
+// =====================================
+// UPDATE COMMUNITY
+// =====================================
+
+// export const updateCommunity = async (
+//   communityId,
+//   communityData
+// ) => {
+
+//   const response = await fetch(
+//     `${COMMUNITY_API_URL}/${communityId}`,
+//     {
+//       method: "PUT",
+//       headers: getHeaders(),
+//       body: JSON.stringify(communityData),
+//     }
+//   );
+
+//   const text = await response.text();
+
+//   let data = {};
+
+//   try {
+//     data = text ? JSON.parse(text) : {};
+//   } catch {
+//     throw new Error(text);
+//   }
+
+//   if (!response.ok) {
+
+//     throw new Error(
+//       data.message || "Failed to update community"
+//     );
+
+//   }
+
+//   return data;
+
+// };
+
+
+export const updateCommunity = async (
+  communityId,
+  communityData
+) => {
+
+  const formData = new FormData();
+
+  // JSON Data
+  formData.append(
+    "data",
+    new Blob(
+      [
+        JSON.stringify({
+          communityName: communityData.communityName,
+          maxMembers: Number(communityData.maxMembers),
+          description: communityData.description,
+          rules: communityData.rules,
+        }),
+      ],
+      {
+        type: "application/json",
+      }
+    )
+  );
+
+  // Image
+  if (communityData.imageFile) {
+    formData.append(
+      "image",
+      communityData.imageFile
+    );
+  }
+
+  const token = getToken();
+
+  const response = await fetch(
+    `${COMMUNITY_API_URL}/${communityId}`,
+    {
+      method: "PUT",
+
+      headers: {
+        ...(token && {
+          Authorization: `Bearer ${token}`,
+        }),
+      },
+
+      body: formData,
+    }
+  );
+
+  const text = await response.text();
+
+  let data = {};
+
+  try {
+    data = text ? JSON.parse(text) : {};
+  } catch {
+    throw new Error(text);
+  }
+
+  if (!response.ok) {
+    throw new Error(
+      data.message || "Failed to update community"
+    );
+  }
+
+  return data;
 };

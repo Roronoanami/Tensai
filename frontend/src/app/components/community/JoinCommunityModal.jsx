@@ -829,29 +829,59 @@ try {
   setLoading(true);
 
 
-  const data = await joinCommunity(
-    communityId,
-    password
-  );
+
+const data = await joinCommunity(
+  communityId,
+  password
+);
+
+console.log("JOIN RESPONSE FROM MODAL:", data);
 
 
-  console.log("JOIN RESPONSE:", data);
+
+// onJoined?.(data);
+
+// setCommunityId("");
+// setPassword("");
+
+// onClose();
+
+// alert("Joined successfully!");
 
 
-  alert("Joined successfully!");
+
+setCommunityId("");
+setPassword("");
+
+onClose();
+
+onJoined?.(data);
+
+alert("Joined successfully!");
+
+// } catch(err) {
 
 
-  onJoined?.(data);
+//   alert(
+//     err.message ||
+//     "Failed to join community"
+//   );
 
 
-  setCommunityId("");
-  setPassword("");
-
-
-  onClose();
-
+// } 
 
 } catch(err) {
+
+
+  if(err.message === "You are already a member.") {
+
+    onJoined?.({
+      communityId: communityId
+    });
+
+    return;
+
+  }
 
 
   alert(
@@ -860,7 +890,8 @@ try {
   );
 
 
-} finally {
+}
+finally {
 
 
   setLoading(false);
