@@ -186,7 +186,7 @@ export default function CommunityChat({
         )}
 
         {/* ALWAYS COMMUNITY OWNER IMAGE */}
-        <Image
+        {/* <Image
           src={community.ownerImage}
           alt="community"
           width={42}
@@ -202,7 +202,25 @@ export default function CommunityChat({
           <p className="text-xs text-gray-500">
             {community.members} members
           </p>
-        </div>
+        </div> */}
+
+        <Image
+  src={community.communityImage || "/assets/user.png"}
+  alt={community.communityName}
+  width={42}
+  height={42}
+  className="rounded-full object-cover"
+/>
+
+<div className="min-w-0">
+  <h2 className="font-semibold truncate">
+    {community.communityName}
+  </h2>
+
+  <p className="text-xs text-gray-500">
+    {community.currentMembers} members
+  </p>
+</div>
       </div>
 
       {/* ================= MESSAGES ================= */}
