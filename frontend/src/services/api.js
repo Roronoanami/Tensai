@@ -16,3 +16,4 @@ export const API_URL =
     : `http://${host}:8081/api`;
 
 export const SOCKET_URL = API_URL.replace("/api", "");
+

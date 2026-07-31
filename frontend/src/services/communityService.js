@@ -350,44 +350,6 @@ if (!response.ok) {
 
 
 
-
-// =====================================
-// GET COMMUNITY INFO
-// =====================================
-
-// export const getCommunity = async (
-//   communityId
-// ) => {
-
-
-//   const response = await fetch(
-//     `${COMMUNITY_API_URL}/${communityId}`,
-//     {
-//       method:"GET",
-//       headers:getHeaders(),
-//     }
-//   );
-
-
-//   const data = await response.json();
-
-
-
-//   if(!response.ok){
-
-//     throw new Error(
-//       data.message || 
-//       "Failed to fetch community"
-//     );
-
-//   }
-
-
-//   return data;
-
-// };
-
-
 export const getCommunity = async (
   communityId
 ) => {
@@ -621,4 +583,52 @@ export const updateCommunity = async (
   }
 
   return data;
+};
+
+
+// =====================================
+// GET COMMUNITY MESSAGES
+// =====================================
+
+export const getCommunityMessages = async (
+  communityId
+) => {
+
+  const response = await fetch(
+    `${COMMUNITY_API_URL}/messages/${communityId}`,
+    {
+      method: "GET",
+      headers: getHeaders(),
+    }
+  );
+
+
+  const text = await response.text();
+
+  let data = {};
+
+  try {
+    data = text ? JSON.parse(text) : [];
+  } catch {
+    throw new Error(text);
+  }
+
+
+  if (!response.ok) {
+
+    console.log(
+      "MESSAGE FETCH ERROR:",
+      data
+    );
+
+    throw new Error(
+      data.message ||
+      "Failed to fetch community messages"
+    );
+
+  }
+
+
+  return data;
+
 };
