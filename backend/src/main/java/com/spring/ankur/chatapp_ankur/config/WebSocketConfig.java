@@ -32,33 +32,112 @@
 //     }
 // }
 
-package com.spring.ankur.chatapp_ankur.config;
+// package com.spring.ankur.chatapp_ankur.config;
 
+// import org.springframework.context.annotation.Configuration;
+// import org.springframework.messaging.simp.config.MessageBrokerRegistry;
+// import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
+// import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
+// import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerConfigurer;
+
+// @Configuration
+// @EnableWebSocketMessageBroker
+// public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
+//     private final WebSocketAuthInterceptor webSocketAuthInterceptor;
+//     @Override
+//     public void registerStompEndpoints(StompEndpointRegistry registry) {
+
+//         // registry.addEndpoint("/chat")
+//         //         .setAllowedOriginPatterns("http://localhost:3000")
+//         //         .withSockJS();
+
+//         registry.addEndpoint("/chat")
+//         .setAllowedOriginPatterns("*")
+//         .withSockJS();
+//     }
+
+//     @Override
+//     public void configureMessageBroker(MessageBrokerRegistry registry) {
+
+//         // Client sends messages here
+//         registry.setApplicationDestinationPrefixes("/app");
+
+//         // Server broadcasts messages here
+//         registry.enableSimpleBroker("/topic");
+//     }
+// }
+
+
+
+
+
+
+
+
+
+package com.spring.ankur.chatapp_ankur.config;
+import org.springframework.web.socket.config.annotation.WebSocketTransportRegistration;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.messaging.simp.config.ChannelRegistration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
 import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
 import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
 import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerConfigurer;
 
+
 @Configuration
 @EnableWebSocketMessageBroker
+@RequiredArgsConstructor
 public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
+
+    private final WebSocketAuthInterceptor webSocketAuthInterceptor;
+
+
     @Override
-    public void registerStompEndpoints(StompEndpointRegistry registry) {
+    public void registerStompEndpoints(
+            StompEndpointRegistry registry
+    ) {
 
         registry.addEndpoint("/chat")
-                .setAllowedOriginPatterns("http://localhost:3000")
+                .setAllowedOriginPatterns("*")
                 .withSockJS();
+
+    }
+
+
+    @Override
+    public void configureMessageBroker(
+            MessageBrokerRegistry registry
+    ) {
+
+        // Client sends message here
+        registry.setApplicationDestinationPrefixes("/app");
+
+
+        // Server broadcasts message here
+        registry.enableSimpleBroker("/topic");
+
+    }
+
+
+    @Override
+    public void configureClientInboundChannel(
+            ChannelRegistration registration
+    ) {
+
+        registration.interceptors(
+                webSocketAuthInterceptor
+        );
+
     }
 
     @Override
-    public void configureMessageBroker(MessageBrokerRegistry registry) {
+public void configureWebSocketTransport(
+        WebSocketTransportRegistration registry
+) {
+    registry.setMessageSizeLimit(1024 * 1024);
+}
 
-        // Client sends messages here
-        registry.setApplicationDestinationPrefixes("/app");
-
-        // Server broadcasts messages here
-        registry.enableSimpleBroker("/topic");
-    }
 }

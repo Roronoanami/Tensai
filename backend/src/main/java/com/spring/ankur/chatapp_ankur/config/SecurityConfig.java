@@ -1159,32 +1159,6 @@ public class SecurityConfig {
 .permitAll()
 
 
-// // COMMUNITY
-
-// .requestMatchers(
-//         HttpMethod.GET,
-//         "/api/community/**"
-// )
-// .permitAll()
-
-
-
-
-// .requestMatchers(
-//         HttpMethod.POST,
-//         "/api/community/**"
-// )
-// .authenticated()
-
-
-
-
-// COMMUNITY
-
-// .requestMatchers(
-//         "/api/community/**"
-// )
-// .authenticated()
 
 .requestMatchers("/api/community/**")
 .permitAll()

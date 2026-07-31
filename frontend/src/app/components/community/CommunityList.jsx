@@ -13,8 +13,9 @@ export default function CommunityList({
   community,
   members,
   onOpenChat,
-  onOpenInfo,   // ✅ ADD THIS
-}) {
+  onOpenInfo,
+  onOpenProfile,
+}){
   return (
     <div className="flex h-full flex-col bg-white dark:bg-black text-black dark:text-white">
 
@@ -41,28 +42,19 @@ export default function CommunityList({
 
       {/* MEMBERS */}
       <div className="flex-1 overflow-y-auto">
-        {/* {members.map((member) => (
-          <div
-            key={member.id}
-            className="flex items-center gap-3 px-4 py-3 hover:bg-gray-100 dark:hover:bg-gray-900"
-          >
-            <Image
-              src={member.image}
-              alt={member.name}
-              width={44}
-              height={44}
-              className="rounded-full"
-            />
-            <span className="text-sm">{member.name}</span>
-          </div>
-        ))} */}
 
         
         {members.map((member) => (
+  // <div
+  //   key={member.userId}
+  //   className="flex items-center gap-3 px-4 py-3 hover:bg-gray-100 dark:hover:bg-gray-900 cursor-pointer"
+  // >
+
   <div
-    key={member.userId}
-    className="flex items-center gap-3 px-4 py-3 hover:bg-gray-100 dark:hover:bg-gray-900 cursor-pointer"
-  >
+  key={member.userId}
+  onClick={() => onOpenProfile(member.username)}
+  className="flex items-center gap-3 px-4 py-3 hover:bg-gray-100 dark:hover:bg-gray-900 cursor-pointer"
+>
     <Image
       src={
         member.profileImage
@@ -95,27 +87,7 @@ export default function CommunityList({
 ))}
       </div>
 
-      {/* BOTTOM */}
-      {/* <div className="border-t p-2">
-        <div className="px-3 py-3 flex items-center gap-3">
-          <Image
-            src={community.ownerImage}
-            width={40}
-            height={40}
-            className="rounded-full"
-            alt="owner"
-          />
-          <span>{community.ownerName}</span>
-        </div>
-
-        <button className="flex gap-2 px-3 py-3">
-          <Settings size={18} /> Settings
-        </button>
-
-        <button className="flex gap-2 px-3 py-3 text-red-500">
-          <LogOut size={18} /> Logout
-        </button>
-      </div> */}
+   
 
 
       {/* BOTTOM OWNER */}
@@ -128,10 +100,16 @@ export default function CommunityList({
     )
     .map((owner)=>(
       
+      // <div
+      //   key={owner.userId}
+      //   className="px-3 py-3 flex items-center gap-3"
+      // >
+
       <div
-        key={owner.userId}
-        className="px-3 py-3 flex items-center gap-3"
-      >
+  key={owner.userId}
+  onClick={() => onOpenProfile(owner.username)}
+  className="px-3 py-3 flex items-center gap-3 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-900"
+>
 
         <Image
           src={

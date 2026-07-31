@@ -4,13 +4,12 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import CommunityBottomNav from "@/app/components/community/CommunityBottomNav";
 import CommunityChat from "@/app/components/community/CommunityChat";
-
 import {
   getCommunity,
   getCommunityMembers,
   getCommunityStatus,
+  getCommunityMessages
 } from "@/services/communityService";
-
 
 export default function ChatPage({ params }) {
 
@@ -31,45 +30,51 @@ export default function ChatPage({ params }) {
 
   useEffect(() => {
 
-    const loadData = async () => {
 
-      const { communityId } = await params;
+const loadData = async () => {
 
-      setCommunityId(communityId);
+  const { communityId } = await params;
 
+  setCommunityId(communityId);
 
-      try {
+  try {
 
-        const communityData =
-          await getCommunity(communityId);
-
-
-        // optional: load members/status if needed later
-        await getCommunityMembers(communityId);
-
-        await getCommunityStatus(communityId);
+    const communityData =
+      await getCommunity(communityId);
 
 
-        setCommunity(communityData);
+    const loadedMessages =
+      await getCommunityMessages(communityId);
 
 
-      } catch(err) {
+    await getCommunityMembers(communityId);
 
-        console.error(
-          "CHAT LOAD ERROR:",
-          err
-        );
-
-      }
-      finally {
-
-        setLoading(false);
-
-      }
-
-    };
+    await getCommunityStatus(communityId);
 
 
+    console.log("COMMUNITY:", communityData);
+    console.log("MESSAGES:", loadedMessages);
+
+
+    setCommunity(communityData);
+    setMessages(loadedMessages);
+
+
+  } catch(err) {
+
+    console.error(
+      "CHAT LOAD ERROR:",
+      err
+    );
+
+  }
+  finally {
+
+    setLoading(false);
+
+  }
+
+};
     loadData();
 
 
@@ -104,16 +109,24 @@ return (
 
   <div className="h-screen bg-white dark:bg-black">
 
-    <CommunityChat
+    {/* <CommunityChat
       community={community}
       messages={messages}
       message={message}
       setMessage={setMessage}
       onBack={() => router.back()}
       mobileMode={true}
-    />
-
-
+    /> */}
+<CommunityChat
+  community={community}
+  communityId={communityId}
+  messages={messages}
+  setMessages={setMessages}
+  message={message}
+  setMessage={setMessage}
+  onBack={() => router.back()}
+  mobileMode={true}
+/>
     <CommunityBottomNav />
 
   </div>
@@ -123,3 +136,4 @@ return (
 
 
 }
+
